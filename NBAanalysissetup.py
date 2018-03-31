@@ -22,7 +22,7 @@ import re
 
 global NBAanalysisdir    
 
-NBAanalysisdir  = os.path.expandvars(myNBAanalysisdir)
+NBAanalysisdir = os.path.expandvars(myNBAanalysisdir)
     
 if not os.path.isdir(NBAanalysisdir):
     print("--- ERROR: {} does not exist - EXIT".format(NBAanalysisdir))
@@ -41,7 +41,6 @@ def loaddata_allyears(prediction_year, validation_year, training_years, includea
         
         print("--> Loading   training year {}-{} ...".format(training_year-1, training_year))
         df = loaddata_singleyear(training_year, includeadvancedstats)
-        df['YEAR'] = training_year # Add YEAR feature for LeaveOneGroupOut cross-validation scheme
         dfs.append(df)
 
     df_training = pd.concat(dfs)
@@ -52,7 +51,6 @@ def loaddata_allyears(prediction_year, validation_year, training_years, includea
 
     print("--> Loading validation year {}-{} ...".format(validation_year-1, validation_year))
     df_validation = loaddata_singleyear(validation_year, includeadvancedstats)
-    df_validation['YEAR'] = validation_year # Add YEAR feature for LeaveOneGroupOut cross-validation scheme
     #print(df_validation.head())
     #print(df_validation.shape)
 
@@ -60,15 +58,8 @@ def loaddata_allyears(prediction_year, validation_year, training_years, includea
 
     print("--> Loading prediction year {}-{} ...".format(prediction_year-1, prediction_year))
     df_prediction = loaddata_singleyear(prediction_year, includeadvancedstats)
-    df_prediction['YEAR'] = prediction_year # Add YEAR feature for LeaveOneGroupOut cross-validation scheme
     #print(df_prediction.head())
     #print(df_prediction.shape)
-
-    '''
-    df_prediction = cleanplayernames(df_prediction)
-    df_validation = cleanplayernames(df_validation)
-    df_training   = cleanplayernames(df_training)
-    '''
     
     return df_training, df_validation, df_prediction
 
@@ -78,7 +69,7 @@ def loaddata_singleyear(year, includeadvancedstats):
     Function that loads NBA data from csv-files for one particular year
     """
 
-    NBA_playerstats_csvfilename = NBAanalysisdir + 'data/NBA_per_game_{}-{}.csv'.format(year-1, year)
+    NBA_playerstats_csvfilename = NBAanalysisdir + 'data/NBA_totals_{}-{}.csv'.format(year-1, year)
     
     if not os.path.isfile(NBA_playerstats_csvfilename):
         print("--- ERROR: {} does not exist - EXIT".format(NBA_playerstats_csvfilename))
@@ -108,7 +99,11 @@ def loaddata_singleyear(year, includeadvancedstats):
 
     #print(df.head())    
     #print(df.shape)
-    
+
+    # Clean player names:
+
+    df = cleanplayernames(df)
+
     # For players with more than one row, keep only row with 'Tm' == 'TOT' and replace 'Tm' value with most recent team id:
 
     indices_of_rows_toberemoved = []
@@ -132,24 +127,18 @@ def loaddata_singleyear(year, includeadvancedstats):
             if (row['Player'] == key):
                 df.at[index, 'Tm'] = value
 
-    '''
-    # Scale total statistics (MP FG FGA 3P 3PA 2P 2PA FT FTA ORB DRB TRB AST STL BLK TOV PF PTS) by # of games:
+    # Add All-Star statistics:
                 
-    df[['MP', 'FG', 'FGA', '3P', '3PA', '2P', '2PA', 'FT', 'FTA',       \
-        'ORB', 'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS']]  \
-        = df[['MP', 'FG', 'FGA', '3P', '3PA', '2P', '2PA', 'FT', 'FTA', \
-              'ORB', 'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS']].div(df['G'].values,axis=0)
+    df = add_AllStar_column(year, df)
 
-    if includeadvancedstats:
+    # Add YEAR for cross-validation groups:
 
-        df[['OWS', 'DWS', 'WS']] = df[['OWS', 'DWS', 'WS']].div(df['G'].values,axis=0)
-    '''
-    
+    df['YEAR'] = year
+    df['YEAR'] = df['YEAR'].astype('int64')
+
     #print(df.head())    
     #print(df.shape)
 
-    df = add_AllStar_column(year, df)
-    
     return df
 
 
@@ -190,16 +179,20 @@ def add_AllStar_column(year, df):
     
     values = {'AS': 0}
     df.fillna(value=values, inplace=True) # replace NaNs with 0s
+
+    df['AS'] = df['AS'].astype('int64')
     
     return df
 
 
 def cleanplayernames(df):
     """
-    This function cleans up player names by removing the part that starts with "\":
+    #This function cleans up player names by removing the part that starts with "\":
+    This function cleans up player names by removing a trailing asterix from a name if present:
     """
 
-    df['Player'].replace(to_replace=r'(\\[\w\d]+$)', value='', regex=True, inplace=True)
+    #df['Player'].replace(to_replace=r'(\\[\w\d]+$)', value='', regex=True, inplace=True)
+    df['Player'].replace(to_replace=r'(\*$)', value='', regex=True, inplace=True)
 
     return df
 
@@ -235,64 +228,64 @@ def plot_confusion_matrix(cm, classes,
     plt.grid(False)
     plt.tight_layout()
 
-    
-def NBA_per_game_scraper(year):
+            
+def NBA_totals_scraper(year):
     """
-    NBA per-game data scraper function
+    NBA totals data scraper function
     """
 
     import requests
     import csv
     from bs4 import BeautifulSoup
 
-    out_path = NBAanalysisdir + 'data/NBA_per_game_{}-{}.csv'.format(year-1, year)
+    out_path = NBAanalysisdir + 'data/NBA_totals_{}-{}.csv'.format(year-1, year)
     csv_file = open(out_path, 'w')
     csv_writer = csv.writer(csv_file)
 
-    features = ['Player', 'Pos', 'Age', 'Tm', 'G', 'GS', 'MP/G', 'FG/G', 'FGA/G', 'FG%', '3P/G', '3PA/G', '3P%', '2P/G', '2PA/G', \
-                '2P%', 'eFG%', 'FT/G', 'FTA/G', 'FT%', 'ORB/G', 'DRB/G', 'TRB/G', 'AST/G', 'STL/G', 'BLK/G', 'TOV/G', 'PF/G', 'PTS/G']
+    features = ['Player', 'Pos', 'Age', 'Tm', 'G', 'GS', 'MP', 'FG', 'FGA', 'FG%', '3P', '3PA', '3P%', '2P', '2PA', \
+                '2P%', 'eFG%', 'FT', 'FTA', 'FT%', 'ORB', 'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS']
     
     csv_writer.writerow(features)
     
-    URL = 'https://www.basketball-reference.com/leagues/NBA_{}_per_game.html'.format(year)
+    URL = 'https://www.basketball-reference.com/leagues/NBA_{}_totals.html'.format(year)
 
-    print("--- Scraping per-game data {}...".format(year))
+    print("--- Scraping totals data {}-{}...".format(year-1, year))
     
     r = requests.get(URL)
     soup = BeautifulSoup(r.text, "html5lib")
 
-    table = soup.find(id="all_per_game_stats")
+    table = soup.find(id="all_totals_stats")
     cells = table.find_all('td')
 
-    Player  = [cells[i].string for i in range( 0, len(cells), 29)]
-    Pos     = [cells[i].string for i in range( 1, len(cells), 29)]
-    Age     = [cells[i].string for i in range( 2, len(cells), 29)]
-    Tm      = [cells[i].string for i in range( 3, len(cells), 29)]
-    G       = [cells[i].string for i in range( 4, len(cells), 29)]
-    GS      = [cells[i].string for i in range( 5, len(cells), 29)]
-    MP      = [cells[i].string for i in range( 6, len(cells), 29)]
-    FG      = [cells[i].string for i in range( 7, len(cells), 29)]
-    FGA     = [cells[i].string for i in range( 8, len(cells), 29)]
-    FGP     = [cells[i].string for i in range( 9, len(cells), 29)]
-    THP     = [cells[i].string for i in range(10, len(cells), 29)]
-    THPA    = [cells[i].string for i in range(11, len(cells), 29)]
-    THPP    = [cells[i].string for i in range(12, len(cells), 29)]
-    TWP     = [cells[i].string for i in range(13, len(cells), 29)]
-    TWPA    = [cells[i].string for i in range(14, len(cells), 29)]
-    TWPP    = [cells[i].string for i in range(15, len(cells), 29)]
-    EFGP    = [cells[i].string for i in range(16, len(cells), 29)]
-    FT      = [cells[i].string for i in range(17, len(cells), 29)]
-    FTA     = [cells[i].string for i in range(18, len(cells), 29)]
-    FTP     = [cells[i].string for i in range(19, len(cells), 29)]
-    ORB     = [cells[i].string for i in range(20, len(cells), 29)]
-    DRB     = [cells[i].string for i in range(21, len(cells), 29)]
-    TRB     = [cells[i].string for i in range(22, len(cells), 29)]
-    AST     = [cells[i].string for i in range(23, len(cells), 29)]
-    STL     = [cells[i].string for i in range(24, len(cells), 29)]
-    BLK     = [cells[i].string for i in range(25, len(cells), 29)]
-    TOV     = [cells[i].string for i in range(26, len(cells), 29)]
-    PF      = [cells[i].string for i in range(27, len(cells), 29)]
-    PTS     = [cells[i].string for i in range(28, len(cells), 29)]
+    Player  = [cells[i].getText() for i in range( 0, len(cells), 29)]
+    Pos     = [cells[i].getText() for i in range( 1, len(cells), 29)]
+    Age     = [cells[i].getText() for i in range( 2, len(cells), 29)]
+    Tm      = [cells[i].getText() for i in range( 3, len(cells), 29)]
+    G       = [cells[i].getText() for i in range( 4, len(cells), 29)]
+    GS      = [cells[i].getText() for i in range( 5, len(cells), 29)]
+    MP      = [cells[i].getText() for i in range( 6, len(cells), 29)]
+    FG      = [cells[i].getText() for i in range( 7, len(cells), 29)]
+    FGA     = [cells[i].getText() for i in range( 8, len(cells), 29)]
+    FGP     = [cells[i].getText() for i in range( 9, len(cells), 29)]
+    THP     = [cells[i].getText() for i in range(10, len(cells), 29)]
+    THPA    = [cells[i].getText() for i in range(11, len(cells), 29)]
+    THPP    = [cells[i].getText() for i in range(12, len(cells), 29)]
+    TWP     = [cells[i].getText() for i in range(13, len(cells), 29)]
+    TWPA    = [cells[i].getText() for i in range(14, len(cells), 29)]
+    TWPP    = [cells[i].getText() for i in range(15, len(cells), 29)]
+    EFGP    = [cells[i].getText() for i in range(16, len(cells), 29)]
+    FT      = [cells[i].getText() for i in range(17, len(cells), 29)]
+    FTA     = [cells[i].getText() for i in range(18, len(cells), 29)]
+    FTP     = [cells[i].getText() for i in range(19, len(cells), 29)]
+    ORB     = [cells[i].getText() for i in range(20, len(cells), 29)]
+    DRB     = [cells[i].getText() for i in range(21, len(cells), 29)]
+    TRB     = [cells[i].getText() for i in range(22, len(cells), 29)]
+    AST     = [cells[i].getText() for i in range(23, len(cells), 29)]
+    STL     = [cells[i].getText() for i in range(24, len(cells), 29)]
+    BLK     = [cells[i].getText() for i in range(25, len(cells), 29)]
+    TOV     = [cells[i].getText() for i in range(26, len(cells), 29)]
+    PF      = [cells[i].getText() for i in range(27, len(cells), 29)]
+    PTS     = [cells[i].getText() for i in range(28, len(cells), 29)]
     
     for i in range(0, int(len(cells) / 29)):
         row = [Player[i], Pos[i], Age[i], Tm[i], G[i], GS[i], MP[i], FG[i], FGA[i], FGP[i], THP[i], THPA[i], THPP[i], TWP[i], TWPA[i], \
@@ -328,32 +321,32 @@ def NBA_advanced_scraper(year):
     table = soup.find(id="all_advanced_stats")
     cells = table.find_all('td')
 
-    Player  = [cells[i].string for i in range( 0, len(cells), 28)]
-    Pos     = [cells[i].string for i in range( 1, len(cells), 28)]
-    Age     = [cells[i].string for i in range( 2, len(cells), 28)]
-    Tm      = [cells[i].string for i in range( 3, len(cells), 28)]
-    G       = [cells[i].string for i in range( 4, len(cells), 28)]
-    MP      = [cells[i].string for i in range( 5, len(cells), 28)]
-    PER     = [cells[i].string for i in range( 6, len(cells), 28)]
-    TSP     = [cells[i].string for i in range( 7, len(cells), 28)]
-    TPAr    = [cells[i].string for i in range( 8, len(cells), 28)]
-    FTr     = [cells[i].string for i in range( 9, len(cells), 28)]
-    ORBP    = [cells[i].string for i in range(10, len(cells), 28)]
-    DRBP    = [cells[i].string for i in range(11, len(cells), 28)]
-    TRBP    = [cells[i].string for i in range(12, len(cells), 28)]
-    ASTP    = [cells[i].string for i in range(13, len(cells), 28)]
-    STLP    = [cells[i].string for i in range(14, len(cells), 28)]
-    BLKP    = [cells[i].string for i in range(15, len(cells), 28)]
-    TOVP    = [cells[i].string for i in range(16, len(cells), 28)]
-    USGP    = [cells[i].string for i in range(17, len(cells), 28)]
-    OWS     = [cells[i].string for i in range(19, len(cells), 28)]
-    DWS     = [cells[i].string for i in range(20, len(cells), 28)]
-    WS      = [cells[i].string for i in range(21, len(cells), 28)]
-    WS48    = [cells[i].string for i in range(22, len(cells), 28)]
-    OBPM    = [cells[i].string for i in range(24, len(cells), 28)]
-    DBPM    = [cells[i].string for i in range(25, len(cells), 28)]
-    BPM     = [cells[i].string for i in range(26, len(cells), 28)]
-    VORP    = [cells[i].string for i in range(27, len(cells), 28)]
+    Player  = [cells[i].getText() for i in range( 0, len(cells), 28)]
+    Pos     = [cells[i].getText() for i in range( 1, len(cells), 28)]
+    Age     = [cells[i].getText() for i in range( 2, len(cells), 28)]
+    Tm      = [cells[i].getText() for i in range( 3, len(cells), 28)]
+    G       = [cells[i].getText() for i in range( 4, len(cells), 28)]
+    MP      = [cells[i].getText() for i in range( 5, len(cells), 28)]
+    PER     = [cells[i].getText() for i in range( 6, len(cells), 28)]
+    TSP     = [cells[i].getText() for i in range( 7, len(cells), 28)]
+    TPAr    = [cells[i].getText() for i in range( 8, len(cells), 28)]
+    FTr     = [cells[i].getText() for i in range( 9, len(cells), 28)]
+    ORBP    = [cells[i].getText() for i in range(10, len(cells), 28)]
+    DRBP    = [cells[i].getText() for i in range(11, len(cells), 28)]
+    TRBP    = [cells[i].getText() for i in range(12, len(cells), 28)]
+    ASTP    = [cells[i].getText() for i in range(13, len(cells), 28)]
+    STLP    = [cells[i].getText() for i in range(14, len(cells), 28)]
+    BLKP    = [cells[i].getText() for i in range(15, len(cells), 28)]
+    TOVP    = [cells[i].getText() for i in range(16, len(cells), 28)]
+    USGP    = [cells[i].getText() for i in range(17, len(cells), 28)]
+    OWS     = [cells[i].getText() for i in range(19, len(cells), 28)] # 18 is empty!
+    DWS     = [cells[i].getText() for i in range(20, len(cells), 28)]
+    WS      = [cells[i].getText() for i in range(21, len(cells), 28)]
+    WS48    = [cells[i].getText() for i in range(22, len(cells), 28)]
+    OBPM    = [cells[i].getText() for i in range(24, len(cells), 28)] # 23 is empty!
+    DBPM    = [cells[i].getText() for i in range(25, len(cells), 28)]
+    BPM     = [cells[i].getText() for i in range(26, len(cells), 28)]
+    VORP    = [cells[i].getText() for i in range(27, len(cells), 28)]
     
     for i in range(0, int(len(cells) / 28)):
         row = [Player[i], Pos[i], Age[i], Tm[i], G[i], MP[i], PER[i], TSP[i], TPAr[i], FTr[i], ORBP[i], DRBP[i], TRBP[i], \
@@ -382,7 +375,7 @@ def NBA_AllStar_scraper(year):
     
     URL = 'https://www.basketball-reference.com/allstar/NBA_{}.html'.format(year)
 
-    print("--- Scraping All-Stars data {}...".format(year))
+    print("--- Scraping All-Stars data {}-{}...".format(year-1, year))
     
     r = requests.get(URL)
     soup = BeautifulSoup(r.text, "html5lib")
@@ -411,29 +404,29 @@ def NBA_AllStar_scraper_team(soup, team, csv_writer):
     
     cells = table.find_all('td')
         
-    Tm  = [cells[i].string for i in range( 0, len(cells), 20)]
-    MP  = [cells[i].string for i in range( 1, len(cells), 20)]
-    FG  = [cells[i].string for i in range( 2, len(cells), 20)]
-    FGA = [cells[i].string for i in range( 3, len(cells), 20)]
-    TP  = [cells[i].string for i in range( 4, len(cells), 20)]
-    TPA = [cells[i].string for i in range( 5, len(cells), 20)]
-    FT  = [cells[i].string for i in range( 6, len(cells), 20)]
-    FTA = [cells[i].string for i in range( 7, len(cells), 20)]
-    ORB = [cells[i].string for i in range( 8, len(cells), 20)]
-    DRB = [cells[i].string for i in range( 9, len(cells), 20)]
-    TRB = [cells[i].string for i in range(10, len(cells), 20)]
-    AST = [cells[i].string for i in range(11, len(cells), 20)]
-    STL = [cells[i].string for i in range(12, len(cells), 20)]
-    BLK = [cells[i].string for i in range(13, len(cells), 20)]
-    TOV = [cells[i].string for i in range(14, len(cells), 20)]
-    PF  = [cells[i].string for i in range(15, len(cells), 20)]
-    PTS = [cells[i].string for i in range(16, len(cells), 20)]
-    FGP = [cells[i].string for i in range(17, len(cells), 20)]
-    TPP = [cells[i].string for i in range(18, len(cells), 20)]
-    FTP = [cells[i].string for i in range(19, len(cells), 20)]
+    Tm  = [cells[i].getText() for i in range( 0, len(cells), 20)]
+    MP  = [cells[i].getText() for i in range( 1, len(cells), 20)]
+    FG  = [cells[i].getText() for i in range( 2, len(cells), 20)]
+    FGA = [cells[i].getText() for i in range( 3, len(cells), 20)]
+    TP  = [cells[i].getText() for i in range( 4, len(cells), 20)]
+    TPA = [cells[i].getText() for i in range( 5, len(cells), 20)]
+    FT  = [cells[i].getText() for i in range( 6, len(cells), 20)]
+    FTA = [cells[i].getText() for i in range( 7, len(cells), 20)]
+    ORB = [cells[i].getText() for i in range( 8, len(cells), 20)]
+    DRB = [cells[i].getText() for i in range( 9, len(cells), 20)]
+    TRB = [cells[i].getText() for i in range(10, len(cells), 20)]
+    AST = [cells[i].getText() for i in range(11, len(cells), 20)]
+    STL = [cells[i].getText() for i in range(12, len(cells), 20)]
+    BLK = [cells[i].getText() for i in range(13, len(cells), 20)]
+    TOV = [cells[i].getText() for i in range(14, len(cells), 20)]
+    PF  = [cells[i].getText() for i in range(15, len(cells), 20)]
+    PTS = [cells[i].getText() for i in range(16, len(cells), 20)]
+    FGP = [cells[i].getText() for i in range(17, len(cells), 20)]
+    TPP = [cells[i].getText() for i in range(18, len(cells), 20)]
+    FTP = [cells[i].getText() for i in range(19, len(cells), 20)]
     
     for i in range(0, int(len(cells) / 20) - 1):
-        row = [players[i].string, Tm[i], MP[i], FG[i], FGA[i], TP[i], TPA[i], FT[i], FTA[i], ORB[i], \
+        row = [players[i].getText(), Tm[i], MP[i], FG[i], FGA[i], TP[i], TPA[i], FT[i], FTA[i], ORB[i], \
                DRB[i], TRB[i], AST[i], STL[i], BLK[i], TOV[i], PF[i], PTS[i], FGP[i], TPP[i], FTP[i]]
         csv_writer.writerow(row)
 

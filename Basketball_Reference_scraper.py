@@ -22,7 +22,7 @@ def main():
         lastyear = int(lastyear_str)    
     
     for year in range(firstyear, lastyear):
-        NBAanalysissetup.NBA_per_game_scraper(year)
+        NBAanalysissetup.NBA_totals_scraper(year)
         NBAanalysissetup.NBA_advanced_scraper(year)
         #NBAanalysissetup.NBA_AllStar_scraper(year)
 

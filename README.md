@@ -4,35 +4,31 @@ The goal of this analysis is to predict the NBA All-Stars for a given year, base
 
 ## NBA player data:
 
-NBA player data from 2000-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the **data** directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py). You can use [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py) to scrape new data.
+NBA player data from 2000-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the **data** directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py). You can use [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py) to scrape new data. The following statistics are taken into account in the analysis:
 
-Statistics taken into account in the analysis:
-
-| Stat     | Acronym |
-|----------|---------|
-| *G*      | Games played  |
-| *GS*     | Games started |
-| *MP/G*   | Minutes played per game |
-| *2P/48*  | 2P Field goals per 48 minutes |
-| *2PA/48* | 2P Field goal attempts per 48 minutes |
-| *3P/48*  | 3P Field goals per 48 minutes |
-| *3PA/48* | 3P Field goal attempts per 48 minutes |
+| Stat     | Acronym | Note |
+|----------|---------|------|
+| *GS/G*   | Games started / Games played |
+| *MP/48*  | Minutes played per game |
+| *3P/48*  | 3P field goals per 48 minutes |
+| *3PA/48* | 3P field goal attempts per 48 minutes |
+| *2P/48*  | 2P field goals per 48 minutes |
+| *2PA/48* | 2P field goal attempts per 48 minutes |
 | *FT/48*  | Free throws per 48 minutes |
 | *FTA/48* | Free throw attempts per 48 minutes |
-| *ORB/48* | Offensive rebounds per 48 minutes |
-| *DRB/48* | Defensive rebounds per 48 minutes |
-| *AST/48* | Assists per 48 minutes |
-| *TOV/48* | Turnovers per 48 minutes |
-| *STL/48* | Steals per 48 minutes |
-| *BLK/48* | Blocks per 48 minutes |
+| *ORB/48* | Offensive rebounds per 48 minutes | Replaced by *ORB%* if advanced stats are included |
+| *DRB/48* | Defensive rebounds per 48 minutes | Replaced by *DRB%* if advanced stats are included |
+| *AST/48* | Assists per 48 minutes | Replaced by *AST%* if advanced stats are included |
+| *STL/48* | Steals per 48 minutes | Replaced by *STL%* if advanced stats are included |
+| *BLK/48* | Blocks per 48 minutes | Replaced by *BLK%* if advanced stats are included |
+| *TOV/48* | Turnovers per 48 minutes | Replaced by *TOV%* if advanced stats are included |
 | *PF/48*  | Personal fouls per 48 minutes |
-| *PTS/48* | Points per 48 minutes |
 
-Advanced statistics that can be included in the analysis:
+Advanced statistics that are optionally included in the analysis:
 
 | Stat  | Acronym | Definition |
 |-------|---------|-------------|
-| *PER* | Player Efficiency Rating | A per-minute rating of a player's overall performance with respect to an average player, see [here](https://www.basketball-reference.com/about/per.html)
+| *PER* | Player Efficiency Rating | Per-minute rating of a player's overall performance with respect to an average player, see [here](https://www.basketball-reference.com/about/per.html)
 | *ORB%* | Offensive Rebound Percentage | Estimate of the percentage of available offensive rebounds a player grabbed while he was on the floor: *ORB%* = 100 * (*ORB* * (*Tm MP* / 5)) / (*MP* * (*Tm ORB* + *Opp DRB*)) |
 | *DRB%* | Defensive Rebound Percentage | Estimate of the percentage of available defensive rebounds a player grabbed while he was on the floor: *ODRB%* = 100 * (*DRB* * (*Tm MP* / 5)) / (*MP* * (*Tm DRB* + *Opp ORB*)) |
 | *AST%* | Assist Percentage | Estimate of the percentage of teammate field goals a player assisted while he was on the floor: *AST%* = 100 * *AST* / (((*MP* / (*Tm MP* / 5)) * *Tm FG*) - *FG*) |
@@ -46,7 +42,9 @@ Advanced statistics that can be included in the analysis:
 | *DBPM* | Defensive Box Plus/Minus | DBPM is a per-100-possession stat, see [here](https://www.basketball-reference.com/about/bpm.html)
 | *VORP* | Value Over Replacement Player | VORP is a per-100-possession stat, see [here](https://www.basketball-reference.com/about/bpm.html) |
 
-## ML classifier algorithms that are implemented in the analysis:
+## ML classifiers that are implemented in the analysis:
+
+The following classification algorithms can be used to select predict the NBA All-Stars for a given year:
 
 1. Logistic Regression Classifier
 2. Gaussian Naive Bayes Classifier
@@ -68,5 +66,5 @@ The analysis is implemented as a python program ([*NBA_All-Stars.py*](NBA_All-St
 To run the analysis:
 
 - Choose the year you want to use to run some validation tests (*validation_year*) and the year you want to predict (*predicion_year*), both in range 2000-2018. The years that are not selected for validation tests and prediction are used to train the model.
-- Choose whether you want to include advanced player statistics (e.g. *PER*, *WS*, etc.) in the model or not.
+- Choose whether you want to include advanced player statistics (e.g. *PER*, *VORP*, etc.) in the model or not.
 - Choose a ML classifier from the list above.
