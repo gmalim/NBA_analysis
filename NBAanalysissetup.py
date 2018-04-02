@@ -126,7 +126,7 @@ def loaddata_singleyear(year, includeadvancedstats):
         for key, value in player_team_dict.items():
             if (row['Player'] == key):
                 df.at[index, 'Tm'] = value
-
+    
     # Add All-Star statistics:
                 
     df = add_AllStar_column(year, df)
@@ -171,14 +171,14 @@ def add_AllStar_column(year, df):
     df_as = df_as.drop(['Tm','MP','FG','FGA','3P','3PA','FT','FTA','ORB','DRB','TRB',\
                         'AST','STL','BLK','TOV','PF','PTS','FG%','3P%','FT%'], axis=1)
 
-    df_as['AS'] = 1
+    df_as['AS'] = 1 # Set All-Star label
     
     #df = pd.merge(df, df_as, how='left', left_on=['Player'], right_on=['Starters'])
     df = pd.merge(df, df_as, how='left', left_on=['Player'], right_on=['Player'])
     #df = df.drop(['Starters'], axis=1) 
     
     values = {'AS': 0}
-    df.fillna(value=values, inplace=True) # replace NaNs with 0s
+    df.fillna(value=values, inplace=True) # Set non-All-Star label
 
     df['AS'] = df['AS'].astype('int64')
     
