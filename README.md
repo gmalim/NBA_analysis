@@ -13,6 +13,7 @@ The following total statistics per season are taken into account in the analysis
 | *G*    | Games played |
 | *GS/G* | Games started / Games played |
 | *MP/G* | Minutes per game |
+| *TW/82* | Team wins per 82 games
 | *3P*   | 3P field goals |
 | *3PA*  | 3P field goal attempts |
 | *2P*   | 2P field goals |
