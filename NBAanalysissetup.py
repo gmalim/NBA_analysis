@@ -27,6 +27,44 @@ if not os.path.isdir(NBAanalysisdir):
     print("--- ERROR: {} does not exist - EXIT".format(NBAanalysisdir))
     exit()
 
+class MyModel:
+
+    year_train_scores = [] # same for all models
+    
+    def __init__(self, name, classifier):
+
+        self.name       = name
+        self.classifier = classifier
+        
+        self.precision_train_scores = []
+        self.recall_train_scores    = []
+        self.f1_train_scores        = []
+        self.accuracy_train_scores  = []
+        
+    def add_year_train_score(self, year_train_score):
+        self.year_train_scores.append(year_train_score)
+
+    def add_precision_train_score(self, precision_train_score):
+        self.precision_train_scores.append(precision_train_score)
+        self.precision_train_scores_mean = np.mean(self.precision_train_scores)
+        self.precision_train_scores_std  = np.std (self.precision_train_scores)
+
+    def add_recall_train_score(self, recall_train_score):
+        self.recall_train_scores.append(recall_train_score)
+        self.recall_train_scores_mean = np.mean(self.recall_train_scores)
+        self.recall_train_scores_std  = np.std (self.recall_train_scores)
+
+    def add_f1_train_score(self, f1_train_score):
+        self.f1_train_scores.append(f1_train_score)
+        self.f1_train_scores_mean = np.mean(self.f1_train_scores)
+        self.f1_train_scores_std  = np.std (self.f1_train_scores)
+
+    def add_accuracy_train_score(self, accuracy_train_score):
+        self.accuracy_train_scores.append(accuracy_train_score)
+        self.accuracy_train_scores_mean = np.mean(self.accuracy_train_scores)
+        self.accuracy_train_scores_std  = np.std (self.accuracy_train_scores)
+
+
 def loaddata_allyears(prediction_year, validation_year, training_years, includeadvancedstats):
     """
     Function that loads NBA data from csv-files for set of years
