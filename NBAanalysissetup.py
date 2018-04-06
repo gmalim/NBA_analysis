@@ -28,19 +28,28 @@ if not os.path.isdir(NBAanalysisdir):
     exit()
 
 class MyModel:
-
-    year_train_scores = [] # same for all models
+    """
+    Container class to store estimators and estimator details
+    """
     
     def __init__(self, name, classifier):
 
         self.name       = name
         self.classifier = classifier
         
+        self.year_train_scores      = []
         self.precision_train_scores = []
         self.recall_train_scores    = []
         self.f1_train_scores        = []
         self.accuracy_train_scores  = []
         
+    def reset(self):
+        self.year_train_scores[:]      = []
+        self.precision_train_scores[:] = []
+        self.recall_train_scores[:]    = []
+        self.f1_train_scores[:]        = []
+        self.accuracy_train_scores[:]  = []
+
     def add_year_train_score(self, year_train_score):
         self.year_train_scores.append(year_train_score)
 
@@ -63,6 +72,20 @@ class MyModel:
         self.accuracy_train_scores.append(accuracy_train_score)
         self.accuracy_train_scores_mean = np.mean(self.accuracy_train_scores)
         self.accuracy_train_scores_std  = np.std (self.accuracy_train_scores)
+
+    def set_CM(self, CM):
+        self.CM = CM
+        self.TN = CM[0,0] # defined as: 0 = negative, 1 = positive
+        self.FN = CM[1,0] # defined as: 0 = negative, 1 = positive
+        self.FP = CM[0,1] # defined as: 0 = negative, 1 = positive
+        self.TP = CM[1,1] # defined as: 0 = negative, 1 = positive
+        self.TOT = self.TP + self.FP + self.FN + self.TN
+        self.precision = self.TP/(self.TP+self.FP)
+        self.recall    = self.TP/(self.TP+self.FN)
+        self.f1        = 2*self.precision*self.recall/(self.precision+self.recall)
+        self.accuracy  = (self.TP+self.TN)/(self.TOT)
+        self.tpr       = self.recall
+        self.fpr       = self.FP/(self.FP+self.TN)
 
 
 def loaddata_allyears(prediction_year, validation_year, training_years, includeadvancedstats):
