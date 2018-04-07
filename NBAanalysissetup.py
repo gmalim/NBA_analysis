@@ -32,73 +32,68 @@ class MyModel:
     Container class to store ML estimators and estimator details
     """
     
-    def __init__(self, name, classifier):
+    def __init__(self, estimator_name, estimator):
 
-        self.name       = name
-        self.classifier = classifier
+        self.estimator_name = estimator_name
+        self.estimator      = estimator
         
         self.year_train_scores      = []
         self.precision_train_scores = []
         self.recall_train_scores    = []
         self.f1_train_scores        = []
         self.accuracy_train_scores  = []
+
+        self.YEAR_cvgroups = []
+        
+        self.PRE_cvgroups = []
+        self.REC_cvgroups = []
+        self.F1_cvgroups  = []
+        self.ACC_cvgroups = []    
+        self.FPR_cvgroups = []
+
+        self.FPR_ROC_cvgroups = []
+        self.TPR_ROC_cvgroups = []
+        self.AUC_ROC_cvgroups = []
+        self.PRE_PR_cvgroups  = []
+        self.REC_PR_cvgroups  = []
+        self.AUC_PR_cvgroups  = []
+
+        self.fpr_linspace       = 0
+        self.mean_tpr_linspaces = 0
+        self.rec_linspace       = 0
+        self.mean_pre_linspaces = 0
         
     def reset(self):
+        
         self.year_train_scores[:]      = []
         self.precision_train_scores[:] = []
         self.recall_train_scores[:]    = []
         self.f1_train_scores[:]        = []
         self.accuracy_train_scores[:]  = []
 
-    def add_year_train_score(self, year_train_score):
-        self.year_train_scores.append(year_train_score)
+        self.YEAR_cvgroups[:] = []
 
-    def add_precision_train_score(self, precision_train_score):
-        self.precision_train_scores.append(precision_train_score)
-        self.precision_train_scores_mean = np.mean(self.precision_train_scores)
-        self.precision_train_scores_std  = np.std (self.precision_train_scores)
+        self.PRE_cvgroups[:] = []
+        self.REC_cvgroups[:] = []
+        self.F1_cvgroups[:]  = []
+        self.ACC_cvgroups[:] = []    
+        self.FPR_cvgroups[:] = []
 
-    def add_recall_train_score(self, recall_train_score):
-        self.recall_train_scores.append(recall_train_score)
-        self.recall_train_scores_mean = np.mean(self.recall_train_scores)
-        self.recall_train_scores_std  = np.std (self.recall_train_scores)
-
-    def add_f1_train_score(self, f1_train_score):
-        self.f1_train_scores.append(f1_train_score)
-        self.f1_train_scores_mean = np.mean(self.f1_train_scores)
-        self.f1_train_scores_std  = np.std (self.f1_train_scores)
-
-    def add_accuracy_train_score(self, accuracy_train_score):
-        self.accuracy_train_scores.append(accuracy_train_score)
-        self.accuracy_train_scores_mean = np.mean(self.accuracy_train_scores)
-        self.accuracy_train_scores_std  = np.std (self.accuracy_train_scores)
+        self.FPR_ROC_cvgroups[:] = []
+        self.TPR_ROC_cvgroups[:] = []
+        self.AUC_ROC_cvgroups[:] = []
+        self.PRE_PR_cvgroups[:]  = []
+        self.REC_PR_cvgroups[:]  = []
+        self.AUC_PR_cvgroups[:]  = []
     
-    def add_mean_fpr(self, mean_fpr):
-        self.mean_fpr = mean_fpr
-
-    def add_mean_tpr(self, mean_tpr):
-        self.mean_tpr = mean_tpr
-        
-    def add_ROC_curve_data(self, mean_fprs, mean_tprs, mean_roc_auc, std_roc_auc):
-        self.mean_fprs    = mean_fprs
-        self.mean_tprs    = mean_tprs
-        self.mean_roc_auc = mean_roc_auc
-        self.std_roc_auc  = std_roc_auc
-        
-    def add_PR_curve_data(self, mean_precision, mean_recall, mean_pr_auc, std_pr_auc):
-        self.mean_precision = mean_precision
-        self.mean_recall    = mean_recall
-        self.mean_pr_auc    = mean_pr_auc
-        self.std_pr_auc     = std_pr_auc
-
     def set_CM(self, CM):
         self.CM = MyCM(CM)
 
-    def set_y_true(self, y_true):
-        self.y_true = y_true
+    def set_y_truth(self, y_truth):
+        self.y_truth = y_truth
 
-    def set_y_model(self, y_model):
-        self.y_model = y_model
+    def set_y_prediction(self, y_prediction):
+        self.y_prediction = y_prediction
 
         
 class MyCM():
@@ -125,40 +120,33 @@ class MyCM():
         self.fpr       = self.FP/(self.FP+self.TN)
 
 
-def loaddata_allyears(prediction_year, validation_year, training_years, includeadvancedstats):
+def loaddata_allyears(train_years, test_year, includeadvancedstats):
     """
     Function that loads NBA data from csv-files for set of years
     """
     
-    # Load training year data into df_training:
+    # Load training year data into df_train:
 
     dfs = []
 
-    for training_year in training_years:
+    for train_year in train_years:
         
-        print("--> Loading   training year {}-{} ...".format(training_year-1, training_year))
-        df = loaddata_singleyear(training_year, includeadvancedstats)
+        print("--> Loading train year {}-{} ...".format(train_year-1, train_year))
+        df = loaddata_singleyear(train_year, includeadvancedstats)
         dfs.append(df)
 
-    df_training = pd.concat(dfs)
-    #print(df_training.head())
-    #print(df_training.shape)
+    df_train = pd.concat(dfs)
+    #print(df_train.head())
+    #print(df_train.shape)
     
-    # Load validation data into df_validation:
+    # Load test data into df_test:
 
-    print("--> Loading validation year {}-{} ...".format(validation_year-1, validation_year))
-    df_validation = loaddata_singleyear(validation_year, includeadvancedstats)
-    #print(df_validation.head())
-    #print(df_validation.shape)
-
-    # Load prediction data into df_prediction:
-
-    print("--> Loading prediction year {}-{} ...".format(prediction_year-1, prediction_year))
-    df_prediction = loaddata_singleyear(prediction_year, includeadvancedstats)
-    #print(df_prediction.head())
-    #print(df_prediction.shape)
+    print("--> Loading test  year {}-{} ...".format(test_year-1, test_year))
+    df_test = loaddata_singleyear(test_year, includeadvancedstats)
+    #print(df_test.head())
+    #print(df_test.shape)
     
-    return df_training, df_validation, df_prediction
+    return df_train, df_test
 
 
 def loaddata_singleyear(year, includeadvancedstats):
@@ -376,8 +364,8 @@ def plot_confusion_matrix(cm, classes,
                  horizontalalignment="center",
                  color="white" if cm[i, j] > thresh else "black")
             
-    plt.ylabel('True label')
-    plt.xlabel('Predicted label')
+    plt.ylabel('Truth')
+    plt.xlabel('Prediction')
     plt.grid(False)
     plt.tight_layout()
 
@@ -864,5 +852,9 @@ def team_info(team_acronym):
         exit()
         
     return full_team_name, conference
-            
+
+
+def logistic_function(x):
+    return 1 / (1 + np.exp(-x))
+
 
