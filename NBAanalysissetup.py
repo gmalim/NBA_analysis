@@ -29,7 +29,7 @@ if not os.path.isdir(NBAanalysisdir):
 
 class MyModel:
     """
-    Container class to store estimators and estimator details
+    Container class to store ML estimators and estimator details
     """
     
     def __init__(self, name, classifier):
@@ -72,14 +72,51 @@ class MyModel:
         self.accuracy_train_scores.append(accuracy_train_score)
         self.accuracy_train_scores_mean = np.mean(self.accuracy_train_scores)
         self.accuracy_train_scores_std  = np.std (self.accuracy_train_scores)
+    
+    def add_mean_fpr(self, mean_fpr):
+        self.mean_fpr = mean_fpr
+
+    def add_mean_tpr(self, mean_tpr):
+        self.mean_tpr = mean_tpr
+        
+    def add_ROC_curve_data(self, mean_fprs, mean_tprs, mean_roc_auc, std_roc_auc):
+        self.mean_fprs    = mean_fprs
+        self.mean_tprs    = mean_tprs
+        self.mean_roc_auc = mean_roc_auc
+        self.std_roc_auc  = std_roc_auc
+        
+    def add_PR_curve_data(self, mean_precision, mean_recall, mean_pr_auc, std_pr_auc):
+        self.mean_precision = mean_precision
+        self.mean_recall    = mean_recall
+        self.mean_pr_auc    = mean_pr_auc
+        self.std_pr_auc     = std_pr_auc
 
     def set_CM(self, CM):
+        self.CM = MyCM(CM)
+
+    def set_y_true(self, y_true):
+        self.y_true = y_true
+
+    def set_y_model(self, y_model):
+        self.y_model = y_model
+
+        
+class MyCM():
+    """
+    Confusion Matrix helper class
+    """
+    
+    def __init__(self, CM):
+
         self.CM = CM
+
         self.TN = CM[0,0] # defined as: 0 = negative, 1 = positive
         self.FN = CM[1,0] # defined as: 0 = negative, 1 = positive
         self.FP = CM[0,1] # defined as: 0 = negative, 1 = positive
         self.TP = CM[1,1] # defined as: 0 = negative, 1 = positive
+    
         self.TOT = self.TP + self.FP + self.FN + self.TN
+    
         self.precision = self.TP/(self.TP+self.FP)
         self.recall    = self.TP/(self.TP+self.FN)
         self.f1        = 2*self.precision*self.recall/(self.precision+self.recall)
