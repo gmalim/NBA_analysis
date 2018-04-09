@@ -49,8 +49,10 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb). The outl
 	- AdaBoost Classifier
 	- Neural Network Classifier
 	- Linear Discriminant Analysis Classifier
+	- Gaussian Process Classifier
+	- Gaussian Naive Bayes Classifier
 	- Passive Aggressive Classifier
-- Hyper-parameters tuning and instantiation of all models.
+- Hyper-parameter tuning and instantiation of all models.
 
 ### 6. Cross-validation 
 
@@ -62,7 +64,8 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb). The outl
 
 - Models are fitted using training data, fitted models are used to predict test data.
 - Confusion Matrices and classification scores are calculated and visualized.
-- Feature importances and model coefficients are calculated and listed.
+- Feature importances for Decision Tree ensemble models (e.g. Random Forest) are calculated and listed.
+- Feature coefficients for linear models (e.g. Logistic Regression) are calculated and listed.
 - For the Logistic Regression Classifier, the fitted Logistic Curves corresponding to all data features are visualized.
 - Decision function values / probability scores in 2-D feature space are visualized.
 - NBA player predictions and are listed.
@@ -76,8 +79,8 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb). The outl
 
 ### 9. Final prediction
 
-- Probability scores and corresponding placement on the scoring list are calculated for all models.
-- The NBA All-Stars per conference are predicted according to a player's mean scoring placement averaged over all models.
+- Probability scores and corresponding rank on the scoring list are calculated for all models.
+- The NBA All-Stars per conference are predicted according to each player's average scoring rank over all models.
 
 ## NBA All-Star prediction 2018
 
@@ -101,3 +104,13 @@ For 2018, the NBA players in these groups are, in order of probability score:
 	- **Questionable NBA All-Stars:** *Kyle Lowry, Kevin Love, Kristaps Porzingis, John Wall, Al Horford, Goran Dragic*
 	- **Snubbed NBA non-All-Stars:** *Blake Griffin, Ben Simmons, Dwight Howard*
 
+## Discussion
+
+There are several caveats to the analysis:
+
+- NBA player data used in the analysis are summary statistics over a complete season, while the NBA All-Star game is played halfway through a season. Therefore the analysis might actually be more suited to predict the selection of the All-NBA teams awarded at the end of the season.
+- All-Star level players can be injured before the All-Star game but recover before the season ends and still pass the minimum number of games requirement to be included in the analysis.
+- Similarly, players selected for the All-Star game who get injured before the All-Star game are replaced by other players who otherwise would not have been selected. For instance in 2018, Paul George and Goran Dragic were injury replacements. 
+- All-Star level players can transfer between conferences during a season. For instance in 2018, Blake Griffin transferred from the Clippers in the Western Conference to the Pistons in the Eastern Conference.
+- All-Star selection is not only determined by a player's individual performance, but also by his team's performance before the All-Star break. Team performance is included in the analysis by the *TW/82* statistic (i.e. the fraction of team wins over a full season), but no attempt has been made to tune the weight of this statistic compared to other data features.
+- Similarly, All-Star selection is (partly) based on fan voting, and therefore popular players can get selected even if they played poorly during the season. 
