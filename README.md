@@ -18,21 +18,38 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb). The outl
 
 - Choose the year you want to predict, between 2000 and 2018. The years that are not selected are used for cross-validation and training of the ML algorithms.
 - Choose whether you want to include advanced player statistics (e.g. *PER*, *VORP*, etc.) in the analysis or not.
+- Choose the minimum number of games a player has to have played per season to be included in the analysis.
 
 ### 3. NBA player data
 
 - Data loading: NBA player data from 2000-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the **data** directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py).
 - Data preparation (feature selection, *NaN* handling, etc.).
+- Features included in this analysis: *G, GS/G, MP/G, 3P, 3PA, 2P, 2PA, FT, FTA, PF, PER, ORB%, DRB%, AST%, STL%, BLK%, TOV%, USG%, OWS, DWS, OBPM, DBPM, VORP, TW/82* (Exact definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
 - Feature scaling as required by various ML algorithms.
 
 ### 4. Unsupervised Learning
 
 - Principal Component Analysis is used for dimensionality reduction and visualized.
-- Clustering algorithms to distinguish NBA All-Stars from non-All-Stars as separate groups in the data are tested and visualized.
+- Clustering algorithms to distinguish NBA All-Stars from non-All-Stars as separate groups in the data are tested and visualized:
+	- K-Means Clustering
+	- Gaussian Mixture Model
+	- Spectral Clustering 
 
 ### 5. Supervised Learning
 
-- Selection of various popular ML classification algorithms.
+- Selection of various popular ML classification algorithms:
+	- Logistic Regression Classifier
+	- Nearest Neighbours Classifier
+	- Linear Support Vector Machine Classifier
+	- Stochastic Gradient Descent Classifier
+	- Bagged Decision Tree Classifier
+	- Random Forest Classifier
+	- Extremely Randomized Trees Classifier
+	- Gradient Boost Classifier
+	- AdaBoost Classifier
+	- Neural Network Classifier
+	- Linear Discriminant Analysis Classifier
+	- Passive Aggressive Classifier
 - Hyper-parameters tuning and instantiation of all models.
 
 ### 6. Cross-validation 
@@ -74,13 +91,13 @@ For 2018, the NBA players in these groups are, in order of probability score:
 
 - **Western Conference:**
 
-	1. **Deserved NBA All-Stars:** *James Harden, Russell Westbrook, Anthony Davis, Kevin Durant, Damian Lillard, Jimmy Butler, LaMarcus Aldridge, Karl-Anthony Towns, Stephen Curry, DeMarcus Cousins*
-	2. **Questionable NBA All-Stars:** *Paul George, Draymond Green, Klay Thompson*
-	3. **Snubbed NBA non-All-Stars:** *Nikola Jokic, Chris Paul*
+	- **Deserved NBA All-Stars:** *James Harden, Russell Westbrook, Anthony Davis, Kevin Durant, Damian Lillard, Jimmy Butler, LaMarcus Aldridge, Karl-Anthony Towns, Stephen Curry, DeMarcus Cousins*
+	- **Questionable NBA All-Stars:** *Paul George, Draymond Green, Klay Thompson*
+	- **Snubbed NBA non-All-Stars:** *Nikola Jokic, Chris Paul*
 
 - **Eastern Conference:**
 
-	1. **Deserved NBA All-Stars:** *LeBron James, Giannis Antetokounmpo, DeMar DeRozan, Joel Embiid, Kyrie Irving, Victor Oladipo, Andre Drummond, Kemba Walker, Bradley Beal*
-	2. **Questionable NBA All-Stars:** *Kyle Lowry, Kevin Love, Kristaps Porzingis, John Wall, Al Horford, Goran Dragic*
-	3. **Snubbed NBA non-All-Stars:** *Blake Griffin, Ben Simmons, Dwight Howard*
+	- **Deserved NBA All-Stars:** *LeBron James, Giannis Antetokounmpo, DeMar DeRozan, Joel Embiid, Kyrie Irving, Victor Oladipo, Andre Drummond, Kemba Walker, Bradley Beal*
+	- **Questionable NBA All-Stars:** *Kyle Lowry, Kevin Love, Kristaps Porzingis, John Wall, Al Horford, Goran Dragic*
+	- **Snubbed NBA non-All-Stars:** *Blake Griffin, Ben Simmons, Dwight Howard*
 
