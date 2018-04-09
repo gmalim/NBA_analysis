@@ -9,11 +9,11 @@ myNBAanalysisdir  = "${HOME}/Programming/github_reps/NBA_analysis/" # Your NBA a
 
 """
 Author: Gordon Lim
-Last Edit: 3 Apr 2018
+Last Edit: 8 Apr 2018
 """
 
 import itertools
-import matplotlib.pyplot as plt #; plt.style.use('ggplot')
+import matplotlib.pyplot as plt
 import numpy as np
 import os
 import pandas as pd
@@ -136,15 +136,11 @@ def loaddata_allyears(train_years, test_year, includeadvancedstats):
         dfs.append(df)
 
     df_train = pd.concat(dfs)
-    #print(df_train.head())
-    #print(df_train.shape)
     
     # Load test data into df_test:
 
     print("--> Loading test  year {}-{} ...".format(test_year-1, test_year))
     df_test = loaddata_singleyear(test_year, includeadvancedstats)
-    #print(df_test.head())
-    #print(df_test.shape)
     
     return df_train, df_test
 
@@ -162,9 +158,6 @@ def loaddata_singleyear(year, includeadvancedstats):
     
     df = pd.read_csv(NBA_playerstats_csvfilename)
 
-    #print(df.head())    
-    #print(df.shape)
-
     if includeadvancedstats:
     
         NBA_playerstats_advanced_csvfilename = NBAanalysisdir + 'data/NBA_advanced_{}-{}.csv'.format(year-1, year)
@@ -177,41 +170,16 @@ def loaddata_singleyear(year, includeadvancedstats):
         #df2.drop(df2.columns[[19, 24]], inplace=True, axis=1)    # remove empty columns
         df2.drop(['Pos', 'Age', 'G', 'MP'], inplace=True, axis=1) # remove columns already included in regular stats csv
 
-        #print(df2.head())    
-        #print(df2.shape)
-
         df = pd.merge(df, df2, how='left', left_on=['Player', 'Tm'], right_on=['Player', 'Tm'])
-
-    #print(df.head())    
-    #print(df.shape)
 
     # Clean player names:
 
     #df = cleanplayernames(df)
 
-    # For players with more than one row, keep only row with 'Tm' == 'TOT' and replace 'Tm' value with most recent team id:
+    # Remove extra rows for players with more than one row: 
 
-    indices_of_rows_toberemoved = []
-    player_team_dict = {}
-
-    previous_player_id = ''
+    df = compress_multirowplayers(df)
     
-    for index, row in df.iterrows():
-        player_id = row['Player']
-        if (player_id == previous_player_id):
-            if (row['Tm'] != 'TOT'):
-                indices_of_rows_toberemoved.append(index)
-                player_team_dict[player_id] = row['Tm'] # this works because the last team in the list is the player's most recent team 
-        previous_player_id = player_id
-
-    for index in indices_of_rows_toberemoved:
-        df.drop(index, inplace=True)
-
-    for index, row in df.iterrows():
-        for key, value in player_team_dict.items():
-            if (row['Player'] == key):
-                df.at[index, 'Tm'] = value
-
     # Add team statistics:
 
     df = add_team_columns(year, df)
@@ -338,13 +306,38 @@ def cleanplayernames(df):
     return df
 
 
-def plot_confusion_matrix(cm, classes,
-                          normalize=False,
-                          title='Confusion matrix',
-                          cmap=plt.cm.Blues):
+def compress_multirowplayers(df):
     """
-    This function prints and plots the confusion matrix.
-    Normalization can be applied by setting `normalize=True`.
+    This function removes extra rows for players with more than one row (because they switched teams during the season): For players with more than one row, keep only row with 'Tm' == 'TOT' and replace 'Tm' value with most recent team id:
+    """
+
+    indices_of_rows_toberemoved = []
+    player_team_dict = {}
+
+    previous_player_id = ''
+    
+    for index, row in df.iterrows():
+        player_id = row['Player']
+        if (player_id == previous_player_id):
+            if (row['Tm'] != 'TOT'):
+                indices_of_rows_toberemoved.append(index)
+                player_team_dict[player_id] = row['Tm'] # this works because the last team in the list is the player's most recent team 
+        previous_player_id = player_id
+
+    for index in indices_of_rows_toberemoved:
+        df.drop(index, inplace=True)
+
+    for index, row in df.iterrows():
+        for key, value in player_team_dict.items():
+            if (row['Player'] == key):
+                df.at[index, 'Tm'] = value
+
+    return df
+
+
+def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion Matrix', cmap=plt.cm.Blues):
+    """
+    This function prints and plots the (normalized) Confusion Matrix.
     """
     
     if normalize:
