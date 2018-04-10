@@ -29,7 +29,7 @@ if not os.path.isdir(NBAanalysisdir):
 
 class MyModel:
     """
-    Container class to store ML estimators and estimator details
+    Container class to store ML estimators and some estimator attributes
     """
     
     def __init__(self, estimator_name, estimator):
@@ -111,16 +111,17 @@ class MyCM():
         self.TP = CM[1,1] # defined as: 0 = negative, 1 = positive
     
         self.TOT = self.TP + self.FP + self.FN + self.TN
-    
-        self.precision = self.TP/(self.TP+self.FP)
-        self.recall    = self.TP/(self.TP+self.FN)
-        self.f1        = 2*self.precision*self.recall/(self.precision+self.recall)
-        self.accuracy  = (self.TP+self.TN)/(self.TOT)
-        self.tpr       = self.recall
-        self.fpr       = self.FP/(self.FP+self.TN)
+
+        self.precision = self.TP/(self.TP+self.FP)  if (self.TP+self.FP != 0) else 0
+        self.recall    = self.TP/(self.TP+self.FN)  if (self.TP+self.FN != 0) else 0
+        self.fpr       = self.FP/(self.FP+self.TN)  if (self.FP+self.TN != 0) else 0
+        self.accuracy  = (self.TP+self.TN)/self.TOT if (self.TOT        != 0) else 0
+        self.tpr = self.recall
+        self.f1 = 2*self.precision*self.recall/(self.precision+self.recall) \
+            if (self.precision+self.recall != 0) else 0
 
 
-def loaddata_allyears(train_years, test_year, includeadvancedstats):
+def loaddata_allyears(train_years, test_year, includeadvancedstats, target):
     """
     Function that loads NBA data from csv-files for set of years
     """
@@ -132,7 +133,7 @@ def loaddata_allyears(train_years, test_year, includeadvancedstats):
     for train_year in train_years:
         
         print("--> Loading train year {}-{} ...".format(train_year-1, train_year))
-        df = loaddata_singleyear(train_year, includeadvancedstats)
+        df = loaddata_singleyear(train_year, includeadvancedstats, target)
         dfs.append(df)
 
     df_train = pd.concat(dfs)
@@ -140,12 +141,12 @@ def loaddata_allyears(train_years, test_year, includeadvancedstats):
     # Load test data into df_test:
 
     print("--> Loading test  year {}-{} ...".format(test_year-1, test_year))
-    df_test = loaddata_singleyear(test_year, includeadvancedstats)
+    df_test = loaddata_singleyear(test_year, includeadvancedstats, target)
     
     return df_train, df_test
 
 
-def loaddata_singleyear(year, includeadvancedstats):
+def loaddata_singleyear(year, includeadvancedstats, target):
     """
     Function that loads NBA data from csv-files for one particular year
     """
@@ -176,7 +177,7 @@ def loaddata_singleyear(year, includeadvancedstats):
 
     #df = cleanplayernames(df)
 
-    # Remove extra rows for players with more than one row: 
+    # Compress extra rows for players with more than one row: 
 
     df = compress_multirowplayers(df)
     
@@ -184,10 +185,16 @@ def loaddata_singleyear(year, includeadvancedstats):
 
     df = add_team_columns(year, df)
     
-    # Add All-Star selection statistic:
-                
-    df = add_AllStar_column(year, df)
+    # Add target selection statistic:
 
+    if (target == 'allstar'):
+        df = add_AllStar_column(year, df)
+    elif (target == 'MVP'):
+        df = add_MVP_column(year, df)
+    else:
+        print("*** loaddata_singleyear ERROR: UNKNOWN TARGET ***")
+        exit()
+        
     # Add YEAR for cross-validation groups:
 
     df['YEAR'] = year
@@ -294,6 +301,32 @@ def add_AllStar_column(year, df):
     return df
 
 
+def add_MVP_column(year, df):
+    """
+    Function that adds the MVP voting statistic of players as an extra column of floats to a dataframe
+    """
+
+    NBA_MVP_csvfilename = NBAanalysisdir + 'data/NBA_MVP_{}-{}.csv'.format(year-1, year)
+
+    if not os.path.isfile(NBA_MVP_csvfilename):
+        print("--- ERROR: {} does not exist - EXIT")
+        exit()
+
+    df_as = pd.read_csv(NBA_MVP_csvfilename)
+
+    df_as = df_as.drop(['Age', 'Tm', 'First', 'PtsWon', 'PtsMax', 'G', 'MP', 'PTS', 'TRB',
+                        'AST', 'STL', 'BLK', 'FG%', '3P%', 'FT%', 'WS', 'WS/48'], axis=1)
+
+    df = pd.merge(df, df_as, how='left', left_on=['Player'], right_on=['Player'])
+    
+    values = {'Share': 0}
+    df.fillna(value=values, inplace=True) # Set value for players without MVP votes
+
+    df.rename(index=str, columns={"Share": "MVP"})
+    
+    return df
+
+
 def cleanplayernames(df):
     """
     #This function cleans up player names by removing the part that starts with "\":
@@ -391,7 +424,7 @@ def NBA_totals_scraper(year):
     table = soup.find(id="all_totals_stats")
     cells = table.find_all('td')
 
-    ncolumns = 29
+    ncolumns = len(features)
     
     Player  = [cells[i].getText() for i in range( 0, len(cells), ncolumns)]
     Pos     = [cells[i].getText() for i in range( 1, len(cells), ncolumns)]
@@ -459,7 +492,7 @@ def NBA_advanced_scraper(year):
     table = soup.find(id="all_advanced_stats")
     cells = table.find_all('td')
 
-    ncolumns = 28
+    ncolumns = len(features)
 
     Player  = [cells[i].getText() for i in range( 0, len(cells), ncolumns)]
     Pos     = [cells[i].getText() for i in range( 1, len(cells), ncolumns)]
@@ -606,9 +639,7 @@ def NBA_teamstats_scraper(year):
     table_soup = BeautifulSoup(table_text, "html5lib")
     cells = table_soup.find_all('td')
 
-    ncolumns = 24
-
-    # Team G MP FG FGA FG% 3P 3PA 3P% 2P 2PA 2P% FT FTA FT% ORB DRB TRB AST STL BLK TOV PF PTS
+    ncolumns = len(features)
     
     Team = [cells[i].getText() for i in range( 0, len(cells), ncolumns)]
     G    = [cells[i].getText() for i in range( 1, len(cells), ncolumns)]
@@ -674,9 +705,7 @@ def NBA_teammisc_scraper(year):
     table_soup = BeautifulSoup(table_text, "html5lib")
     cells = table_soup.find_all('td')
 
-    ncolumns = 26
-    
-    # Team Age W L PW PL MOV SOS SRS ORtg DRtg Pace FTr 3PAr TS% eFG% TOV% ORB% FT/FGA eFG% TOV% DRB% FT/FGA Arena Att Att/G
+    ncolumns = len(features)
     
     Team     = [cells[i].getText() for i in range( 0, len(cells), ncolumns)]
     Age      = [cells[i].getText() for i in range( 1, len(cells), ncolumns)]
@@ -719,6 +748,64 @@ def NBA_teammisc_scraper(year):
     return 0
 
 
+def NBA_MVP_scraper(year):
+    """
+    NBA MVP voting data scraper function
+    """
+
+    import requests
+    import csv
+    from bs4 import BeautifulSoup
+
+    out_path = NBAanalysisdir + 'data/NBA_MVP_{}-{}.csv'.format(year-1, year)
+    csv_file = open(out_path, 'w')
+    csv_writer = csv.writer(csv_file)
+    
+    features = ['Player', 'Age', 'Tm', 'First', 'PtsWon', 'PtsMax', 'Share',
+                'G', 'MP', 'PTS', 'TRB', 'AST', 'STL', 'BLK', 'FG%', '3P%', 'FT%', 'WS', 'WS/48']
+    
+    csv_writer.writerow(features)
+    
+    URL = 'https://www.basketball-reference.com/awards/awards_{}.html'.format(year)
+
+    print("--- Scraping MVP data {}-{}...".format(year-1, year))
+    
+    r = requests.get(URL)
+    soup = BeautifulSoup(r.text, "html5lib")
+
+    table = soup.find(id="div_mvp")
+    cells = table.find_all('td')
+
+    ncolumns = len(features)
+    
+    Player  = [cells[i].getText() for i in range( 0, len(cells), ncolumns)]
+    Age     = [cells[i].getText() for i in range( 1, len(cells), ncolumns)]
+    Tm      = [cells[i].getText() for i in range( 2, len(cells), ncolumns)]
+    First   = [cells[i].getText() for i in range( 3, len(cells), ncolumns)]
+    PtsWon  = [cells[i].getText() for i in range( 4, len(cells), ncolumns)]
+    PtsMax  = [cells[i].getText() for i in range( 5, len(cells), ncolumns)]
+    Share   = [cells[i].getText() for i in range( 6, len(cells), ncolumns)]
+    G       = [cells[i].getText() for i in range( 7, len(cells), ncolumns)]
+    MP      = [cells[i].getText() for i in range( 8, len(cells), ncolumns)]
+    PTS     = [cells[i].getText() for i in range( 9, len(cells), ncolumns)]
+    TRB     = [cells[i].getText() for i in range(10, len(cells), ncolumns)]
+    AST     = [cells[i].getText() for i in range(11, len(cells), ncolumns)]
+    STL     = [cells[i].getText() for i in range(12, len(cells), ncolumns)]
+    BLK     = [cells[i].getText() for i in range(13, len(cells), ncolumns)]
+    FGP     = [cells[i].getText() for i in range(14, len(cells), ncolumns)]
+    TPP     = [cells[i].getText() for i in range(15, len(cells), ncolumns)]
+    FTP     = [cells[i].getText() for i in range(16, len(cells), ncolumns)]
+    WS      = [cells[i].getText() for i in range(17, len(cells), ncolumns)]
+    WS48    = [cells[i].getText() for i in range(18, len(cells), ncolumns)]
+
+    Player = [i.replace('*', '') for i in Player] # Remove possible asterix from player name
+    
+    for i in range(0, int(len(cells) / ncolumns)):
+        row = [Player[i], Age[i], Tm[i], First[i], PtsWon[i], PtsMax[i], Share[i],
+               G[i], MP[i], PTS[i], TRB[i], AST[i], STL[i], BLK[i], FGP[i], TPP[i], FTP[i], WS[i], WS48[i]]
+        csv_writer.writerow(row)
+
+        
 def team_info(team_acronym):
 
     if (team_acronym == 'ATL'):
