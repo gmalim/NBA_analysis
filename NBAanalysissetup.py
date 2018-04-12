@@ -37,12 +37,6 @@ class MyModel:
         self.estimator_name = estimator_name
         self.estimator      = estimator
         
-        self.year_train_scores      = []
-        self.precision_train_scores = []
-        self.recall_train_scores    = []
-        self.f1_train_scores        = []
-        self.accuracy_train_scores  = []
-
         self.YEAR_cvgroups = []
         
         self.PRE_cvgroups = []
@@ -57,7 +51,7 @@ class MyModel:
         self.PRE_PR_cvgroups  = []
         self.REC_PR_cvgroups  = []
         self.AUC_PR_cvgroups  = []
-
+        
         self.fpr_linspace       = 0
         self.mean_tpr_linspaces = 0
         self.rec_linspace       = 0
@@ -65,12 +59,6 @@ class MyModel:
         
     def reset(self):
         
-        self.year_train_scores[:]      = []
-        self.precision_train_scores[:] = []
-        self.recall_train_scores[:]    = []
-        self.f1_train_scores[:]        = []
-        self.accuracy_train_scores[:]  = []
-
         self.YEAR_cvgroups[:] = []
 
         self.PRE_cvgroups[:] = []
@@ -85,7 +73,7 @@ class MyModel:
         self.PRE_PR_cvgroups[:]  = []
         self.REC_PR_cvgroups[:]  = []
         self.AUC_PR_cvgroups[:]  = []
-    
+        
     def set_CM(self, CM):
         self.CM = MyCM(CM)
 
@@ -94,6 +82,12 @@ class MyModel:
 
     def set_y_prediction(self, y_prediction):
         self.y_prediction = y_prediction
+
+    def set_regression_scores(self, regression_scores):
+        self.regression_scores = regression_scores
+        
+    def set_y_score(self, y_score):
+        self.y_score = y_score
 
         
 class MyCM():
@@ -164,7 +158,7 @@ def loaddata_singleyear(year, includeadvancedstats, target):
         NBA_playerstats_advanced_csvfilename = NBAanalysisdir + 'data/NBA_advanced_{}-{}.csv'.format(year-1, year)
     
         if not os.path.isfile(NBA_playerstats_advanced_csvfilename):
-            print("--- ERROR: {} does not exist - EXIT")
+            print("*** loaddata_singleyear ERROR: {} does not exist - EXIT")
             exit()
     
         df2 = pd.read_csv(NBA_playerstats_advanced_csvfilename)
@@ -192,7 +186,7 @@ def loaddata_singleyear(year, includeadvancedstats, target):
     elif (target == 'MVP'):
         df = add_MVP_column(year, df)
     else:
-        print("*** loaddata_singleyear ERROR: UNKNOWN TARGET ***")
+        print("*** loaddata_singleyear ERROR: Unknown target - EXIT")
         exit()
         
     # Add YEAR for cross-validation groups:
@@ -319,10 +313,10 @@ def add_MVP_column(year, df):
 
     df = pd.merge(df, df_as, how='left', left_on=['Player'], right_on=['Player'])
     
-    values = {'Share': 0}
-    df.fillna(value=values, inplace=True) # Set value for players without MVP votes
+    df = df.rename(index=str, columns={"Share": "MVS"})
 
-    df.rename(index=str, columns={"Share": "MVP"})
+    values = {'MVS': 0}
+    df.fillna(value=values, inplace=True) # Set MVP Vote Share to 0 for players without MVP votes
     
     return df
 
@@ -371,6 +365,7 @@ def compress_multirowplayers(df):
 def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion Matrix', cmap=plt.cm.Blues):
     """
     This function prints and plots the (normalized) Confusion Matrix.
+    See http://scikit-learn.org/stable/auto_examples/model_selection/plot_confusion_matrix.html#sphx-glr-auto-examples-model-selection-plot-confusion-matrix-py
     """
     
     if normalize:
@@ -492,7 +487,7 @@ def NBA_advanced_scraper(year):
     table = soup.find(id="all_advanced_stats")
     cells = table.find_all('td')
 
-    ncolumns = len(features)
+    ncolumns = len(features) + 2 # plus 2 because there are two columns missing!
 
     Player  = [cells[i].getText() for i in range( 0, len(cells), ncolumns)]
     Pos     = [cells[i].getText() for i in range( 1, len(cells), ncolumns)]
