@@ -1,6 +1,6 @@
 # Predicting the NBA MVP with Machine Learning
 
-The goal of this analysis is to predict the NBA All-Stars for a given year, based on NBA player data and MVP voting statistics in other years. This is accomplished by applying several machine learning regression algorithms on NBA player performance data. The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA player data are taken from [basketball-reference.com](https://www.basketball-reference.com), data from 2010-2018 is included in the **data** directory of this repository. Data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
+The goal of this analysis is to predict the NBA MVP for a given year, based on NBA player data and MVP voting statistics in other years. This is accomplished by applying several machine learning regression algorithms on NBA player performance data. The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA player data are taken from [basketball-reference.com](https://www.basketball-reference.com), data from 2010-2018 is included in the **data** directory of this repository. Data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
 
 ## Analysis
 
@@ -62,8 +62,8 @@ The analysis is presented as a [Jupyter Notebook](NBA_MVP.ipynb). The outline of
 
 The Top-5 NBA MVP candidates for 2018, ordered according to the mean scoring rank of all models:
 
-1. ***James Harden*** 
-2. ***LeBron James*** 
-3. ***huh***
-4. ***huh***
-5. ***huh***
+1. ***James Harden*** (Mean scoring rank = 1, median score = 0.744) 
+2. ***LeBron James*** (Mean scoring rank = 2, median score = 0.468) 
+3. ***Russell Westbrook*** (Mean scoring rank = 4.2, median score = 0.240) 
+4. ***Kevin Durant*** (Mean scoring rank = 4.4, median score = 0.236) 
+5. ***Anthony Davis*** (Mean scoring rank = 5.6, median score = 0.184) 
