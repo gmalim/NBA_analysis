@@ -11,6 +11,7 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb). The outl
 - [NumPy](http://www.numpy.org)
 - [Pandas](https://pandas.pydata.org)
 - [Scikit-learn](http://scikit-learn.org)
+- [XGBoost](http://xgboost.readthedocs.io/en/latest/)
 - [Matplotlib](https://matplotlib.org/)
 - [Seaborn](https://seaborn.pydata.org/)
 
