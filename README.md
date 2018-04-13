@@ -48,6 +48,7 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb). The outl
 	- Neural Network Classifier
 	- Gaussian Process Classifier
 	- Gaussian Naive Bayes Classifier
+	- Decision Tree Classifier
 	- Random Forest Classifier
 	- Extra Randomized Trees Classifier
 	- Gradient Boosted Decision Tree Classifier
