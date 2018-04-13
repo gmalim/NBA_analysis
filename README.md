@@ -33,7 +33,7 @@ The predicted NBA All-Stars for 2018, ordered according to the median scoring ra
 
 #### NBA MVP:
 
-The predicted NBA MVP top-5 for 2018, ordered according to the mean scoring rank over all models (actual MVP is not known yet):
+The predicted NBA MVP top-5 for 2018, ordered according to the mean scoring rank over all models (the actual NBA MVP 2018 is not known yet):
 
 1. ***James Harden*** (Mean scoring rank = 1, median score = 0.744) 
 2. ***LeBron James*** (Mean scoring rank = 2, median score = 0.468) 
