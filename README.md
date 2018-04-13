@@ -17,7 +17,7 @@ The analyses are based on the [Scikit-learn](http://scikit-learn.org) machine le
 
 #### NBA All-Stars:
 
-The NBA All-Stars for 2018, ordered according to the median scoring rank over all models:
+The predicted NBA All-Stars for 2018, ordered according to the median scoring rank over all models and compared to the actual NBA All-Star selection in 2018:
 
 - Western Conference:
 
@@ -33,7 +33,7 @@ The NBA All-Stars for 2018, ordered according to the median scoring rank over al
 
 #### NBA MVP:
 
-The Top-5 NBA MVP candidates for 2018, ordered according to the mean scoring rank over all models:
+The predicted NBA MVP top-5 for 2018, ordered according to the mean scoring rank over all models (actual MVP is not known yet):
 
 1. ***James Harden*** (Mean scoring rank = 1, median score = 0.744) 
 2. ***LeBron James*** (Mean scoring rank = 2, median score = 0.468) 
