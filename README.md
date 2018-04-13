@@ -44,21 +44,21 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb). The outl
 	- Stochastic Gradient Descent Classifier
 	- Linear Discriminant Analysis Classifier
 	- Passive Aggressive Classifier
-	- Perceptron Classifier
 	- Neural Network Classifier
 	- Gaussian Process Classifier
 	- Gaussian Naive Bayes Classifier
-	- Decision Tree Classifier
 	- Random Forest Classifier
 	- Extra Randomized Trees Classifier
 	- Gradient Boosted Decision Tree Classifier
-	- Adaptive Boosted Decision Tree Classifier
+	- Adaptive Boosted (AdaBoost) Decision Tree Classifier
+	- Extreme Gradient Boosted (XGBoost) Decision Tree Classifier
 	- Bagged Decision Tree Classifier
 - Hyper-parameter tuning and instantiation of all models.
 
 ### 6. Cross-validation 
 
 - All classifiers are cross-validated by using training data and the *LeaveOneGroupOut* cross-validation scheme, where a group is defined as a single NBA season.
+- Validation curves are visualized.
 - Classification scores are calculated and listed.
 - ROC and PR curves are calculated and visualized.
 
@@ -82,7 +82,7 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb). The outl
 ### 9. Final prediction
 
 - Probability scores and corresponding rank on the scoring list are calculated for all models.
-- The NBA All-Stars per conference are predicted according to each player's average scoring rank over all models.
+- The NBA All-Stars per conference are predicted according to each player's median scoring rank over all models.
 
 ## NBA All-Star prediction 2018
 
@@ -96,15 +96,15 @@ For 2018, the NBA players in these groups are, in order of probability score:
 
 - **Western Conference:**
 
-	- **Deserved NBA All-Stars:** *James Harden, Anthony Davis, Russell Westbrook, Kevin Durant, Damian Lillard, LaMarcus Aldridge, Jimmy Butler, Karl-Anthony Towns, DeMarcus Cousins, Stephen Curry*
+	- **Deserved NBA All-Stars:** *James Harden, Anthony Davis, Russell Westbrook, Kevin Durant, Damian Lillard, LaMarcus Aldridge, Jimmy Butler, DeMarcus Cousins, Stephen Curry, Karl-Anthony Towns*
 	- **Questionable NBA All-Stars:** *Paul George, Klay Thompson, Draymond Green*
-	- **Snubbed NBA non-All-Stars:** *Nikola Jokic, Chris Paul*
+	- **Snubbed NBA non-All-Stars:** *Chris Paul, Nikola Jokic*
 
 - **Eastern Conference:**
 
-	- **Deserved NBA All-Stars:** *LeBron James, Giannis Antetokounmpo, DeMar DeRozan, Victor Oladipo, Kyrie Irving, Joel Embiid, Kemba Walker, Andre Drummond, Kyle Lowry*
-	- **Questionable NBA All-Stars:** *Bradley Beal, Kevin Love, Al Horford, Kristaps Porzingis, John Wall, Goran Dragic*
-	- **Snubbed NBA non-All-Stars:** *Ben Simmons, Blake Griffin, Dwight Howard*
+	- **Deserved NBA All-Stars:** *LeBron James, Giannis Antetokounmpo, DeMar DeRozan, Kyrie Irving, Victor Oladipo, Joel Embiid, Kemba Walker, Andre Drummond, Kyle Lowry, Bradley Beal*
+	- **Questionable NBA All-Stars:** *John Wall, Kevin Love, Al Horford, Kristaps Porzingis, Goran Dragic*
+	- **Snubbed NBA non-All-Stars:** *Ben Simmons, Blake Griffin*
 
 ## Discussion
 
