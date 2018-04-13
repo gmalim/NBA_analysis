@@ -92,7 +92,7 @@ The analysis identifies three groups of NBA players per conference:
 2. **Questionable NBA All-Stars:** Players that were selected but are not predicted as All-Stars.
 3. **Snubbed NBA non-All-Stars:**  Players that are predicted but were not selected as All-Stars.
 
-For 2018, the NBA players in these groups are, in order of probability score:
+For 2018, the NBA players in these groups are, in order of median scoring rank over all models:
 
 - **Western Conference:**
 
@@ -114,5 +114,5 @@ There are several caveats to the analysis:
 - All-Star level players can be injured before the All-Star game but recover before the season ends and still pass the minimum number of games requirement to be included in the analysis.
 - Similarly, players selected for the All-Star game who get injured before the All-Star game are replaced by other players who otherwise would not have been selected. (*In 2018 for instance, Paul George and Goran Dragic were injury replacements*). 
 - All-Star level players can transfer between conferences during a season. (*In 2018 for instance, Blake Griffin transferred from the Clippers in the Western Conference to the Pistons in the Eastern Conference*).
-- All-Star selection is not only determined by a player's individual performance, but also by his team's performance before the All-Star break. Team performance is included in the analysis by the *TW/82* statistic (i.e. the fraction of team wins over a full season), but no attempt has been made to tune the weight of this statistic compared to other data features. (*In 2018 for instance, Draymond Green and Klay Thompson played for the Golden State Warriors, the defending NBA champions*).
+- All-Star selection is not only determined by a player's individual performance, but also by his team's performance before the All-Star break. Team performance is included in the analysis by the *TW/82* statistic (i.e. the fraction of team wins over a full season), but no attempt has been made to tune the weight of this statistic compared to other data features. (*In 2018 for instance, Klay Thompson and  Draymond Green played for the Golden State Warriors, the defending NBA champions*).
 - Similarly, All-Star selection is (partly) based on fan voting, and therefore popular players can get selected even if they played poorly during the season. 
