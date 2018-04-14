@@ -1,6 +1,6 @@
 # Predicting the NBA All-Stars with Machine Learning
 
-The goal of this analysis is to predict the NBA All-Stars for a given year, based on NBA player data and All-Star selections in other years. This is accomplished by applying several machine learning classification algorithms on NBA player performance data. The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA player data are taken from [basketball-reference.com](https://www.basketball-reference.com), data from 2010-2018 is included in the **data** directory of this repository. Data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
+The goal of this analysis is to predict the NBA All-Stars for a given year, based on NBA player data and All-Star selections in other years. This is accomplished by applying several machine learning classification algorithms on NBA player performance data. The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA player data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2010-2018 is included in the **data** directory of this repository, data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
 
 ## Analysis
 
@@ -31,7 +31,7 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb). The outl
 ### 4. Unsupervised Learning
 
 - Principal Component Analysis is used for dimensionality reduction.
-- Clustering algorithms to distinguish NBA All-Stars from non-All-Stars as separate groups in the data are tested and visualized:
+- Clustering algorithms to identify NBA All-Stars from non-All-Stars as separate groups in the data are tested and visualized:
 	- K-Means Clustering
 	- Gaussian Mixture Model
 	- Spectral Clustering 
@@ -61,18 +61,18 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb). The outl
 
 - All classifiers are cross-validated by using training data and the *LeaveOneGroupOut* cross-validation scheme, where a group is defined as a single NBA season.
 - Validation curves are visualized.
-- Classification scores are calculated and listed.
-- ROC and PR curves are calculated and visualized.
+- Classification scores for all models are calculated and listed.
+- ROC and PR curves for all models are calculated and visualized.
 
 ### 7. Model training and predictions
 
 - Models are fitted using training data, fitted models are used to predict test data.
-- Confusion Matrices and classification scores are calculated and visualized.
+- Confusion Matrices and classification scores for all models are calculated and visualized.
 - Feature importances for Decision Tree ensemble models (e.g. Random Forest) are calculated and listed.
 - Feature coefficients for linear models (e.g. Logistic Regression) are calculated and listed.
 - For the Logistic Regression Classifier, the fitted Logistic Curves corresponding to all data features are visualized.
-- Decision function values / probability scores in 2-D feature space are visualized.
-- NBA player predictions are listed.
+- Decision function values / probability scores in 2-D feature space for all models are visualized.
+- NBA player predictions for all models are listed.
 
 ### 8. Ensemble model
 
@@ -83,12 +83,12 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb). The outl
 
 ### 9. Final prediction
 
-- Probability scores and corresponding rank on the scoring list are calculated for all models.
+- Probability scores are calculated for all models.
 - The NBA All-Stars per conference are predicted according to each player's median scoring rank over all models.
 
 ## NBA All-Star prediction 2018
 
-The analysis identifies three groups of NBA players per conference:
+At the time of writing the NBA All-Stars for 2018 were already selected. Therefore the analysis identifies three groups of NBA players per conference:
 
 1. **Deserved NBA All-Stars:**     Players that were selected and are predicted as All-Stars.
 2. **Questionable NBA All-Stars:** Players that were selected but are not predicted as All-Stars.
