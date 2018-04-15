@@ -13,13 +13,12 @@ The analysis is presented as a [Jupyter Notebook](NBA_MVP.ipynb). The outline of
 - [Scikit-learn](http://scikit-learn.org)
 - [XGBoost](http://xgboost.readthedocs.io/en/latest/)
 - [Matplotlib](https://matplotlib.org/)
-- [Seaborn](https://seaborn.pydata.org/)
 
 ### 2. User input
 
 - Choose the year you want to predict, between 2010 and 2018. The years that are not selected are used for cross-validation and training of the ML algorithms.
 - Choose whether you want to include advanced player statistics (e.g. *PER*, *VORP*, etc.) in the analysis or not.
-- Choose the minimum number of games a player has to have played per season to be included in the analysis.
+- Choose the minimum number of games a player has to have started per season to be included in the analysis.
 
 ### 3. NBA player data
 
@@ -45,22 +44,19 @@ The analysis is presented as a [Jupyter Notebook](NBA_MVP.ipynb). The outline of
 
 - All regressors are cross-validated by using training data and the *LeaveOneGroupOut* cross-validation scheme, where a group is defined as a single NBA season.
 - Validation curves are visualized.
-- Regression scores for all models are calculated and listed.
+- Regression metrics are calculated and listed for all models.
 
 ### 6. Model training and predictions
 
 - Models are fitted using training data, fitted models are used to predict test data.
+- Regression metrics are calculated and listed for all models.
 - Feature importances for Decision Tree ensemble models (e.g. Random Forest) are calculated and listed.
 - NBA player predictions for all models are listed.
-
-### 7. Final prediction
-
-- Probability scores for all NBA players are calculated for all models.
-- The NBA MVP candidates are predicted according to each player's median scoring rank over all models.
+- The NBA MVP candidates are defined according to their median prediction rank over all models.
 
 ## NBA MVP prediction 2018
 
-At the time of writing the NBA MVP for 2018 has not been awarded yet. The top-5 NBA MVP candidates for 2018, ordered according to the mean scoring rank of all models, are:
+At the time of writing the NBA MVP for 2018 has not been awarded yet. The top-5 NBA MVP candidates for 2018, ordered according to the mean prediction rank over all models, are:
 
 1. ***James Harden*** (Mean scoring rank = 1, median score = 0.744) 
 2. ***LeBron James*** (Mean scoring rank = 2, median score = 0.468) 
