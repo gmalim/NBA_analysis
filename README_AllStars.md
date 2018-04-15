@@ -32,29 +32,29 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb). The outl
 
 - Principal Component Analysis is used for dimensionality reduction.
 - Clustering algorithms to identify NBA All-Stars from non-All-Stars as separate groups in the data are tested and visualized:
-	- K-Means Clustering
-	- Gaussian Mixture Model
-	- Spectral Clustering 
+	- *K-Means Clustering*
+	- *Gaussian Mixture Model*
+	- *Spectral Clustering* 
 
 ### 5. Supervised Learning
 
 - Selection of various popular ML classification algorithms:
-	- Nearest Neighbours Classifier
-	- Logistic Regression Classifier
-	- Linear Support Vector Machine Classifier
-	- Stochastic Gradient Descent Classifier
-	- Linear Discriminant Analysis Classifier
-	- Passive Aggressive Classifier
-	- Neural Network Classifier
-	- Gaussian Process Classifier
-	- Gaussian Naive Bayes Classifier
-	- Decision Tree Classifier
-	- Random Forest Classifier
-	- Extra Randomized Trees Classifier
-	- Gradient Boosted Decision Tree Classifier
-	- Adaptive Boosted (AdaBoost) Decision Tree Classifier
-	- Extreme Gradient Boosted (XGBoost) Decision Tree Classifier
-	- Bagged Decision Tree Classifier
+	- *Nearest Neighbours Classifier*
+	- *Logistic Regression Classifier*
+	- *Linear Support Vector Machine Classifier*
+	- *Stochastic Gradient Descent Classifier*
+	- *Linear Discriminant Analysis Classifier*
+	- *Passive Aggressive Classifier*
+	- *Neural Network Classifier*
+	- *Gaussian Process Classifier*
+	- *Gaussian Naive Bayes Classifier*
+	- *Decision Tree Classifier*
+	- *Random Forest Classifier*
+	- *Extra Randomized Trees Classifier*
+	- *Gradient Boosted Decision Tree Classifier*
+	- *Adaptive Boosted (AdaBoost) Decision Tree Classifier*
+	- *Extreme Gradient Boosted (XGBoost) Decision Tree Classifier*
+	- *Bagged Decision Tree Classifier*
 - Hyper-parameter tuning and instantiation of all models.
 
 ### 6. Cross-validation 

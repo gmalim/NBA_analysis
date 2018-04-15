@@ -30,14 +30,21 @@ The analysis is presented as a [Jupyter Notebook](NBA_MVP.ipynb). The outline of
 ### 4. Supervised Learning
 
 - Selection of various popular ML regression algorithms:
-	- Nearest Neighbours Regressor
-	- Support Vector Machine Regressor
-	- Neural Network Regressor
-	- Random Forest Regressor
-	- Extra Randomized Trees Regressor
-	- Gradient Boosted Decision Tree Regressor
-	- Adaptive Boosted (AdaBoost) Decision Tree Regressor
-	- Extreme Gradient Boosted (XGBoost) Decision Tree Regressor
+	- *Nearest Neighbours Regressor*
+	- *Ridge Regressor*
+	- *Lasso Regressor*
+	- *ElasticNet Regressor*
+	- *Support Vector Machine Regressor*
+	- *Stochastic Gradient Descent Regressor*
+	- *Passive Aggressive Regressor*
+	- *Neural Network Regressor*
+	- *Gaussian Process Regressor*
+	- *Decision Tree Regressor*
+	- *Random Forest Regressor*
+	- *Extra Randomized Trees Regressor*
+	- *Gradient Boosted Decision Tree Regressor*
+	- *Adaptive Boosted (AdaBoost) Decision Tree Regressor*
+	- *Extreme Gradient Boosted (XGBoost) Decision Tree Regressor*
 - Hyper-parameter tuning and instantiation of all models.
 
 ### 5. Cross-validation 
