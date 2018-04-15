@@ -73,7 +73,7 @@ class MyModel:
         self.PRE_PR_cvgroups[:]  = []
         self.REC_PR_cvgroups[:]  = []
         self.AUC_PR_cvgroups[:]  = []
-        
+
     def set_CM(self, CM):
         self.CM = MyCM(CM)
 
@@ -82,13 +82,7 @@ class MyModel:
 
     def set_y_prediction(self, y_prediction):
         self.y_prediction = y_prediction
-
-    def set_regression_scores(self, regression_scores):
-        self.regression_scores = regression_scores
         
-    def set_y_score(self, y_score):
-        self.y_score = y_score
-
         
 class MyCM():
     """
