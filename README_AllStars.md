@@ -63,11 +63,13 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb). The outl
 - Validation curves are visualized.
 - Classification scores for all models are calculated and listed.
 - ROC and PR curves for all models are calculated and visualized.
+- Feature importances for Decision Tree ensemble models (e.g. Random Forest) are calculated and listed for all CV groups.
+- Feature coefficients for linear models (e.g. Logistic Regression) are calculated and listed for all CV groups.
 
 ### 7. Model training and predictions
 
 - Models are fitted using training data, fitted models are used to predict test data.
-- Confusion Matrices and classification scores for all models are calculated and visualized.
+- Confusion Matrices and classification scores for all models are calculated and visualized if NBA All-Stars have been selected for test year.
 - Feature importances for Decision Tree ensemble models (e.g. Random Forest) are calculated and listed.
 - Feature coefficients for linear models (e.g. Logistic Regression) are calculated and listed.
 - For the Logistic Regression Classifier, the fitted Logistic Curves corresponding to all data features are visualized.

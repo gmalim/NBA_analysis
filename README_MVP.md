@@ -25,6 +25,7 @@ The analysis is presented as a [Jupyter Notebook](NBA_MVP.ipynb). The outline of
 - Data loading: NBA player data from 2010-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the **data** directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py).
 - Data preparation (feature selection, *NaN* handling, etc.).
 - Features included in this analysis: *G, GS/G, MP/G, 3P, 3PA, 2P, 2PA, FT, FTA, PF, PER, ORB%, DRB%, AST%, STL%, BLK%, TOV%, USG%, OWS, DWS, OBPM, DBPM, VORP, TW/82*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
+- Relationships between MVP voting share and other features in training data are visualized.
 - Feature scaling as required by various ML algorithms.
 
 ### 4. Supervised Learning
@@ -52,12 +53,12 @@ The analysis is presented as a [Jupyter Notebook](NBA_MVP.ipynb). The outline of
 - All regressors are cross-validated by using training data and the *LeaveOneGroupOut* cross-validation scheme, where a group is defined as a single NBA season.
 - Validation curves are visualized.
 - Regression metrics are calculated and listed for all models.
+- Feature importances for Decision Tree ensemble models (e.g. Random Forest) are calculated and listed for all CV groups.
 
 ### 6. Model training and predictions
 
 - Models are fitted using training data, fitted models are used to predict test data.
-- Regression metrics are calculated and listed for all models.
-- Feature importances for Decision Tree ensemble models (e.g. Random Forest) are calculated and listed.
+- Regression metrics are calculated and listed for all models (if MVP has been awarded for test year).
 - NBA player predictions for all models are listed.
 - The NBA MVP candidates are defined according to their median prediction rank over all models.
 
