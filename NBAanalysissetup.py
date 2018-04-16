@@ -52,6 +52,9 @@ class MyModel:
         self.REC_PR_cvgroups  = []
         self.AUC_PR_cvgroups  = []
         
+        self.cvimportances  = []
+        self.cvcoefficients = []
+
         self.fpr_linspace       = 0
         self.mean_tpr_linspaces = 0
         self.rec_linspace       = 0
@@ -73,6 +76,9 @@ class MyModel:
         self.PRE_PR_cvgroups[:]  = []
         self.REC_PR_cvgroups[:]  = []
         self.AUC_PR_cvgroups[:]  = []
+
+        self.cvimportances[:]  = []
+        self.cvcoefficients[:] = []
 
     def set_CM(self, CM):
         self.CM = MyCM(CM)
