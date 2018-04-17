@@ -35,6 +35,7 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb). The outl
 	- *K-Means Clustering*
 	- *Gaussian Mixture Model*
 	- *Spectral Clustering* 
+- Clustering performance scores for all clustering algorithms are calculated.
 
 ### 5. Supervised Learning
 
