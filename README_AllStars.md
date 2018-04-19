@@ -102,15 +102,15 @@ For 2018, the NBA players in these groups are, in order of median scoring rank o
 
 - **Western Conference:**
 
-	- **Deserved NBA All-Stars:** *James Harden, Anthony Davis, Russell Westbrook, Kevin Durant, Damian Lillard, LaMarcus Aldridge, Jimmy Butler, DeMarcus Cousins, Stephen Curry, Karl-Anthony Towns*
+	- **Deserved NBA All-Stars:** *James Harden, Russell Westbrook, Kevin Durant, Damian Lillard, Anthony Davis, LaMarcus Aldridge, Stephen Curry, DeMarcus Cousins, Jimmy Butler, Karl-Anthony Towns*
 	- **Questionable NBA All-Stars:** *Paul George, Klay Thompson, Draymond Green*
 	- **Snubbed NBA non-All-Stars:** *Chris Paul, Nikola Jokic*
 
 - **Eastern Conference:**
 
-	- **Deserved NBA All-Stars:** *LeBron James, Giannis Antetokounmpo, DeMar DeRozan, Kyrie Irving, Victor Oladipo, Joel Embiid, Kemba Walker, Andre Drummond, Kyle Lowry, Bradley Beal*
-	- **Questionable NBA All-Stars:** *John Wall, Kevin Love, Al Horford, Kristaps Porzingis, Goran Dragic*
-	- **Snubbed NBA non-All-Stars:** *Ben Simmons, Blake Griffin*
+	- **Deserved NBA All-Stars:** *LeBron James, Giannis Antetokounmpo, DeMar DeRozan, Victor Oladipo, Kyrie Irving, Joel Embiid, Kyle Lowry, Andre Drummond, Kemba Walker, John Wall*
+	- **Questionable NBA All-Stars:** *Bradley Beal, Kevin Love, Kristaps Porzingis, Al Horford, Goran Dragic*
+	- **Snubbed NBA non-All-Stars:** *Blake Griffin, Ben Simmons*
 
 ## Discussion
 

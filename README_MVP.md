@@ -1,6 +1,6 @@
 # Predicting the NBA MVP with Machine Learning
 
-The goal of this analysis is to predict the NBA MVP for a given year, based on NBA player data and MVP voting statistics in other years. This is accomplished by applying several machine learning regression algorithms on NBA player performance data. The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA player data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2010-2018 is included in the **data** directory of this repository, data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
+The goal of this analysis is to predict the NBA MVP for a given year, based on NBA player data and MVP voting statistics in other years. This is accomplished by applying several machine learning regression algorithms on NBA player performance data. The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA player data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 is included in the **data** directory of this repository, data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
 
 ## Analysis
 
@@ -17,19 +17,19 @@ The analysis is presented as a [Jupyter Notebook](NBA_MVP.ipynb). The outline of
 
 ### 2. User input
 
-- Choose the year you want to predict, between 2010 and 2018. The years that are not selected are used for cross-validation and training of the ML algorithms.
+- Choose the year you want to predict, between 2000 and 2018. The years that are not selected are used for cross-validation and training of the ML algorithms.
 - Choose whether you want to include advanced player statistics (e.g. *PER*, *VORP*, etc.) in the analysis or not.
 - Choose the minimum number of games a player has to have started per season to be included in the analysis.
 
 ### 3. NBA player data
 
-- Data loading: NBA player data from 2010-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the **data** directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py).
+- Data loading: NBA player data from 2000-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the **data** directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py).
 - Data preparation (feature selection, *NaN* handling, etc.).
 - Features included in this analysis: *G, GS, MP/G, PTS/48, PER, TS%, TRB%, AST%, STL%, BLK%, USG%, OWS/48, DWS/48, OBPM, DBPM, VORP, TW*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
 - Relationships between MVP voting share and other features in training data are visualized.
 - Feature scaling as required by various ML algorithms.
 
-### 4. Supervised Learning
+### 4. Supervised Learning: Regression
 
 - Selection of various popular ML regression algorithms:
 	- *Nearest Neighbours Regressor*
@@ -61,14 +61,14 @@ The analysis is presented as a [Jupyter Notebook](NBA_MVP.ipynb). The outline of
 - Models are fitted using training data, fitted models are used to predict test data.
 - Regression metrics are calculated and listed for all models (if MVP has been awarded for test year).
 - NBA player predictions for all models are listed.
-- The NBA MVP candidates are defined according to the median prediction score over all models.
+- The NBA MVP candidates are defined according to the median predicted probability scoring-rank of all models.
 
 ## NBA MVP prediction 2018
 
-At the time of writing the NBA MVP for 2018 has not been awarded yet. The NBA MVP candidate top-5 for 2018, ordered according to the median prediction score over all models, is:
+At the time of writing the NBA MVP for 2018 has not been awarded yet. The NBA MVP candidate top-5 for 2018, ordered according to the median predicted probability scoring-rank of all models, is:
 
-1. ***James Harden*** (Mean scoring rank = 1, median score = 0.744) 
-2. ***LeBron James*** (Mean scoring rank = 2, median score = 0.468) 
-3. ***Russell Westbrook*** (Mean scoring rank = 4.2, median score = 0.240) 
-4. ***Kevin Durant*** (Mean scoring rank = 4.4, median score = 0.236) 
-5. ***Anthony Davis*** (Mean scoring rank = 5.6, median score = 0.184) 
+1. ***James Harden*** (Median scoring-rank = 1, median score = 0.784) 
+2. ***LeBron James*** (Median scoring-rank = 2, median score = 0.512) 
+3. ***Kevin Durant*** (Median scoring-rank = 3, median score = 0.284) 
+4. ***Anthony Davis*** (Median scoring-rank = 4.5, median score = 0.238) 
+5. ***Russell Westbrook*** (Median scoring-rank = 5.5, median score = 0.206) 
