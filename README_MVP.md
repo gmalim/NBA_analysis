@@ -25,7 +25,7 @@ The analysis is presented as a [Jupyter Notebook](NBA_MVP.ipynb). The outline of
 
 - Data loading: NBA player data from 2010-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the **data** directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py).
 - Data preparation (feature selection, *NaN* handling, etc.).
-- Features included in this analysis: *G, GS/G, MP/G, 3P, 3PA, 2P, 2PA, FT, FTA, PF, PER, ORB%, DRB%, AST%, STL%, BLK%, TOV%, USG%, OWS, DWS, OBPM, DBPM, VORP, TW/82*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
+- Features included in this analysis: *G, GS, MP/G, PTS/48, PER, TS%, TRB%, AST%, STL%, BLK%, USG%, OWS/48, DWS/48, OBPM, DBPM, VORP, TW*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
 - Relationships between MVP voting share and other features in training data are visualized.
 - Feature scaling as required by various ML algorithms.
 
@@ -44,15 +44,15 @@ The analysis is presented as a [Jupyter Notebook](NBA_MVP.ipynb). The outline of
 	- *Decision Tree Regressor*
 	- *Random Forest Regressor*
 	- *Extra Randomized Trees Regressor*
-	- *Gradient Boosted Decision Tree Regressor*
 	- *Adaptive Boosted (AdaBoost) Decision Tree Regressor*
+	- *Gradient Boosted Decision Tree Regressor*
 	- *Extreme Gradient Boosted (XGBoost) Decision Tree Regressor*
-- Hyper-parameter tuning and instantiation of all models.
+- Hyper-parameter selection and instantiation of all models.
 
 ### 5. Cross-validation 
 
 - All regressors are cross-validated by using training data and the *LeaveOneGroupOut* cross-validation scheme, where a group is defined as a single NBA season.
-- Validation curves are visualized.
+- Validation curves are calculated and visualized.
 - Regression metrics are calculated and listed for all models.
 - Feature importances for Decision Tree ensemble models (e.g. Random Forest) are calculated and listed for all CV groups.
 
@@ -61,11 +61,11 @@ The analysis is presented as a [Jupyter Notebook](NBA_MVP.ipynb). The outline of
 - Models are fitted using training data, fitted models are used to predict test data.
 - Regression metrics are calculated and listed for all models (if MVP has been awarded for test year).
 - NBA player predictions for all models are listed.
-- The NBA MVP candidates are defined according to their median prediction rank over all models.
+- The NBA MVP candidates are defined according to the median prediction score over all models.
 
 ## NBA MVP prediction 2018
 
-At the time of writing the NBA MVP for 2018 has not been awarded yet. The top-5 NBA MVP candidates for 2018, ordered according to the mean prediction rank over all models, are:
+At the time of writing the NBA MVP for 2018 has not been awarded yet. The NBA MVP candidate top-5 for 2018, ordered according to the median prediction score over all models, is:
 
 1. ***James Harden*** (Mean scoring rank = 1, median score = 0.744) 
 2. ***LeBron James*** (Mean scoring rank = 2, median score = 0.468) 

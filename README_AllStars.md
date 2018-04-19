@@ -19,14 +19,15 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb). The outl
 
 - Choose the year you want to predict, between 2010 and 2018. The years that are not selected are used for cross-validation and training of the ML algorithms.
 - Choose whether you want to include advanced player statistics (e.g. *PER*, *VORP*, etc.) in the analysis or not.
-- Choose the minimum number of games a player has to have played per season to be included in the analysis.
+- Choose the minimum number of games a player has to have started per season to be included in the analysis.
 
 ### 3. NBA player data
 
 - Data loading: NBA player data from 2010-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the **data** directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py).
 - Data preparation (feature selection, *NaN* handling, etc.).
-- Features included in this analysis: *G, GS/G, MP/G, 3P, 3PA, 2P, 2PA, FT, FTA, PF, PER, ORB%, DRB%, AST%, STL%, BLK%, TOV%, USG%, OWS, DWS, OBPM, DBPM, VORP, TW/82*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
+- Features included in this analysis: *G, GS, MP/G, PTS/48, PER, TS%, TRB%, AST%, STL%, BLK%, USG%, OWS/48, DWS/48, OBPM, DBPM, VORP, TW*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
 - Feature scaling as required by various ML algorithms.
+- Visualization of distributions of all features for All-Stars and non-All-Stars.
 
 ### 4. Unsupervised Learning
 
@@ -50,18 +51,18 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb). The outl
 	- *Gaussian Process Classifier*
 	- *Gaussian Naive Bayes Classifier*
 	- *Decision Tree Classifier*
+	- *Bagged Decision Tree Classifier*
 	- *Random Forest Classifier*
 	- *Extra Randomized Trees Classifier*
-	- *Gradient Boosted Decision Tree Classifier*
 	- *Adaptive Boosted (AdaBoost) Decision Tree Classifier*
+	- *Gradient Boosted Decision Tree Classifier*
 	- *Extreme Gradient Boosted (XGBoost) Decision Tree Classifier*
-	- *Bagged Decision Tree Classifier*
-- Hyper-parameter tuning and instantiation of all models.
+- Hyper-parameter selection and instantiation of all models.
 
 ### 6. Cross-validation 
 
 - All classifiers are cross-validated by using training data and the *LeaveOneGroupOut* cross-validation scheme, where a group is defined as a single NBA season.
-- Validation curves are visualized.
+- Validation curves are calculated and visualized.
 - Classification scores for all models are calculated and listed.
 - ROC and PR curves for all models are calculated and visualized.
 - Feature importances for Decision Tree ensemble models (e.g. Random Forest) are calculated and listed for all CV groups.
