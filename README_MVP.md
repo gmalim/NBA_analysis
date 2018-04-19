@@ -59,7 +59,7 @@ The analysis is presented as a [Jupyter Notebook](NBA_MVP.ipynb). The outline of
 ### 6. Model training and predictions
 
 - Models are fitted using training data, fitted models are used to predict test data.
-- Regression metrics are calculated and listed for all models (if MVP has been awarded for test year).
+- Regression metrics are calculated and listed for all models if the NBA MVP has been awarded for test year.
 - NBA player predictions for all models are listed.
 - The NBA MVP candidates are defined according to the median predicted probability scoring-rank of all models.
 
@@ -72,3 +72,9 @@ At the time of writing the NBA MVP for 2018 has not been awarded yet. The NBA MV
 3. ***Kevin Durant*** (Median scoring-rank = 3, median score = 0.284) 
 4. ***Anthony Davis*** (Median scoring-rank = 4.5, median score = 0.238) 
 5. ***Russell Westbrook*** (Median scoring-rank = 5.5, median score = 0.206) 
+
+## Discussion
+
+There are several caveats to the analysis:
+
+- The predicted MVP voting shares of the accepted models are not very accurate. This is due to the small sample size of players with MVP votes and the highly non-linear relationship between true MVP voting share and the player performance statistics. Therefore the predicted probability scoring-rank is used as a measure for MVP candidateship.
