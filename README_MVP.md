@@ -1,6 +1,6 @@
 # Predicting the NBA MVP with Machine Learning
 
-The goal of this analysis is to predict the NBA MVP for a given year, based on NBA player data and MVP voting statistics in other years. This is accomplished by applying several machine learning regression algorithms on NBA player performance data. The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA player data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 is included in the **data** directory of this repository, data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
+The goal of this analysis is to predict the NBA MVP for a given year, based on NBA player data and MVP voting statistics in other years. This is accomplished by applying several machine learning regression algorithms on NBA player performance data. The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 is included in the **data** directory of this repository, data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
 
 ## Analysis
 
@@ -23,7 +23,7 @@ The analysis is presented as a [Jupyter Notebook](NBA_MVP.ipynb). The outline of
 
 ### 3. NBA player data
 
-- Data loading: NBA player data from 2000-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the **data** directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py).
+- Data loading: NBA data from 2000-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the **data** directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py).
 - Data preparation (feature selection, *NaN* handling, etc.).
 - Features included in this analysis: *G, GS, MP/G, PTS/48, PER, TS%, TRB%, AST%, STL%, BLK%, USG%, OWS/48, DWS/48, OBPM, DBPM, VORP, TW*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
 - Relationships between MVP voting share and other features in training data are visualized.
@@ -65,7 +65,7 @@ The analysis is presented as a [Jupyter Notebook](NBA_MVP.ipynb). The outline of
 
 ## NBA MVP prediction 2018
 
-At the time of writing the NBA MVP for 2018 has not been awarded yet. The NBA MVP candidate top-5 for 2018, ordered according to the median predicted probability scoring-rank of all models, is:
+At the time of writing the NBA MVP for 2018 has not been awarded yet. The NBA MVP candidate top-5 ordered for 2018, according to the median predicted probability scoring-rank of all models and based on 2000-2018 data, is:
 
 1. ***James Harden*** (Median scoring-rank = 1, median score = 0.784) 
 2. ***LeBron James*** (Median scoring-rank = 2, median score = 0.512) 
