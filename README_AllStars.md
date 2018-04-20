@@ -21,11 +21,12 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb). The outl
 - Choose whether you want to include advanced player statistics (e.g. *PER*, *VORP*, etc.) in the analysis or not.
 - Choose the minimum number of games a player has to have started per season to be included in the analysis.
 
-### 3. NBA player data
+### 3. Data processing
 
 - Data loading: NBA data from 2000-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the **data** directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py).
 - Data preparation (feature selection, *NaN* handling, etc.).
 - Features included in this analysis: *G, GS, MP/G, PTS/48, PER, TS%, TRB%, AST%, STL%, BLK%, USG%, OWS/48, DWS/48, OBPM, DBPM, VORP, TW*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
+- Target statistic is the players' All-Star selection status (a binary variable).
 - Feature scaling as required by various ML algorithms.
 - Visualization of distributions of all features for All-Stars and non-All-Stars.
 
@@ -75,42 +76,42 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb). The outl
 - Feature importances for Decision Tree ensemble models (e.g. Random Forest) are calculated and listed.
 - Feature coefficients for linear models (e.g. Logistic Regression) are calculated and listed.
 - For the Logistic Regression Classifier, the fitted Logistic Curves corresponding to all data features are visualized.
-- Decision function values / probability scores in 2-D feature space for all models are visualized.
+- Decision function values / classification probability scores in 2-D feature space for all models are visualized.
 - NBA player predictions for all models are listed.
 
 ### 8. Ensemble model
 
-- An ensemble model with majority voting is created from the ML classifier list using the *VotingClassifier* class.
+- An ensemble model of all non-rejected classifiers with majority voting is created using the *VotingClassifier* class.
 - Ensemble model is cross-validated and classification scores are calculated and listed.
 - Ensemble model is fitted using training data, fitted ensemble is used to predict test data.
 - NBA player predictions and classification results per classifier in the ensemble model are listed.
 
 ### 9. Final prediction
 
-- Probability scores are calculated for all models.
-- The NBA All-Stars per conference are predicted according to each player's median scoring rank over all models.
+- Classification probability scores and corresponding scoring ranks are calculated for all models.
+- The NBA All-Stars per conference are listed in order of the median predicted scoring rank over all models.
 
 ## NBA All-Star prediction 2018
 
-At the time of writing the NBA All-Stars for 2018 were already selected. Therefore the analysis identifies three groups of NBA players per conference:
+At the time of writing the NBA All-Stars for 2018 were already selected. Therefore the analysis identifies three groups of players per conference:
 
-1. **Deserved NBA All-Stars:**     Players that were selected and are predicted as All-Stars.
-2. **Questionable NBA All-Stars:** Players that were selected but are not predicted as All-Stars.
-3. **Snubbed NBA non-All-Stars:**  Players that are predicted but were not selected as All-Stars.
+1. **Deserved All-Stars:**     Players that were selected and are predicted as All-Stars.
+2. **Questionable All-Stars:** Players that were selected but are not predicted as All-Stars.
+3. **Snubbed non-All-Stars:**  Players that are predicted but were not selected as All-Stars.
 
-For 2018, based on 2010-2018 data, the NBA players in these groups are, in order of median scoring rank over all models:
+For 2018, based on 2010-2018 data, the NBA players in these groups are, in order of the median predicted scoring rank over all models:
 
 - **Western Conference:**
 
-	- **Deserved NBA All-Stars:** *James Harden, Russell Westbrook, Kevin Durant, Damian Lillard, Anthony Davis, LaMarcus Aldridge, Stephen Curry, DeMarcus Cousins, Jimmy Butler, Karl-Anthony Towns*
-	- **Questionable NBA All-Stars:** *Paul George, Klay Thompson, Draymond Green*
-	- **Snubbed NBA non-All-Stars:** *Chris Paul, Nikola Jokic*
+	- **Deserved All-Stars:** *James Harden, Russell Westbrook, Kevin Durant, Damian Lillard, Anthony Davis, LaMarcus Aldridge, Stephen Curry, DeMarcus Cousins, Jimmy Butler, Karl-Anthony Towns*
+	- **Questionable All-Stars:** *Paul George, Klay Thompson, Draymond Green*
+	- **Snubbed non-All-Stars:** *Chris Paul, Nikola Jokic*
 
 - **Eastern Conference:**
 
-	- **Deserved NBA All-Stars:** *LeBron James, Giannis Antetokounmpo, DeMar DeRozan, Victor Oladipo, Kyrie Irving, Joel Embiid, Kyle Lowry, Andre Drummond, Kemba Walker, John Wall*
-	- **Questionable NBA All-Stars:** *Bradley Beal, Kevin Love, Kristaps Porzingis, Al Horford, Goran Dragic*
-	- **Snubbed NBA non-All-Stars:** *Blake Griffin, Ben Simmons*
+	- **Deserved All-Stars:** *LeBron James, Giannis Antetokounmpo, DeMar DeRozan, Victor Oladipo, Kyrie Irving, Joel Embiid, Kyle Lowry, Andre Drummond, Kemba Walker, John Wall*
+	- **Questionable All-Stars:** *Bradley Beal, Kevin Love, Kristaps Porzingis, Al Horford, Goran Dragic*
+	- **Snubbed non-All-Stars:** *Blake Griffin, Ben Simmons*
 
 ## Discussion
 

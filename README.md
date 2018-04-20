@@ -15,9 +15,9 @@ The analyses are based on the [Scikit-learn](http://scikit-learn.org) machine le
 
 ## Predictions for 2018
 
-#### NBA All-Stars (based on 2010-2018 data):
+#### NBA All-Stars 2018, based on 2010-2018 data:
 
-The NBA All-Stars for 2018, ordered according to the median predicted probability score over all models and compared to the actual NBA All-Star selection in 2018:
+The NBA All-Stars for 2018, in order of the median predicted probability score over all models and compared to the actual NBA All-Star selection in 2018:
 
 - Western Conference:
 
@@ -31,12 +31,12 @@ The NBA All-Stars for 2018, ordered according to the median predicted probabilit
 	- **Questionable NBA All-Stars:** *Bradley Beal, Kevin Love, Kristaps Porzingis, Al Horford, Goran Dragic*
 	- **Snubbed NBA non-All-Stars:** *Blake Griffin, Ben Simmons*
 
-#### NBA MVP (based on 2000-2018 data):
+#### NBA MVP 2018, based on 2000-2018 data:
 
-The NBA MVP candidate top-5 for 2018 according to the median predicted probability scoring-rank of all models (the actual NBA MVP 2018 is not known yet):
+At the time of writing the NBA MVP for 2018 has not been awarded yet. The NBA MVP candidate top-5 for 2018, in order of the median predicted MVP voting share rank over all models:
 
-1. ***James Harden*** (Median scoring-rank = 1, median score = 0.784) 
-2. ***LeBron James*** (Median scoring-rank = 2, median score = 0.512) 
-3. ***Kevin Durant*** (Median scoring-rank = 3, median score = 0.284) 
-4. ***Anthony Davis*** (Median scoring-rank = 4.5, median score = 0.238) 
-5. ***Russell Westbrook*** (Median scoring-rank = 5.5, median score = 0.206)
+1. ***James Harden*** (Median predicted MVS rank = 1, median predicted MVS = 0.784) 
+2. ***LeBron James*** (Median predicted MVS rank = 2, median predicted MVS = 0.512) 
+3. ***Kevin Durant*** (Median predicted MVS rank = 3, median predicted MVS = 0.284) 
+4. ***Anthony Davis*** (Median predicted MVS rank = 4.5, median predicted MVS = 0.238) 
+5. ***Russell Westbrook*** (Median predicted MVS rank = 5.5, median predicted MVS = 0.206)
