@@ -4,7 +4,7 @@ The goal of this analysis is to predict the NBA All-Stars for a given year, base
 
 ## Analysis
 
-The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb). The outline of the analysis is summarized in the following:
+The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb), and can be viewed online using [Jupyter nbviewer](https://nbviewer.jupyter.org/github/gmalim/NBA_analysis/blob/master/NBA_All-Stars.ipynb) (which has improved display rendering capabilities compared to Github). The outline of the analysis is summarized in the following:
 
 ### 1. Import external modules and libraries
 
