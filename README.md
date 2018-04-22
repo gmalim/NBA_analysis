@@ -17,19 +17,19 @@ The analyses are based on the [Scikit-learn](http://scikit-learn.org) machine le
 
 #### NBA All-Stars 2018, based on 2010-2018 data:
 
-The NBA All-Stars for 2018, in order of the median predicted probability score over all models and compared to the actual NBA All-Star selection in 2018:
+The NBA All-Stars for 2018, in order of the median predicted calibrated probability score over all models and compared to the actual NBA All-Star selection in 2018:
 
 - Western Conference:
 
-	- **Deserved NBA All-Stars:** *James Harden, Russell Westbrook, Kevin Durant, Damian Lillard, Anthony Davis, LaMarcus Aldridge, Stephen Curry, DeMarcus Cousins, Jimmy Butler, Karl-Anthony Towns*
-	- **Questionable NBA All-Stars:** *Paul George, Klay Thompson, Draymond Green*
-	- **Snubbed NBA non-All-Stars:** *Chris Paul, Nikola Jokic*
+	- **Deserved All-Stars:** *James Harden, Russell Westbrook, Anthony Davis, Kevin Durant, Damian Lillard, LaMarcus Aldridge, Jimmy Butler, DeMarcus Cousins, Stephen Curry, Karl-Anthony Towns*
+	- **Questionable All-Stars:** *Paul George, Klay Thompson, Draymond Green*
+	- **Snubbed non-All-Stars:** *Chris Paul, Nikola Jokic*
 
 - Eastern Conference:
 
-	- **Deserved NBA All-Stars:** *LeBron James, Giannis Antetokounmpo, DeMar DeRozan, Victor Oladipo, Kyrie Irving, Joel Embiid, Kyle Lowry, Andre Drummond, Kemba Walker, John Wall*
-	- **Questionable NBA All-Stars:** *Bradley Beal, Kevin Love, Kristaps Porzingis, Al Horford, Goran Dragic*
-	- **Snubbed NBA non-All-Stars:** *Blake Griffin, Ben Simmons*
+	- **Deserved All-Stars:** *Giannis Antetokounmpo, LeBron James, Kyrie Irving, Victor Oladipo, DeMar DeRozan, Joel Embiid, Andre Drummond, Kyle Lowry, Kemba Walker, Bradley Beal*
+	- **Questionable All-Stars:** *John Wall, Kevin Love, Kristaps Porzingis, Al Horford, Goran Dragic*
+	- **Snubbed non-All-Stars:** *Ben Simmons, Blake Griffin*
 
 #### NBA MVP 2018, based on 2000-2018 data:
 

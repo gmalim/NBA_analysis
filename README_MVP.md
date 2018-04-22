@@ -26,7 +26,7 @@ The analysis is presented as a [Jupyter Notebook](NBA_MVP.ipynb), and can be vie
 - Data loading: NBA data from 2000-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the **data** directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py).
 - Data preparation (feature selection, *NaN* handling, etc.).
 - Features included in this analysis: *G, GS, MP/G, PTS/48, PER, TS%, TRB%, AST%, STL%, BLK%, USG%, OWS/48, DWS/48, OBPM, DBPM, VORP, TW*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
-- Target statistic is the players' MVP voting share (*MVS*, a continuous variable).
+- Target statistic is the players' MVP voting share (*MVS*), a continuous variable.
 - Relationships between MVS and other features in training data are visualized.
 - Feature scaling as required by various ML algorithms.
 
@@ -78,4 +78,4 @@ At the time of writing the NBA MVP for 2018 has not been awarded yet. The MVP ca
 
 There are several caveats to the analysis:
 
-- The MVS absolute values predicted by the accepted models is not very accurate. This is due to the small sample size of players with MVP votes and the highly non-linear relationships between MVS and other features in the analysis. Therefore the predicted MVS rank instead of the absolute value is used as a measure for MVP candidateship.
+- The MVS absolute values predicted by the accepted models are not very accurate. This is due to the small sample size of players with MVP votes and the highly non-linear relationships between MVS and other features in the analysis. Therefore the predicted MVS rank instead of the absolute value is used as a measure for MVP candidateship.

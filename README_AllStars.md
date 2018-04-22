@@ -72,7 +72,7 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb), and can 
 ### 7. Model training and predictions
 
 - Models are fitted using training data, fitted models are used to predict test data.
-- Confusion Matrices and classification scores for all models are calculated and visualized if NBA All-Stars have been selected for test year.
+- Confusion Matrices and classification scores for all models are calculated and visualized (if NBA All-Stars have been selected for test year).
 - Feature importances for Decision Tree ensemble models (e.g. Random Forest) are calculated and listed.
 - Feature coefficients for linear models (e.g. Logistic Regression) are calculated and listed.
 - For the Logistic Regression Classifier, the fitted Logistic Curves corresponding to all data features are visualized.
@@ -86,10 +86,13 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb), and can 
 - Ensemble model is fitted using training data, fitted ensemble is used to predict test data.
 - NBA player predictions and classification results per classifier in the ensemble model are listed.
 
-### 9. Final prediction
+### 9. Probability scores and final prediction
 
-- Classification probability scores and corresponding scoring ranks are calculated for all models.
-- The NBA All-Stars per conference are listed in order of the median predicted scoring rank over all models.
+- Classification probability scores and corresponding scoring ranks of test data are calculated for all models.
+- Predicted score distributions and probability calibration curves of training data are visualized for all models.
+- Calibrated classification probability scores and corresponding scoring ranks of test data are calculated for all models.
+- Predicted calibrated score distributions and calibrated probability calibration curves of test data are vizualized for all models.
+- The NBA All-Stars per conference are listed in order of the median predicted calibrated score over all models.
 
 ## NBA All-Star prediction 2018
 
@@ -99,19 +102,19 @@ At the time of writing the NBA All-Stars for 2018 were already selected. Therefo
 2. **Questionable All-Stars:** Players that were selected but are not predicted as All-Stars.
 3. **Snubbed non-All-Stars:**  Players that are predicted but were not selected as All-Stars.
 
-For 2018, based on 2010-2018 data, the NBA players in these groups are, in order of the median predicted scoring rank over all models:
+For 2018, based on 2010-2018 data, the NBA players in these groups are, in order of the median predicted calibrated scoring rank over all models:
 
 - **Western Conference:**
 
-	- **Deserved All-Stars:** *James Harden, Russell Westbrook, Kevin Durant, Damian Lillard, Anthony Davis, LaMarcus Aldridge, Stephen Curry, DeMarcus Cousins, Jimmy Butler, Karl-Anthony Towns*
+	- **Deserved All-Stars:** *James Harden, Russell Westbrook, Anthony Davis, Kevin Durant, Damian Lillard, LaMarcus Aldridge, Jimmy Butler, DeMarcus Cousins, Stephen Curry, Karl-Anthony Towns*
 	- **Questionable All-Stars:** *Paul George, Klay Thompson, Draymond Green*
 	- **Snubbed non-All-Stars:** *Chris Paul, Nikola Jokic*
 
 - **Eastern Conference:**
 
-	- **Deserved All-Stars:** *LeBron James, Giannis Antetokounmpo, DeMar DeRozan, Victor Oladipo, Kyrie Irving, Joel Embiid, Kyle Lowry, Andre Drummond, Kemba Walker, John Wall*
-	- **Questionable All-Stars:** *Bradley Beal, Kevin Love, Kristaps Porzingis, Al Horford, Goran Dragic*
-	- **Snubbed non-All-Stars:** *Blake Griffin, Ben Simmons*
+	- **Deserved All-Stars:** *Giannis Antetokounmpo, LeBron James, Kyrie Irving, Victor Oladipo, DeMar DeRozan, Joel Embiid, Andre Drummond, Kyle Lowry, Kemba Walker, Bradley Beal*
+	- **Questionable All-Stars:** *John Wall, Kevin Love, Kristaps Porzingis, Al Horford, Goran Dragic*
+	- **Snubbed non-All-Stars:** *Ben Simmons, Blake Griffin*
 
 ## Discussion
 
@@ -122,4 +125,4 @@ There are several caveats to the analysis:
 - Similarly, players selected for the All-Star game who get injured before the All-Star game are replaced by other players who otherwise would not have been selected. (*In 2018 for instance, Paul George and Goran Dragic were injury replacements*). Therefore the injured players have been added to the scraped 2000-2018 csv-files by hand.
 - All-Star level players can transfer between conferences during a season. (*In 2018 for instance, Blake Griffin transferred from the Clippers in the Western Conference to the Pistons in the Eastern Conference*).
 - All-Star selection is not only determined by a player's individual performance, but also by his team's performance before the All-Star break. Team performance is included in the analysis by the *TW/82* statistic (i.e. the fraction of team wins over a full season), but no attempt has been made to tune the weight of this statistic compared to other data features. (*In 2018 for instance, Klay Thompson and  Draymond Green played for the Golden State Warriors, the defending NBA champions*).
-- Similarly, All-Star selection is (partly) based on fan voting, and therefore popular players can get selected even if they played poorly during the season. 
+- Similarly, All-Star selection is (partly) based on fan voting, and therefore popular players can get selected even if they played poorly during the season.
