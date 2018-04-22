@@ -37,7 +37,7 @@ class MyModel:
         self.estimator_name = estimator_name
         self.estimator      = estimator
         
-        self.YEAR_cvgroups = []
+        #self.YEAR_cvgroups = []
         
         self.PRE_cvgroups = []
         self.REC_cvgroups = []
@@ -55,6 +55,9 @@ class MyModel:
         self.cvimportances  = []
         self.cvcoefficients = []
 
+        self.cv_y_test  = []
+        self.cv_y_score = []
+
         self.fpr_linspace       = 0
         self.mean_tpr_linspaces = 0
         self.rec_linspace       = 0
@@ -62,7 +65,7 @@ class MyModel:
         
     def reset(self):
         
-        self.YEAR_cvgroups[:] = []
+        #self.YEAR_cvgroups[:] = []
 
         self.PRE_cvgroups[:] = []
         self.REC_cvgroups[:] = []
@@ -79,6 +82,9 @@ class MyModel:
 
         self.cvimportances[:]  = []
         self.cvcoefficients[:] = []
+        
+        self.cv_y_test[:]  = []
+        self.cv_y_score[:] = []
 
     def set_CM(self, CM):
         self.CM = MyCM(CM)
@@ -88,6 +94,12 @@ class MyModel:
 
     def set_y_prediction(self, y_prediction):
         self.y_prediction = y_prediction
+        
+    def set_y_score(self, y_score):
+        self.y_score = y_score
+        
+    def set_y_score_calib(self, y_score_calib):
+        self.y_score_calib = y_score_calib
         
         
 class MyCM():
