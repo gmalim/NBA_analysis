@@ -1,11 +1,10 @@
-# Predicting NBA award winners with Machine Learning
+# Predicting NBA Player Award winners with Machine Learning
 
-The goal of this analysis is to predict NBA Player Award winners
- for a specific year. This is accomplished by applying several machine learning regression algorithms on player performance data and award voting data in other years. Player Awards considered in this analysis are **Most Valuable Player** (MVP), **Rookie of the Year** (ROY) and **Defensive Player of the Year** (DPOY). The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 is included in the **data** directory of this repository, data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
+The goal of this analysis is to predict NBA Player Award winners for a specific year. This is accomplished by applying several machine learning regression algorithms on player performance data and award voting data in other years. Player Awards considered in this analysis are **Most Valuable Player** (MVP), **Rookie of the Year** (ROY) and **Defensive Player of the Year** (DPOY). The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 is included in the **data** directory of this repository, data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
 
 ## Analysis
 
-The analysis is presented as a [Python Jupyter Notebook](NBA_Awards.ipynb), and can be viewed online using [Jupyter nbviewer](https://nbviewer.jupyter.org/github/gmalim/NBA_analysis/blob/master/NBA_Awards.ipynb) (which has improved display rendering capabilities compared to Github). The outline of the analysis is summarized in the following:
+The analysis is presented as a [Python Jupyter Notebook](NBA_PlayerAwards.ipynb), and can be viewed online using [Jupyter nbviewer](https://nbviewer.jupyter.org/github/gmalim/NBA_analysis/blob/master/NBA_PlayerAwards.ipynb) (which has improved display rendering capabilities compared to Github). The outline of the analysis is summarized in the following:
 
 ### 1. Import external modules and libraries
 
