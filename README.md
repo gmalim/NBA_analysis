@@ -1,6 +1,6 @@
-# Predicting the NBA All-Stars and NBA MVP with Machine Learning
+# Predicting the NBA All-Stars and NBA Player Awards with Machine Learning
 
-The goal of this analysis is to predict the **NBA All-Stars** and **NBA MVP** for a given year, by applying various machine learning algorithms on NBA player performance data and All-Star selections / MVP voting data from other years.
+The goal of this analysis is to predict the **NBA All-Stars** and **NBA Player Awards** for a given year, by applying various machine learning algorithms on player performance data and All-Star selections / award voting data from other years. Player Awards considered in this analysis are **Most Valuable Player** (MVP), **Rookie of the Year** (ROY) and **Defensive Player of the Year** (DPOY).
 
 ## Data
 
@@ -11,13 +11,15 @@ NBA data are taken from [basketball-reference.com](https://www.basketball-refere
 The analyses are based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python, and are described in more detail in the following:
 
 - [NBA All-Stars analysis README](README_AllStars.md)
-- [NBA MVP analysis README](README_MVP.md)
+- [NBA Player Awards analysis README](README_PlayerAwards.md)
 
 ## Predictions for 2018
 
-#### NBA All-Stars 2018, based on 2010-2018 data:
+At the time of writing, the NBA All-Stars for 2018 have been selected, but the NBA Player Awards for 2018 have not been awarded yet. Predictions for the NBA All-Stars and Player Awards for 2018 are listed below. The All-Stars analysis is based on 2010-2018 data, the Player Awards analysis is based on 2000-2018 data.
 
-The NBA All-Stars for 2018, in order of the median predicted calibrated probability score over all models and compared to the actual NBA All-Star selection in 2018:
+#### NBA All-Stars 2018:
+
+The NBA All-Stars for 2018, ordered by to the median predicted calibrated probability score over all selected models and compared to the actual NBA All-Star selection in 2018:
 
 - Western Conference:
 
@@ -31,12 +33,25 @@ The NBA All-Stars for 2018, in order of the median predicted calibrated probabil
 	- **Questionable All-Stars:** *John Wall, Kevin Love, Kristaps Porzingis, Al Horford, Goran Dragic*
 	- **Snubbed non-All-Stars:** *Ben Simmons, Blake Griffin*
 
-#### NBA MVP 2018, based on 2000-2018 data:
+#### NBA Player Awards 2018:
 
-At the time of writing the NBA MVP for 2018 has not been awarded yet. The NBA MVP candidate top-5 for 2018, in order of the median predicted MVP voting share rank over all models:
+The predicted NBA MVP, ROY and DPOY candidate Top-3s, based on 2000-2018 data, are listed below ordered by the median predicted AVS rank over all selected models.
 
-1. ***James Harden*** (Median predicted MVS rank = 1, median predicted MVS = 0.784) 
-2. ***LeBron James*** (Median predicted MVS rank = 2, median predicted MVS = 0.512) 
-3. ***Kevin Durant*** (Median predicted MVS rank = 3, median predicted MVS = 0.284) 
-4. ***Anthony Davis*** (Median predicted MVS rank = 4.5, median predicted MVS = 0.238) 
-5. ***Russell Westbrook*** (Median predicted MVS rank = 5.5, median predicted MVS = 0.206)
+- ##### NBA Most Valuable Player 2018:
+
+	1. *James Harden (HOU)*
+	2. *LeBron James (CLE)*
+	3. *Kevin Durant (GSW)* 
+
+- ##### NBA Rookie of the Year 2018:
+
+	1. *Ben Simmons (PHI)*
+	2. *Donovan Mitchell (UTA)*
+	3. *Lauri Markkanen (CHI)*
+
+- ##### NBA Defensive Player of the Year 2018:
+
+	1. *Andre Drummond (DET)*
+	2. *Clint Capela (HOU)*
+	3. *Anthony Davis (NOP)*
+

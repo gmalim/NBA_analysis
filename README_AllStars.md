@@ -1,10 +1,10 @@
 # Predicting the NBA All-Stars with Machine Learning
 
-The goal of this analysis is to predict the NBA All-Stars for a given year, based on NBA player data and All-Star selections in other years. This is accomplished by applying several machine learning classification algorithms on NBA player performance data. The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 is included in the **data** directory of this repository, data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
+The goal of this analysis is to predict the NBA All-Stars for a specific year. This is accomplished by applying several machine learning classification algorithms on player performance data and All-Star selection data in other years. The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 is included in the **data** directory of this repository, data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
 
 ## Analysis
 
-The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb), and can be viewed online using [Jupyter nbviewer](https://nbviewer.jupyter.org/github/gmalim/NBA_analysis/blob/master/NBA_All-Stars.ipynb) (which has improved display rendering capabilities compared to Github). The outline of the analysis is summarized in the following:
+The analysis is presented as a [Python Jupyter Notebook](NBA_All-Stars.ipynb), and can be viewed online using [Jupyter nbviewer](https://nbviewer.jupyter.org/github/gmalim/NBA_analysis/blob/master/NBA_All-Stars.ipynb) (which has improved display rendering capabilities compared to Github). The outline of the analysis is summarized in the following:
 
 ### 1. Import external modules and libraries
 
@@ -26,7 +26,7 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb), and can 
 - Data loading: NBA data from 2000-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the **data** directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py).
 - Data preparation (feature selection, *NaN* handling, etc.).
 - Features included in this analysis: *G, GS, MP/G, PTS/48, PER, TS%, TRB%, AST%, STL%, BLK%, USG%, OWS/48, DWS/48, OBPM, DBPM, VORP, TW*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
-- Target statistic is the players' All-Star selection status (a binary variable).
+- Target statistic is the players' All-Star selection status (*AS*), a binary variable.
 - Feature scaling as required by various ML algorithms.
 - Visualization of distributions of all features for All-Stars and non-All-Stars.
 
@@ -81,7 +81,7 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb), and can 
 
 ### 8. Ensemble model
 
-- An ensemble model of all non-rejected classifiers with majority voting is created using the *VotingClassifier* class.
+- An ensemble model of all selected classifiers with majority voting is created using the *VotingClassifier* class.
 - Ensemble model is cross-validated and classification scores are calculated and listed.
 - Ensemble model is fitted using training data, fitted ensemble is used to predict test data.
 - NBA player predictions and classification results per classifier in the ensemble model are listed.
@@ -92,7 +92,7 @@ The analysis is presented as a [Jupyter Notebook](NBA_All-Stars.ipynb), and can 
 - Predicted score distributions and probability calibration curves of training data are visualized for all models.
 - Calibrated classification probability scores and corresponding scoring ranks of test data are calculated for all models.
 - Predicted calibrated score distributions and calibrated probability calibration curves of test data are vizualized for all models.
-- The NBA All-Stars per conference are listed in order of the median predicted calibrated score over all models.
+- The NBA All-Stars per conference are listed in order of the median predicted calibrated score over all selected models.
 
 ## NBA All-Star prediction 2018
 
@@ -102,7 +102,7 @@ At the time of writing the NBA All-Stars for 2018 were already selected. Therefo
 2. **Questionable All-Stars:** Players that were selected but are not predicted as All-Stars.
 3. **Snubbed non-All-Stars:**  Players that are predicted but were not selected as All-Stars.
 
-For 2018, based on 2010-2018 data, the NBA players in these groups are, in order of the median predicted calibrated scoring rank over all models:
+The NBA players in these groups for 2018 are listed below, based on 2010-2018 data and in order of the median predicted calibrated scoring rank over all selected models:
 
 - **Western Conference:**
 

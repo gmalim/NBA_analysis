@@ -1,10 +1,11 @@
-# Predicting the NBA MVP with Machine Learning
+# Predicting NBA award winners with Machine Learning
 
-The goal of this analysis is to predict the NBA MVP for a given year, based on NBA player data and MVP voting statistics in other years. This is accomplished by applying several machine learning regression algorithms on NBA player performance data. The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 is included in the **data** directory of this repository, data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
+The goal of this analysis is to predict NBA Player Award winners
+ for a specific year. This is accomplished by applying several machine learning regression algorithms on player performance data and award voting data in other years. Player Awards considered in this analysis are **Most Valuable Player** (MVP), **Rookie of the Year** (ROY) and **Defensive Player of the Year** (DPOY). The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 is included in the **data** directory of this repository, data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
 
 ## Analysis
 
-The analysis is presented as a [Jupyter Notebook](NBA_MVP.ipynb), and can be viewed online using [Jupyter nbviewer](https://nbviewer.jupyter.org/github/gmalim/NBA_analysis/blob/master/NBA_MVP.ipynb) (which has improved display rendering capabilities compared to Github). The outline of the analysis is summarized in the following:
+The analysis is presented as a [Python Jupyter Notebook](NBA_Awards.ipynb), and can be viewed online using [Jupyter nbviewer](https://nbviewer.jupyter.org/github/gmalim/NBA_analysis/blob/master/NBA_Awards.ipynb) (which has improved display rendering capabilities compared to Github). The outline of the analysis is summarized in the following:
 
 ### 1. Import external modules and libraries
 
@@ -17,17 +18,21 @@ The analysis is presented as a [Jupyter Notebook](NBA_MVP.ipynb), and can be vie
 
 ### 2. User input
 
+- Choose the NBA Player Award you want to predict:
+	- NBA Most Valuable Player (MVP)
+	- NBA Rookie of the Year (ROY)
+	- NBA Defensive Player of the Year (DPOY)
 - Choose the year you want to predict, between 2000 and 2018. The years that are not selected are used for cross-validation and training of the ML algorithms.
 - Choose whether you want to include advanced player statistics (e.g. *PER*, *VORP*, etc.) in the analysis or not.
-- Choose the minimum number of games a player has to have started per season to be included in the analysis.
+- Choose the minimum number of games a player has to have played (ROY) or started (MVP, DPOY) per season to be included in the analysis.
 
 ### 3. Data handling
 
 - Data loading: NBA data from 2000-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the **data** directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py).
 - Data preparation (feature selection, *NaN* handling, etc.).
 - Features included in this analysis: *G, GS, MP/G, PTS/48, PER, TS%, TRB%, AST%, STL%, BLK%, USG%, OWS/48, DWS/48, OBPM, DBPM, VORP, TW*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
-- Target statistic is the players' MVP voting share (*MVS*), a continuous variable.
-- Relationships between MVS and other features in training data are visualized.
+- Target statistic is the players' Award Voting Share (*AVS*), a continuous variable.
+- Relationships between AVS and other features in training data are visualized.
 - Feature scaling as required by various ML algorithms.
 
 ### 4. Supervised Learning
@@ -60,22 +65,34 @@ The analysis is presented as a [Jupyter Notebook](NBA_MVP.ipynb), and can be vie
 ### 6. Model training and predictions
 
 - Models are fitted using training data, fitted models are used to predict test data.
-- Regression metrics are calculated and listed for all models if the NBA MVP has been awarded for test year.
+- Regression metrics are calculated and listed for all models (if the NBA Player Award has been awarded for test year).
 - NBA player predictions for all models are listed.
-- The NBA MVP candidates are listed in order of the median predicted MVS rank over all models.
+- The NBA Player Award candidates are listed in order of the median predicted AVS rank over all selected models.
 
-## NBA MVP prediction 2018
+## NBA Player Awards predictions for 2018
 
-At the time of writing the NBA MVP for 2018 has not been awarded yet. The MVP candidate top-5, based on 2000-2018 data, in order of the median predicted MVS rank over all models:
+At the time of writing the NBA Player Awards for 2018 have not been awarded yet. The predicted NBA MVP, ROY and DPOY candidate Top-3s, based on 2000-2018 data, are listed below in order of the median predicted AVS rank over all selected models.
 
-1. ***James Harden*** (Median predicted MVS rank = 1, median predicted MVS = 0.784) 
-2. ***LeBron James*** (Median predicted MVS rank = 2, median predicted MVS = 0.512) 
-3. ***Kevin Durant*** (Median predicted MVS rank = 3, median predicted MVS = 0.284) 
-4. ***Anthony Davis*** (Median predicted MVS rank = 4.5, median predicted MVS = 0.238) 
-5. ***Russell Westbrook*** (Median predicted MVS rank = 5.5, median predicted MVS = 0.206) 
+- #### NBA Most Valuable Player 2018:
+
+	1. *James Harden (HOU)*
+	2. *LeBron James (CLE)* 
+	3. *Kevin Durant (GSW)* 
+
+- #### NBA Rookie of the Year 2018:
+
+	1. *Ben Simmons (PHI)*
+	2. *Donovan Mitchell (UTA)*
+	3. *Lauri Markkanen (CHI)*
+
+- #### NBA Defensive Player of the Year 2018:
+
+	1. *Andre Drummond (DET):*
+	2. *Clint Capela (HOU):*
+	3. *Anthony Davis (NOP):*
 
 ## Discussion
 
 There are several caveats to the analysis:
 
-- The MVS absolute values predicted by the accepted models are not very accurate. This is due to the small sample size of players with MVP votes and the highly non-linear relationships between MVS and other features in the analysis. Therefore the predicted MVS rank instead of the absolute value is used as a measure for MVP candidateship.
+- The AVS absolute values predicted by the accepted models are not very accurate. This is due to the small sample size of players with MVP votes and the erratic relationship between AVS and other features in the analysis. Therefore the predicted AVS rank instead of the absolute value is used as a measure for award candidateship.
