@@ -76,7 +76,7 @@ At the time of writing the NBA Player Awards for 2018 have not been awarded yet.
 
 	1. *James Harden (HOU)*
 	2. *LeBron James (CLE)* 
-	3. *Kevin Durant (GSW)* 
+	3. *Russell Westbrook (OKC)* 
 
 - ### NBA Rookie of the Year 2018:
 
@@ -87,11 +87,11 @@ At the time of writing the NBA Player Awards for 2018 have not been awarded yet.
 - ### NBA Defensive Player of the Year 2018:
 
 	1. *Andre Drummond (DET)*
-	2. *Clint Capela (HOU)*
-	3. *Anthony Davis (NOP)*
+	2. *Ben Simmons (PHI)*
+	3. *Clint Capela (HOU)*
 
 ## Discussion
 
 There are several caveats to the analysis:
 
-- The AVS absolute values predicted by the accepted models are not very accurate. This is due to the small sample size of players with MVP votes and the erratic relationship between AVS and other features in the analysis. Therefore the predicted AVS rank instead of the absolute value is used as a measure for award candidateship.
+- The AVS absolute values predicted by the accepted models are not very accurate. This is due to the small sample size of players with award votes and the erratic relationship between AVS and other features in the analysis. Therefore the predicted AVS rank instead of the absolute value is used as a measure for award candidateship.

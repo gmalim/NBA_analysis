@@ -40,8 +40,8 @@ The predicted NBA MVP, ROY and DPOY candidate Top-3s, based on 2000-2018 data, a
 - #### NBA Most Valuable Player 2018:
 
 	1. *James Harden (HOU)*
-	2. *LeBron James (CLE)*
-	3. *Kevin Durant (GSW)* 
+	2. *LeBron James (CLE)* 
+	3. *Russell Westbrook (OKC)* 
 
 - #### NBA Rookie of the Year 2018:
 
@@ -52,6 +52,6 @@ The predicted NBA MVP, ROY and DPOY candidate Top-3s, based on 2000-2018 data, a
 - #### NBA Defensive Player of the Year 2018:
 
 	1. *Andre Drummond (DET)*
-	2. *Clint Capela (HOU)*
-	3. *Anthony Davis (NOP)*
+	2. *Ben Simmons (PHI)*
+	3. *Clint Capela (HOU)*
 
