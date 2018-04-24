@@ -17,7 +17,7 @@ The analyses are based on the [Scikit-learn](http://scikit-learn.org) machine le
 
 At the time of writing, the NBA All-Stars for 2018 have been selected, but the NBA Player Awards for 2018 have not been awarded yet. Predictions for the NBA All-Stars and Player Awards for 2018 are listed below. The All-Stars analysis is based on 2010-2018 data, the Player Awards analysis is based on 2000-2018 data.
 
-#### NBA All-Stars 2018:
+### NBA All-Stars 2018:
 
 The NBA All-Stars for 2018, ordered by to the median predicted calibrated probability score over all selected models and compared to the actual NBA All-Star selection in 2018:
 
@@ -33,23 +33,23 @@ The NBA All-Stars for 2018, ordered by to the median predicted calibrated probab
 	- **Questionable All-Stars:** *John Wall, Kevin Love, Kristaps Porzingis, Al Horford, Goran Dragic*
 	- **Snubbed non-All-Stars:** *Ben Simmons, Blake Griffin*
 
-#### NBA Player Awards 2018:
+### NBA Player Awards 2018:
 
-The predicted NBA MVP, ROY and DPOY candidate Top-3s, based on 2000-2018 data, are listed below ordered by the median predicted AVS rank over all selected models.
+The predicted NBA MVP, ROY and DPOY candidate Top-3s, based on 2000-2018 data, are listed below in order of the median predicted AVS rank over all selected models.
 
-- ##### NBA Most Valuable Player 2018:
+- #### NBA Most Valuable Player 2018:
 
 	1. *James Harden (HOU)*
 	2. *LeBron James (CLE)*
 	3. *Kevin Durant (GSW)* 
 
-- ##### NBA Rookie of the Year 2018:
+- #### NBA Rookie of the Year 2018:
 
 	1. *Ben Simmons (PHI)*
 	2. *Donovan Mitchell (UTA)*
 	3. *Lauri Markkanen (CHI)*
 
-- ##### NBA Defensive Player of the Year 2018:
+- #### NBA Defensive Player of the Year 2018:
 
 	1. *Andre Drummond (DET)*
 	2. *Clint Capela (HOU)*

@@ -73,23 +73,23 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_Awards.ipynb), and 
 
 At the time of writing the NBA Player Awards for 2018 have not been awarded yet. The predicted NBA MVP, ROY and DPOY candidate Top-3s, based on 2000-2018 data, are listed below in order of the median predicted AVS rank over all selected models.
 
-- #### NBA Most Valuable Player 2018:
+- ### NBA Most Valuable Player 2018:
 
 	1. *James Harden (HOU)*
 	2. *LeBron James (CLE)* 
 	3. *Kevin Durant (GSW)* 
 
-- #### NBA Rookie of the Year 2018:
+- ### NBA Rookie of the Year 2018:
 
 	1. *Ben Simmons (PHI)*
 	2. *Donovan Mitchell (UTA)*
 	3. *Lauri Markkanen (CHI)*
 
-- #### NBA Defensive Player of the Year 2018:
+- ### NBA Defensive Player of the Year 2018:
 
-	1. *Andre Drummond (DET):*
-	2. *Clint Capela (HOU):*
-	3. *Anthony Davis (NOP):*
+	1. *Andre Drummond (DET)*
+	2. *Clint Capela (HOU)*
+	3. *Anthony Davis (NOP)*
 
 ## Discussion
 
