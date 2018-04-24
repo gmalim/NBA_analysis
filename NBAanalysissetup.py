@@ -9,7 +9,7 @@ myNBAanalysisdir  = "${HOME}/Programming/github_reps/NBA_analysis/" # Your NBA a
 
 """
 Author: Gordon Lim
-Last Edit: 13 Apr 2018
+Last Edit: 23 Apr 2018
 """
 
 import itertools
@@ -51,6 +51,8 @@ class MyModel:
         self.PRE_PR_cvgroups  = []
         self.REC_PR_cvgroups  = []
         self.AUC_PR_cvgroups  = []
+
+        self.cv_r2 = []
         
         self.cvimportances  = []
         self.cvcoefficients = []
@@ -80,6 +82,8 @@ class MyModel:
         self.REC_PR_cvgroups[:]  = []
         self.AUC_PR_cvgroups[:]  = []
 
+        self.cv_r2[:] = []
+        
         self.cvimportances[:]  = []
         self.cvcoefficients[:] = []
         
@@ -158,7 +162,7 @@ def loaddata_singleyear(year, includeadvancedstats, target):
     """
 
     NBA_playerstats_csvfilename = NBAanalysisdir + 'data/NBA_totals_{}-{}.csv'.format(year-1, year)
-    
+        
     if not os.path.isfile(NBA_playerstats_csvfilename):
         print("--- ERROR: {} does not exist - EXIT".format(NBA_playerstats_csvfilename))
         exit()
@@ -197,6 +201,10 @@ def loaddata_singleyear(year, includeadvancedstats, target):
         df = add_AllStar_column(year, df)
     elif (target == 'MVP'):
         df = add_MVP_column(year, df)
+    elif (target == 'ROY'):
+        df = add_ROY_column(year, df)
+    elif (target == 'DPOY'):
+        df = add_DPOY_column(year, df)
     else:
         print("*** loaddata_singleyear ERROR: Unknown target - EXIT")
         exit()
@@ -325,10 +333,74 @@ def add_MVP_column(year, df):
 
     df = pd.merge(df, df_as, how='left', left_on=['Player'], right_on=['Player'])
     
-    df = df.rename(index=str, columns={"Share": "MVS"})
+    df = df.rename(index=str, columns={"Share": "AVS"})
 
-    values = {'MVS': 0}
+    values = {'AVS': 0}
     df.fillna(value=values, inplace=True) # Set MVP Vote Share to 0 for players without MVP votes
+    
+    return df
+
+
+def add_ROY_column(year, df):
+    """
+    Function that adds the ROY voting statistic of players as an extra column of floats to a dataframe
+    """
+
+    NBA_rookies_csvfilename = NBAanalysisdir + 'data/NBA_rookies_{}-{}.csv'.format(year-1, year)
+
+    if not os.path.isfile(NBA_rookies_csvfilename):
+        print("--- ERROR: {} does not exist - EXIT")
+        exit()
+
+    df_as = pd.read_csv(NBA_rookies_csvfilename)
+
+    df_as = df_as.drop(['Age', 'Yrs', 'G', 'MP', 'FG', 'FGA', '3P', '3PA', 'FT', 'FTA', 'ORB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', 'FG%', '3P%', 'FT%', 'MP/G', 'PTS/G', 'TRB/G', 'AST/G'], axis=1)
+
+    df = pd.merge(df, df_as, how='right', left_on=['Player'], right_on=['Player'])
+
+    NBA_ROY_csvfilename = NBAanalysisdir + 'data/NBA_ROY_{}-{}.csv'.format(year-1, year)
+
+    if not os.path.isfile(NBA_ROY_csvfilename):
+        print("--- ERROR: {} does not exist - EXIT")
+        exit()
+
+    df_as = pd.read_csv(NBA_ROY_csvfilename)
+
+    df_as = df_as.drop(['Age', 'Tm', 'First', 'PtsWon', 'PtsMax', 'G', 'MP', 'PTS', 'TRB',
+                        'AST', 'STL', 'BLK', 'FG%', '3P%', 'FT%', 'WS', 'WS/48'], axis=1)
+
+    df = pd.merge(df, df_as, how='left', left_on=['Player'], right_on=['Player'])
+    
+    df = df.rename(index=str, columns={"Share": "AVS"})
+
+    values = {'AVS': 0}
+    df.fillna(value=values, inplace=True) # Set ROY Vote Share to 0 for players without ROY votes
+    
+    return df
+
+
+def add_DPOY_column(year, df):
+    """
+    Function that adds the DPOY voting statistic of players as an extra column of floats to a dataframe
+    """
+
+    NBA_DPOY_csvfilename = NBAanalysisdir + 'data/NBA_DPOY_{}-{}.csv'.format(year-1, year)
+
+    if not os.path.isfile(NBA_DPOY_csvfilename):
+        print("--- ERROR: {} does not exist - EXIT")
+        exit()
+
+    df_as = pd.read_csv(NBA_DPOY_csvfilename)
+
+    df_as = df_as.drop(['Age', 'Tm', 'First', 'PtsWon', 'PtsMax', 'G', 'MP', 'PTS', 'TRB',
+                        'AST', 'STL', 'BLK', 'FG%', '3P%', 'FT%', 'WS', 'WS/48'], axis=1)
+
+    df = pd.merge(df, df_as, how='left', left_on=['Player'], right_on=['Player'])
+    
+    df = df.rename(index=str, columns={"Share": "AVS"})
+
+    values = {'AVS': 0}
+    df.fillna(value=values, inplace=True) # Set DPOY Vote Share to 0 for players without DPOY votes
     
     return df
 
@@ -755,6 +827,69 @@ def NBA_teammisc_scraper(year):
     return 0
 
 
+def NBA_rookies_scraper(year):
+    """
+    NBA rookies data scraper function
+    """
+
+    import requests
+    import csv
+    from bs4 import BeautifulSoup
+
+    out_path = NBAanalysisdir + 'data/NBA_rookies_{}-{}.csv'.format(year-1, year)
+    csv_file = open(out_path, 'w')
+    csv_writer = csv.writer(csv_file)
+    
+    features = ['Player', 'Age', 'Yrs', 'G', 'MP', 'FG', 'FGA', '3P', '3PA', 'FT', 'FTA', 'ORB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', 'FG%', '3P%', 'FT%', 'MP/G', 'PTS/G', 'TRB/G', 'AST/G']
+    
+    csv_writer.writerow(features)
+    
+    URL = 'https://www.basketball-reference.com/leagues/NBA_{}_rookies.html'.format(year)
+
+    print("--- Scraping rookies data {}-{}...".format(year-1, year))
+    
+    r = requests.get(URL)
+    soup = BeautifulSoup(r.text, "html5lib")
+
+    table = soup.find(id="rookies")
+    cells = table.find_all('td')
+
+    ncolumns = len(features)
+    
+    Player = [cells[i].getText() for i in range( 0, len(cells), ncolumns)]
+    Age    = [cells[i].getText() for i in range( 1, len(cells), ncolumns)]
+    Yrs    = [cells[i].getText() for i in range( 2, len(cells), ncolumns)]
+    G      = [cells[i].getText() for i in range( 3, len(cells), ncolumns)]
+    MP     = [cells[i].getText() for i in range( 4, len(cells), ncolumns)]
+    FG     = [cells[i].getText() for i in range( 5, len(cells), ncolumns)]
+    FGA    = [cells[i].getText() for i in range( 6, len(cells), ncolumns)]
+    THP    = [cells[i].getText() for i in range( 7, len(cells), ncolumns)]
+    THPA   = [cells[i].getText() for i in range( 8, len(cells), ncolumns)]
+    FT     = [cells[i].getText() for i in range( 9, len(cells), ncolumns)]
+    FTA    = [cells[i].getText() for i in range(10, len(cells), ncolumns)]
+    ORB    = [cells[i].getText() for i in range(11, len(cells), ncolumns)]
+    TRB    = [cells[i].getText() for i in range(12, len(cells), ncolumns)]
+    AST    = [cells[i].getText() for i in range(13, len(cells), ncolumns)]
+    STL    = [cells[i].getText() for i in range(14, len(cells), ncolumns)]
+    BLK    = [cells[i].getText() for i in range(15, len(cells), ncolumns)]
+    TOV    = [cells[i].getText() for i in range(16, len(cells), ncolumns)]
+    PF     = [cells[i].getText() for i in range(17, len(cells), ncolumns)]
+    PTS    = [cells[i].getText() for i in range(18, len(cells), ncolumns)]
+    FGP    = [cells[i].getText() for i in range(19, len(cells), ncolumns)]
+    THPP   = [cells[i].getText() for i in range(20, len(cells), ncolumns)]
+    FTP    = [cells[i].getText() for i in range(21, len(cells), ncolumns)]
+    MPG    = [cells[i].getText() for i in range(22, len(cells), ncolumns)]
+    PTSG   = [cells[i].getText() for i in range(23, len(cells), ncolumns)]
+    TRBG   = [cells[i].getText() for i in range(24, len(cells), ncolumns)]
+    ASTG   = [cells[i].getText() for i in range(25, len(cells), ncolumns)]
+    
+    Player = [i.replace('*', '') for i in Player] # Remove possible asterix from player name
+    
+    for i in range(0, int(len(cells) / ncolumns)):
+        row = [Player[i], Age[i], Yrs[i], G[i], MP[i], FG[i], FGA[i], THP[i], THPA[i], FT[i], FTA[i], ORB[i], TRB[i], AST[i], STL[i], BLK[i], TOV[i], PF[i], PTS[i], FGP[i], THPP[i], FTP[i], MPG[i], PTSG[i], TRBG[i], ASTG[i]]
+        csv_writer.writerow(row)
+
+
 def NBA_MVP_scraper(year):
     """
     NBA MVP voting data scraper function
@@ -782,6 +917,123 @@ def NBA_MVP_scraper(year):
 
     table = soup.find(id="div_mvp")
     cells = table.find_all('td')
+
+    ncolumns = len(features)
+    
+    Player  = [cells[i].getText() for i in range( 0, len(cells), ncolumns)]
+    Age     = [cells[i].getText() for i in range( 1, len(cells), ncolumns)]
+    Tm      = [cells[i].getText() for i in range( 2, len(cells), ncolumns)]
+    First   = [cells[i].getText() for i in range( 3, len(cells), ncolumns)]
+    PtsWon  = [cells[i].getText() for i in range( 4, len(cells), ncolumns)]
+    PtsMax  = [cells[i].getText() for i in range( 5, len(cells), ncolumns)]
+    Share   = [cells[i].getText() for i in range( 6, len(cells), ncolumns)]
+    G       = [cells[i].getText() for i in range( 7, len(cells), ncolumns)]
+    MP      = [cells[i].getText() for i in range( 8, len(cells), ncolumns)]
+    PTS     = [cells[i].getText() for i in range( 9, len(cells), ncolumns)]
+    TRB     = [cells[i].getText() for i in range(10, len(cells), ncolumns)]
+    AST     = [cells[i].getText() for i in range(11, len(cells), ncolumns)]
+    STL     = [cells[i].getText() for i in range(12, len(cells), ncolumns)]
+    BLK     = [cells[i].getText() for i in range(13, len(cells), ncolumns)]
+    FGP     = [cells[i].getText() for i in range(14, len(cells), ncolumns)]
+    TPP     = [cells[i].getText() for i in range(15, len(cells), ncolumns)]
+    FTP     = [cells[i].getText() for i in range(16, len(cells), ncolumns)]
+    WS      = [cells[i].getText() for i in range(17, len(cells), ncolumns)]
+    WS48    = [cells[i].getText() for i in range(18, len(cells), ncolumns)]
+
+    Player = [i.replace('*', '') for i in Player] # Remove possible asterix from player name
+    
+    for i in range(0, int(len(cells) / ncolumns)):
+        row = [Player[i], Age[i], Tm[i], First[i], PtsWon[i], PtsMax[i], Share[i],
+               G[i], MP[i], PTS[i], TRB[i], AST[i], STL[i], BLK[i], FGP[i], TPP[i], FTP[i], WS[i], WS48[i]]
+        csv_writer.writerow(row)
+
+        
+def NBA_ROY_scraper(year):
+    """
+    NBA ROY voting data scraper function
+    """
+
+    import requests
+    import csv
+    from bs4 import BeautifulSoup
+
+    out_path = NBAanalysisdir + 'data/NBA_ROY_{}-{}.csv'.format(year-1, year)
+    csv_file = open(out_path, 'w')
+    csv_writer = csv.writer(csv_file)
+
+    features = ['Player', 'Age', 'Tm', 'First', 'PtsWon', 'PtsMax', 'Share',
+                'G', 'MP', 'PTS', 'TRB', 'AST', 'STL', 'BLK', 'FG%', '3P%', 'FT%', 'WS', 'WS/48']
+    
+    csv_writer.writerow(features)
+    
+    URL = 'https://www.basketball-reference.com/awards/awards_{}.html'.format(year)
+
+    print("--- Scraping ROY data {}-{}...".format(year-1, year))
+    
+    r = requests.get(URL)
+    soup = BeautifulSoup(r.text, "html5lib")
+
+    table = soup.find(id="div_roy")
+    cells = table.find_all('td')
+
+    ncolumns = len(features)
+    
+    Player  = [cells[i].getText() for i in range( 0, len(cells), ncolumns)]
+    Age     = [cells[i].getText() for i in range( 1, len(cells), ncolumns)]
+    Tm      = [cells[i].getText() for i in range( 2, len(cells), ncolumns)]
+    First   = [cells[i].getText() for i in range( 3, len(cells), ncolumns)]
+    PtsWon  = [cells[i].getText() for i in range( 4, len(cells), ncolumns)]
+    PtsMax  = [cells[i].getText() for i in range( 5, len(cells), ncolumns)]
+    Share   = [cells[i].getText() for i in range( 6, len(cells), ncolumns)]
+    G       = [cells[i].getText() for i in range( 7, len(cells), ncolumns)]
+    MP      = [cells[i].getText() for i in range( 8, len(cells), ncolumns)]
+    PTS     = [cells[i].getText() for i in range( 9, len(cells), ncolumns)]
+    TRB     = [cells[i].getText() for i in range(10, len(cells), ncolumns)]
+    AST     = [cells[i].getText() for i in range(11, len(cells), ncolumns)]
+    STL     = [cells[i].getText() for i in range(12, len(cells), ncolumns)]
+    BLK     = [cells[i].getText() for i in range(13, len(cells), ncolumns)]
+    FGP     = [cells[i].getText() for i in range(14, len(cells), ncolumns)]
+    TPP     = [cells[i].getText() for i in range(15, len(cells), ncolumns)]
+    FTP     = [cells[i].getText() for i in range(16, len(cells), ncolumns)]
+    WS      = [cells[i].getText() for i in range(17, len(cells), ncolumns)]
+    WS48    = [cells[i].getText() for i in range(18, len(cells), ncolumns)]
+
+    Player = [i.replace('*', '') for i in Player] # Remove possible asterix from player name
+    
+    for i in range(0, int(len(cells) / ncolumns)):
+        row = [Player[i], Age[i], Tm[i], First[i], PtsWon[i], PtsMax[i], Share[i],
+               G[i], MP[i], PTS[i], TRB[i], AST[i], STL[i], BLK[i], FGP[i], TPP[i], FTP[i], WS[i], WS48[i]]
+        csv_writer.writerow(row)
+
+
+def NBA_DPOY_scraper(year):
+    """
+    NBA DPOY voting data scraper function
+    """
+
+    import requests
+    import csv
+    from bs4 import BeautifulSoup
+
+    out_path = NBAanalysisdir + 'data/NBA_DPOY_{}-{}.csv'.format(year-1, year)
+    csv_file = open(out_path, 'w')
+    csv_writer = csv.writer(csv_file)
+
+    features = ['Player', 'Age', 'Tm', 'First', 'PtsWon', 'PtsMax', 'Share',
+                'G', 'MP', 'PTS', 'TRB', 'AST', 'STL', 'BLK', 'FG%', '3P%', 'FT%', 'WS', 'WS/48']
+    
+    csv_writer.writerow(features)
+    
+    URL = 'https://www.basketball-reference.com/awards/awards_{}.html'.format(year)
+
+    print("--- Scraping DPOY data {}-{}...".format(year-1, year))
+    
+    r = requests.get(URL)
+    soup = BeautifulSoup(r.text, "html5lib")
+
+    table_text = soup.find(text=re.compile('table class="sortable stats_table" id="dpoy"'))
+    table_soup = BeautifulSoup(table_text, "html5lib")
+    cells = table_soup.find_all('td')
 
     ncolumns = len(features)
     
