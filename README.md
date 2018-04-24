@@ -23,15 +23,15 @@ The NBA All-Stars for 2018, ordered by to the median predicted calibrated probab
 
 - Western Conference:
 
-	- **Deserved All-Stars:** *James Harden, Russell Westbrook, Anthony Davis, Kevin Durant, Damian Lillard, LaMarcus Aldridge, Jimmy Butler, DeMarcus Cousins, Stephen Curry, Karl-Anthony Towns*
-	- **Questionable All-Stars:** *Paul George, Klay Thompson, Draymond Green*
-	- **Snubbed non-All-Stars:** *Chris Paul, Nikola Jokic*
+	- **Deserved All-Stars:** *James Harden (HOU), Russell Westbrook (OKC), Anthony Davis (NOP), Kevin Durant (GSW), Damian Lillard (POR), LaMarcus Aldridge (SAS), Jimmy Butler (MIN), DeMarcus Cousins (NOP), Stephen Curry (GSW), Karl-Anthony Towns (MIN)*
+	- **Questionable All-Stars:** *Paul George (OKC), Klay Thompson (GSW), Draymond Green (GSW)*
+	- **Snubbed non-All-Stars:** *Chris Paul (HOU), Nikola Jokic (DEN)*
 
 - Eastern Conference:
 
-	- **Deserved All-Stars:** *Giannis Antetokounmpo, LeBron James, Kyrie Irving, Victor Oladipo, DeMar DeRozan, Joel Embiid, Andre Drummond, Kyle Lowry, Kemba Walker, Bradley Beal*
-	- **Questionable All-Stars:** *John Wall, Kevin Love, Kristaps Porzingis, Al Horford, Goran Dragic*
-	- **Snubbed non-All-Stars:** *Ben Simmons, Blake Griffin*
+	- **Deserved All-Stars:** *Giannis Antetokounmpo (MIL), LeBron James (CLE), Kyrie Irving (BOS), Victor Oladipo (IND), DeMar DeRozan (TOR), Joel Embiid (PHI), Andre Drummond (DET), Kyle Lowry (TOR), Kemba Walker (CHO), Bradley Beal (WAS)*
+	- **Questionable All-Stars:** *John Wall (WAS), Kevin Love (CLE), Kristaps Porzingis (NYK), Al Horford (BOS), Goran Dragic (MIA)*
+	- **Snubbed non-All-Stars:** *Ben Simmons (PHI), Blake Griffin (DET)*
 
 ### NBA Player Awards 2018:
 
