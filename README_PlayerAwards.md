@@ -71,7 +71,7 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_PlayerAwards.ipynb)
 
 ## NBA Player Awards predictions for 2018
 
-At the time of writing the NBA Player Awards for 2018 have not been awarded yet. The predicted NBA MVP, ROY and DPOY candidate Top-3s, based on 2000-2018 data, are listed below in order of the median predicted AVS rank over all selected models.
+At the time of writing the NBA Player Awards for 2018 have not been awarded yet. The top-3 predicted NBA MVP, ROY and DPOY candidates based on 2000-2018 data are listed below in order of the median predicted AVS rank over all selected models.
 
 - ### NBA Most Valuable Player 2018:
 

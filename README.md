@@ -4,7 +4,7 @@ The goal of this analysis is to predict the **NBA All-Stars** and **NBA Player A
 
 ## Data
 
-NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 are included in the **data** directory of this repository, data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).
+NBA data from 2000-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the **data** directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py). Data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py). The following data are used in the analysis, where each file corresponds to a single season:
 
 - *NBA_totals_xxx.csv*: Regular player performance statistics
 - *NBA_advanced_xxx.csv*: Advanced player performance statistics
@@ -16,7 +16,6 @@ NBA data are taken from [basketball-reference.com](https://www.basketball-refere
 - *NBA_DPOY_xxx.csv*: DPOY voting statistics
 - *NBA_SMOY_xxx.csv*: SMOY voting statistics
 
-
 ## Analysis
 
 The analyses are based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python, and are described in more detail in the following:
@@ -26,11 +25,11 @@ The analyses are based on the [Scikit-learn](http://scikit-learn.org) machine le
 
 ## Predictions for 2018
 
-At the time of writing, the NBA All-Stars for 2018 have been selected, but the NBA Player Awards for 2018 have not been awarded yet. Predictions for the NBA All-Stars and Player Awards for 2018 are listed below, based on 2010-2018 data and 2000-2018 data respectively.
+At the time of writing, the NBA All-Stars for 2018 have been selected, but the NBA Player Awards for 2018 have not been awarded yet. Predictions for the NBA All-Stars and Player Awards for 2018 are listed below.
 
 ### NBA All-Stars 2018:
 
-The NBA All-Stars for 2018, ordered by to the median predicted calibrated probability score over all selected models and compared to the actual NBA All-Star selection in 2018:
+The NBA All-Stars for 2018, based on 2010-2018 data, ordered by to the median predicted calibrated probability score over all selected models and compared to the actual NBA All-Star selection in 2018:
 
 - Western Conference:
 
@@ -46,7 +45,7 @@ The NBA All-Stars for 2018, ordered by to the median predicted calibrated probab
 
 ### NBA Player Awards 2018:
 
-The predicted NBA MVP, ROY, DPOY and SMOY candidate Top-3s are listed below in order of the median predicted AVS rank over all selected models.
+The top-3 predicted NBA MVP, ROY, DPOY and SMOY candidates based on 2000-2018 data are listed below in order of the median predicted AVS rank over all selected models.
 
 - #### NBA Most Valuable Player 2018:
 
