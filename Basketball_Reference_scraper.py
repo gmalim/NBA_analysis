@@ -3,7 +3,7 @@
 Program to scrape NBA player data from https://www.basketball-reference.com/.
 
 Author: Gordon Lim
-Last Edit: 23 Apr 2018 
+Last Edit: 26 Apr 2018 
 """
 
 import NBAanalysissetup
@@ -31,6 +31,7 @@ def main():
         NBAanalysissetup.NBA_MVP_scraper(year)
         NBAanalysissetup.NBA_ROY_scraper(year)
         NBAanalysissetup.NBA_DPOY_scraper(year)
+        NBAanalysissetup.NBA_SMOY_scraper(year)
 
     return 0
 
