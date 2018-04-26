@@ -15,7 +15,7 @@ The analyses are based on the [Scikit-learn](http://scikit-learn.org) machine le
 
 ## Predictions for 2018
 
-At the time of writing, the NBA All-Stars for 2018 have been selected, but the NBA Player Awards for 2018 have not been awarded yet. Predictions for the NBA All-Stars and Player Awards for 2018 are listed below. The All-Stars analysis is based on 2010-2018 data, the Player Awards analysis is based on 2000-2018 data.
+At the time of writing, the NBA All-Stars for 2018 have been selected, but the NBA Player Awards for 2018 have not been awarded yet. Predictions for the NBA All-Stars and Player Awards for 2018 are listed below, based on 2010-2018 data and 2000-2018 data respectively.
 
 ### NBA All-Stars 2018:
 
@@ -35,7 +35,7 @@ The NBA All-Stars for 2018, ordered by to the median predicted calibrated probab
 
 ### NBA Player Awards 2018:
 
-The predicted NBA MVP, ROY, DPOY and SMOY candidate Top-3s, based on 2000-2018 data, are listed below in order of the median predicted AVS rank over all selected models.
+The predicted NBA MVP, ROY, DPOY and SMOY candidate Top-3s are listed below in order of the median predicted AVS rank over all selected models.
 
 - #### NBA Most Valuable Player 2018:
 

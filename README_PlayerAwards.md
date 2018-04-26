@@ -101,4 +101,4 @@ At the time of writing the NBA Player Awards for 2018 have not been awarded yet.
 
 There are several caveats to the analysis:
 
-- The AVS absolute values predicted by the accepted models are not very accurate. This is due to the small sample size of players with award votes and the erratic relationship between AVS and other features in the analysis. Therefore the predicted AVS rank instead of the absolute value is used as a measure for award candidateship.
+- The AVS absolute values predicted by the accepted models are not very accurate. This is due to the erratic relationship between AVS and other features in the analysis (and to a lesser degree to the small sample size of players with award votes). Therefore the predicted AVS rank instead of the absolute value is used as a measure for award candidateship.
