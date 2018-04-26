@@ -32,7 +32,7 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_PlayerAwards.ipynb)
 - Data preparation (feature selection, *NaN* handling, etc.).
 - Features included in this analysis: *G, GS, MP/G, PTS/48, PER, TS%, TRB%, AST%, STL%, BLK%, USG%, OWS/48, DWS/48, OBPM, DBPM, VORP, TW*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
 - Target statistic is the players' Award Voting Share (*AVS*), a continuous variable.
-- Relationships between AVS and other features in training data are visualized.
+- The AVS distributions of training and test data as well as the relationships between AVS and other features in training data are visualized.
 - Feature scaling as required by various ML algorithms.
 
 ### 4. Supervised Learning
@@ -59,13 +59,13 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_PlayerAwards.ipynb)
 
 - All regressors are cross-validated by using training data and the *LeaveOneGroupOut* cross-validation scheme, where a group is defined as a single NBA season.
 - Validation curves are calculated and visualized.
-- Regression metrics are calculated and listed for all models.
+- Predicted versus true AVS distributions are visualized for all models and regression metrics are calculated.
 - Feature importances for Decision Tree ensemble models (e.g. Random Forest) are calculated and listed for all CV groups.
 
 ### 6. Model training and predictions
 
 - Models are fitted using training data, fitted models are used to predict test data.
-- Regression metrics are calculated and listed for all models (if the NBA Player Award has been awarded for test year).
+- Predicted versus true AVS distributions are visualized for all models and regression metrics are calculated if the NBA Player Award has been awarded for test year.
 - NBA player predictions for all models are listed.
 - The NBA Player Award candidates are listed in order of the median predicted AVS rank over all selected models.
 
@@ -99,6 +99,4 @@ At the time of writing the NBA Player Awards for 2018 have not been awarded yet.
 
 ## Discussion
 
-There are several caveats to the analysis:
-
-- The AVS absolute values predicted by the accepted models are not very accurate. This is due to the erratic relationship between AVS and other features in the analysis (and to a lesser degree to the small sample size of players with award votes). Therefore the predicted AVS rank instead of the absolute value is used as a measure for award candidateship.
+Unfortunately none of the regression models tested in this analysis are able to accurately predict the Player Award voting shares. This is due to the erratic relationship between AVS and other features in the analysis (and to a lesser degree to the small sample size of players with award votes). Therefore the predicted absolute AVS values are ignored and the predicted median AVS rank over all models is used as a measure for Player Award candidateship.

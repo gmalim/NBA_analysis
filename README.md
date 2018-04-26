@@ -6,6 +6,17 @@ The goal of this analysis is to predict the **NBA All-Stars** and **NBA Player A
 
 NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 are included in the **data** directory of this repository, data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).
 
+- *NBA_totals_xxx.csv*: Regular player performance statistics
+- *NBA_advanced_xxx.csv*: Advanced player performance statistics
+- *NBA_teammisc_xxx.csv*: Team performance statistics
+- *NBA_rookies_xxx.csv*: Rookie performance statistics
+- *NBA_allstars_xxx.csv*: All-Star game statistics
+- *NBA_MVP_xxx.csv*: MVP voting statistics
+- *NBA_ROY_xxx.csv*: ROY voting statistics
+- *NBA_DPOY_xxx.csv*: DPOY voting statistics
+- *NBA_SMOY_xxx.csv*: SMOY voting statistics
+
+
 ## Analysis
 
 The analyses are based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python, and are described in more detail in the following:
