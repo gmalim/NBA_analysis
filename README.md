@@ -1,6 +1,6 @@
 # Predicting the NBA All-Stars and NBA Player Awards with Machine Learning
 
-The goal of this analysis is to predict the **NBA All-Stars** and **NBA Player Awards** for a given year, by applying various machine learning algorithms on player performance data and All-Star selections / award voting data from other years. Player Awards considered in this analysis are **Most Valuable Player** (MVP), **Rookie of the Year** (ROY) and **Defensive Player of the Year** (DPOY).
+The goal of this analysis is to predict the **NBA All-Stars** and **NBA Player Awards** for a given year, by applying various machine learning algorithms on player performance data and All-Star selections / award voting data from other years. Player Awards considered in this analysis are **Most Valuable Player** (MVP), **Rookie of the Year** (ROY), **Defensive Player of the Year** (DPOY) and **Sixth Man of the Year** (SMOY).
 
 ## Data
 
@@ -35,7 +35,7 @@ The NBA All-Stars for 2018, ordered by to the median predicted calibrated probab
 
 ### NBA Player Awards 2018:
 
-The predicted NBA MVP, ROY and DPOY candidate Top-3s, based on 2000-2018 data, are listed below in order of the median predicted AVS rank over all selected models.
+The predicted NBA MVP, ROY, DPOY and SMOY candidate Top-3s, based on 2000-2018 data, are listed below in order of the median predicted AVS rank over all selected models.
 
 - #### NBA Most Valuable Player 2018:
 
@@ -47,11 +47,17 @@ The predicted NBA MVP, ROY and DPOY candidate Top-3s, based on 2000-2018 data, a
 
 	1. *Ben Simmons (PHI)*
 	2. *Donovan Mitchell (UTA)*
-	3. *Lauri Markkanen (CHI)*
+	3. *Kyle Kuzma (LAL)*
 
 - #### NBA Defensive Player of the Year 2018:
 
 	1. *Andre Drummond (DET)*
-	2. *Ben Simmons (PHI)*
-	3. *Clint Capela (HOU)*
+	2. *Clint Capela (HOU)*
+	3. *Ben Simmons (PHI)*
+
+- #### NBA Sixth Man of the Year 2018:
+
+	1. *Lou Williams (LAC)*
+	2. *Eric Gordon (HOU)*
+	3. *Jordan Clarkson (CLE)*
 

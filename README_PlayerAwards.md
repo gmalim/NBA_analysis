@@ -1,6 +1,6 @@
 # Predicting NBA Player Award winners with Machine Learning
 
-The goal of this analysis is to predict NBA Player Award winners for a specific year. This is accomplished by applying several machine learning regression algorithms on player performance data and award voting data in other years. Player Awards considered in this analysis are **Most Valuable Player** (MVP), **Rookie of the Year** (ROY) and **Defensive Player of the Year** (DPOY). The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 is included in the **data** directory of this repository, data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
+The goal of this analysis is to predict NBA Player Award winners for a specific year. This is accomplished by applying several machine learning regression algorithms on player performance data and award voting data in other years. Player Awards considered in this analysis are **Most Valuable Player** (MVP), **Rookie of the Year** (ROY), **Defensive Player of the Year** (DPOY) and **Sixth Man of the Year** (SMOY). The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 is included in the **data** directory of this repository, data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
 
 ## Analysis
 
@@ -21,6 +21,7 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_PlayerAwards.ipynb)
 	- NBA Most Valuable Player (MVP)
 	- NBA Rookie of the Year (ROY)
 	- NBA Defensive Player of the Year (DPOY)
+	- NBA Sixth Man of the Year (SMOY)
 - Choose the year you want to predict, between 2000 and 2018. The years that are not selected are used for cross-validation and training of the ML algorithms.
 - Choose whether you want to include advanced player statistics (e.g. *PER*, *VORP*, etc.) in the analysis or not.
 - Choose the minimum number of games a player has to have played (ROY) or started (MVP, DPOY) per season to be included in the analysis.
@@ -82,13 +83,19 @@ At the time of writing the NBA Player Awards for 2018 have not been awarded yet.
 
 	1. *Ben Simmons (PHI)*
 	2. *Donovan Mitchell (UTA)*
-	3. *Lauri Markkanen (CHI)*
+	3. *Kyle Kuzma (LAL)*
 
 - ### NBA Defensive Player of the Year 2018:
 
 	1. *Andre Drummond (DET)*
-	2. *Ben Simmons (PHI)*
-	3. *Clint Capela (HOU)*
+	2. *Clint Capela (HOU)*
+	3. *Ben Simmons (PHI)*
+
+- ### NBA Sixth Man of the Year 2018:
+
+	1. *Lou Williams (LAC)*
+	2. *Eric Gordon (HOU)*
+	3. *Jordan Clarkson (CLE)*
 
 ## Discussion
 
