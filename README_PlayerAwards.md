@@ -1,6 +1,6 @@
 # Predicting NBA Player Award winners with Machine Learning
 
-The goal of this analysis is to predict NBA Player Award winners for a specific year. This is accomplished by applying several machine learning regression algorithms on player performance data and award voting data in other years. Player Awards considered in this analysis are **Most Valuable Player** (MVP), **Rookie of the Year** (ROY), **Defensive Player of the Year** (DPOY) and **Sixth Man of the Year** (SMOY). The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 is included in the **data** directory of this repository, data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
+The goal of this analysis is to predict NBA Player Award winners for a specific year. This is accomplished by applying several machine learning regression algorithms on player performance data and award voting data in other years. Player Awards considered in this analysis are **Most Valuable Player** (MVP), **Rookie of the Year** (ROY), **Defensive Player of the Year** (DPOY) and **Sixth Man of the Year** (SMOY). The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py), data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
 
 ## Analysis
 
@@ -22,16 +22,15 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_PlayerAwards.ipynb)
 	- NBA Rookie of the Year (ROY)
 	- NBA Defensive Player of the Year (DPOY)
 	- NBA Sixth Man of the Year (SMOY)
-- Choose the year you want to predict, between 2000 and 2018. The years that are not selected are used for cross-validation and training of the ML algorithms.
+- Choose the first and last year for which data has been scraped, and choose the year you want to predict. The years that are not selected are used for cross-validation and training of the ML algorithms.
 - Choose whether you want to include advanced player statistics (e.g. *PER*, *VORP*, etc.) in the analysis or not.
 - Choose the minimum number of games a player has to have played (ROY) or started (MVP, DPOY) per season to be included in the analysis.
 
 ### 3. Data handling
 
-- Data loading: NBA data from 2000-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the **data** directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py).
-- Data preparation (feature selection, *NaN* handling, etc.).
-- Features included in this analysis: *G, GS, MP/G, PTS/48, PER, TS%, TRB%, AST%, STL%, BLK%, USG%, OWS/48, DWS/48, OBPM, DBPM, VORP, TW*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
-- Target statistic is the players' Award Voting Share (*AVS*), a continuous variable.
+- Data loading and preparation (feature selection, *NaN* handling, etc.).
+	- Features included in this analysis: *G, GS, MP/G, PTS/48, PER, TS%, TRB%, AST%, STL%, BLK%, USG%, OWS/48, DWS/48, OBPM, DBPM, VORP, TW*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
+	- Target statistic is the players' Award Voting Share (*AVS*), a continuous variable.
 - The AVS distributions of training and test data as well as the relationships between AVS and other features in training data are visualized.
 - Feature scaling as required by various ML algorithms.
 
@@ -60,7 +59,7 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_PlayerAwards.ipynb)
 - All regressors are cross-validated by using training data and the *LeaveOneGroupOut* cross-validation scheme, where a group is defined as a single NBA season.
 - Validation curves are calculated and visualized.
 - Predicted versus true AVS distributions are visualized for all models and regression metrics are calculated.
-- Feature importances for Decision Tree ensemble models (e.g. Random Forest) are calculated and listed for all CV groups.
+- Feature importances for Decision Tree ensemble models are calculated and listed for all CV groups.
 
 ### 6. Model training and predictions
 

@@ -1,6 +1,6 @@
 # Predicting the NBA All-Stars with Machine Learning
 
-The goal of this analysis is to predict the NBA All-Stars for a specific year. This is accomplished by applying several machine learning classification algorithms on player performance data and All-Star selection data in other years. The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 is included in the **data** directory of this repository, data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
+The goal of this analysis is to predict the NBA All-Stars for a specific year. This is accomplished by applying several machine learning classification algorithms on player performance data and All-Star selection data in other years. The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py), data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
 
 ## Analysis
 
@@ -17,16 +17,15 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_All-Stars.ipynb), a
 
 ### 2. User input
 
-- Choose the year you want to predict, between 2000 and 2018. The years that are not selected are used for cross-validation and training of the ML algorithms.
+- Choose the first and last year for which data has been scraped, and choose the year you want to predict.the year you want to predict. The years that are not selected are used for cross-validation and training of the ML algorithms.
 - Choose whether you want to include advanced player statistics (e.g. *PER*, *VORP*, etc.) in the analysis or not.
 - Choose the minimum number of games a player has to have started per season to be included in the analysis.
 
 ### 3. Data processing
 
-- Data loading: NBA data from 2000-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the **data** directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py).
-- Data preparation (feature selection, *NaN* handling, etc.).
-- Features included in this analysis: *G, GS, MP/G, PTS/48, PER, TS%, TRB%, AST%, STL%, BLK%, USG%, OWS/48, DWS/48, OBPM, DBPM, VORP, TW*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
-- Target statistic is the players' All-Star selection status (*AS*), a binary variable.
+- Data loading and preparation (feature selection, *NaN* handling, etc.).
+	- Features included in this analysis: *G, GS, MP/G, PTS/48, PER, TS%, TRB%, AST%, STL%, BLK%, USG%, OWS/48, DWS/48, OBPM, DBPM, VORP, TW*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
+	- Target statistic is the players' All-Star selection status (*AS*), a binary variable.
 - Feature scaling as required by various ML algorithms.
 - Visualization of distributions of all features for All-Stars and non-All-Stars.
 
@@ -66,16 +65,16 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_All-Stars.ipynb), a
 - Validation curves are calculated and visualized.
 - Classification scores for all models are calculated and listed.
 - ROC and PR curves for all models are calculated and visualized.
-- Feature importances for Decision Tree ensemble models (e.g. Random Forest) are calculated and listed for all CV groups.
-- Feature coefficients for linear models (e.g. Logistic Regression) are calculated and listed for all CV groups.
+- Feature importances for Decision Tree ensemble models are calculated and listed for all CV groups.
+- Feature coefficients for linear models are calculated and listed for all CV groups.
 
 ### 7. Model training and predictions
 
 - Models are fitted using training data, fitted models are used to predict test data.
 - Confusion Matrices and classification scores for all models are calculated and visualized (if NBA All-Stars have been selected for test year).
-- Feature importances for Decision Tree ensemble models (e.g. Random Forest) are calculated and listed.
-- Feature coefficients for linear models (e.g. Logistic Regression) are calculated and listed.
-- For the Logistic Regression Classifier, the fitted Logistic Curves corresponding to all data features are visualized.
+- Feature importances for Decision Tree ensemble models are calculated and listed.
+- Feature coefficients for linear models are calculated and listed.
+- For the Logistic Regression Classifier, the fitted logistic curves corresponding to all data features are visualized.
 - Decision function values / classification probability scores in 2-D feature space for all models are visualized.
 - NBA player predictions for all models are listed.
 
@@ -124,5 +123,6 @@ There are several caveats to the analysis:
 - All-Star level players can be injured before the All-Star game but recover before the season ends and still pass the minimum number of games requirement to be included in the analysis.
 - Similarly, players selected for the All-Star game who get injured before the All-Star game are replaced by other players who otherwise would not have been selected. (*In 2018 for instance, Paul George and Goran Dragic were injury replacements*). Therefore the injured players have been added to the scraped 2000-2018 csv-files by hand.
 - All-Star level players can transfer between conferences during a season. (*In 2018 for instance, Blake Griffin transferred from the Clippers in the Western Conference to the Pistons in the Eastern Conference*).
-- All-Star selection is not only determined by a player's individual performance, but also by his team's performance before the All-Star break. Team performance is included in the analysis by the *TW/82* statistic (i.e. the fraction of team wins over a full season), but no attempt has been made to tune the weight of this statistic compared to other data features. (*In 2018 for instance, Klay Thompson and  Draymond Green played for the Golden State Warriors, the defending NBA champions*).
+- All-Star selection is not only determined by a player's individual performance, but also by his team's performance before the All-Star break. Team performance is included in the analysis by the *TW* statistic (i.e. the number of team wins per season), but no attempt has been made to tune the weight of this statistic compared to other data features. (*In 2018 for instance, Klay Thompson and  Draymond Green played for the Golden State Warriors, the defending NBA champions*).
 - Similarly, All-Star selection is (partly) based on fan voting, and therefore popular players can get selected even if they played poorly during the season.
+- Predictions for NBA seasons affected by a lock-out (i.e. the 1998–99 and 2011-2012 seasons were shortened to 50 and 66 regular season games per team respectively) may be sub-optimal.
