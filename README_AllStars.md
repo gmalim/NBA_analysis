@@ -1,6 +1,6 @@
 # Predicting the NBA All-Stars with Machine Learning
 
-The goal of this analysis is to predict the NBA All-Stars for a specific year. This is accomplished by applying several machine learning classification algorithms on player performance data and All-Star selection data in other years. The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py), data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
+The goal of this analysis is to predict the [NBA All-Stars](https://www.basketball-reference.com/allstar/) for a specific year. This is accomplished by applying several machine learning classification algorithms on player performance data and All-Star selection data in other years. The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py), data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
 
 ## Analysis
 

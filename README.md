@@ -4,7 +4,7 @@ The goal of this analysis is to predict the **NBA All-Stars** and **NBA Player A
 
 ## Data
 
-NBA data from 2000-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the **data** directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py). Data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py). The following data are used in the analysis, where each file corresponds to a single season:
+NBA data from 2000-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py). Data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py). The following data are used in the analysis, where each file corresponds to a single season:
 
 - *NBA_totals_xxx.csv*: Regular player performance statistics
 - *NBA_advanced_xxx.csv*: Advanced player performance statistics
@@ -29,7 +29,7 @@ At the time of writing, the NBA All-Stars for 2018 have been selected, but the N
 
 ### NBA All-Stars 2018:
 
-The NBA All-Stars for 2018, based on 2010-2018 data, ordered by to the median predicted calibrated probability score over all selected models and compared to the actual NBA All-Star selection in 2018:
+The predicted NBA All-Stars for 2018 based on 2010-2018 data, ordered by to the median predicted calibrated probability score over all selected models and compared to the actual NBA All-Star selection in 2018:
 
 - Western Conference:
 
