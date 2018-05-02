@@ -1,6 +1,6 @@
 # Predicting the NBA All-Stars and NBA Player Awards with Machine Learning
 
-The goal of this analysis is to predict the **NBA All-Stars** and **NBA Player Awards** for a given year, by applying various machine learning algorithms on player performance data and All-Star selections / award voting data from other years. Player Awards considered in this analysis are **Most Valuable Player** (MVP), **Rookie of the Year** (ROY), **Defensive Player of the Year** (DPOY) and **Sixth Man of the Year** (SMOY).
+The goal of this analysis is to predict the [NBA All-Stars](https://www.basketball-reference.com/allstar/) and NBA Player Awards for a specific year, by applying various machine learning algorithms on player performance data and All-Star selections / award voting data from other years. Player Awards considered in this analysis are [Most Valuable Player](https://www.basketball-reference.com/awards/mvp.html) (MVP), [Rookie of the Year](https://www.basketball-reference.com/awards/roy.html) (ROY), [Defensive Player of the Year](https://www.basketball-reference.com/awards/dpoy.html) (DPOY) and [Sixth Man of the Year](https://www.basketball-reference.com/awards/smoy.html) (SMOY).
 
 ## Data
 

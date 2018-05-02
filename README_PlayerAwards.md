@@ -1,6 +1,6 @@
 # Predicting NBA Player Award winners with Machine Learning
 
-The goal of this analysis is to predict NBA Player Award winners for a specific year. This is accomplished by applying several machine learning regression algorithms on player performance data and award voting data in other years. Player Awards considered in this analysis are [Most Valuable Player](https://www.basketball-reference.com/awards/mvp.html) (MVP), [Rookie of the Year](https://www.basketball-reference.com/awards/roy.html) (ROY), [Defensive Player of the Year](https://www.basketball-reference.com/awards/dpoy.html) (DPOY) and [Sixth Man of the Year](https://www.basketball-reference.com/awards/smoy.html) (SMOY). The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py), data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
+The goal of this analysis is to predict NBA Player Award winners for a specific year by applying machine learning algorithms on player performance data and award voting data from other years. Player Awards considered in this analysis are [Most Valuable Player](https://www.basketball-reference.com/awards/mvp.html) (MVP), [Rookie of the Year](https://www.basketball-reference.com/awards/roy.html) (ROY), [Defensive Player of the Year](https://www.basketball-reference.com/awards/dpoy.html) (DPOY) and [Sixth Man of the Year](https://www.basketball-reference.com/awards/smoy.html) (SMOY). The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py), data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
 
 ## Analysis
 
@@ -14,6 +14,7 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_PlayerAwards.ipynb)
 - [XGBoost](http://xgboost.readthedocs.io/en/latest/)
 - [Matplotlib](https://matplotlib.org/)
 - [Seaborn](https://seaborn.pydata.org/)
+- [Bokeh](https://bokeh.pydata.org/)
 
 ### 2. User input
 
@@ -26,7 +27,7 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_PlayerAwards.ipynb)
 - Choose whether you want to include advanced player statistics (e.g. *PER*, *VORP*, etc.) in the analysis or not.
 - Choose the minimum number of games a player has to have played (ROY) or started (MVP, DPOY) per season to be included in the analysis.
 
-### 3. Data handling
+### 3. Data processing
 
 - Data loading and preparation (feature selection, *NaN* handling, etc.).
 	- Features included in this analysis: *G, GS, MP/G, PTS/48, PER, TS%, TRB%, AST%, STL%, BLK%, USG%, OWS/48, DWS/48, OBPM, DBPM, VORP, TW*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
@@ -34,7 +35,7 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_PlayerAwards.ipynb)
 - The AVS distributions of training and test data as well as the relationships between AVS and other features in training data are visualized.
 - Feature scaling as required by various ML algorithms.
 
-### 4. Supervised Learning
+### 4. Supervised Learning: Regression
 
 - Selection of various popular ML regression algorithms:
 	- *Nearest Neighbours Regressor*

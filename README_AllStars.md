@@ -1,6 +1,6 @@
 # Predicting the NBA All-Stars with Machine Learning
 
-The goal of this analysis is to predict the [NBA All-Stars](https://www.basketball-reference.com/allstar/) for a specific year. This is accomplished by applying several machine learning classification algorithms on player performance data and All-Star selection data in other years. The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py), data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
+The goal of this analysis is to predict the [NBA All-Stars](https://www.basketball-reference.com/allstar/) for a specific year by applying machine learning algorithms on player performance data and All-Star selection data from other years. The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py), data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
 
 ## Analysis
 
@@ -14,22 +14,23 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_All-Stars.ipynb), a
 - [XGBoost](http://xgboost.readthedocs.io/en/latest/)
 - [Matplotlib](https://matplotlib.org/)
 - [Seaborn](https://seaborn.pydata.org/)
+- [Bokeh](https://bokeh.pydata.org/)
 
 ### 2. User input
 
-- Choose the first and last year for which data has been scraped, and choose the year you want to predict.the year you want to predict. The years that are not selected are used for cross-validation and training of the ML algorithms.
-- Choose whether you want to include advanced player statistics (e.g. *PER*, *VORP*, etc.) in the analysis or not.
+- Choose the first and last year for which data has been scraped, and choose the year you want to predict. The years that are not selected are used for cross-validation and training of the ML algorithms.
+- Choose if you want to include advanced player statistics (e.g. *PER*, *VORP*, etc.) in the analysis or not.
 - Choose the minimum number of games a player has to have started per season to be included in the analysis.
 
 ### 3. Data processing
 
-- Data loading and preparation (feature selection, *NaN* handling, etc.).
+- Data loading and preparation (feature selection, *NaN* handling, etc.):
 	- Features included in this analysis: *G, GS, MP/G, PTS/48, PER, TS%, TRB%, AST%, STL%, BLK%, USG%, OWS/48, DWS/48, OBPM, DBPM, VORP, TW*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
 	- Target statistic is the players' All-Star selection status (*AS*), a binary variable.
 - Feature scaling as required by various ML algorithms.
 - Visualization of distributions of all features for All-Stars and non-All-Stars.
 
-### 4. Unsupervised Learning
+### 4. Unsupervised Learning: PCA & Clustering
 
 - Principal Component Analysis is used for dimensionality reduction.
 - Clustering algorithms to identify NBA All-Stars from non-All-Stars as separate groups in the data are tested and visualized:
@@ -38,7 +39,7 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_All-Stars.ipynb), a
 	- *Spectral Clustering* 
 - Clustering performance scores for all clustering algorithms are calculated.
 
-### 5. Supervised Learning
+### 5. Supervised Learning: Classification
 
 - Selection of various popular ML classification algorithms:
 	- *Nearest Neighbours Classifier*
@@ -125,4 +126,4 @@ There are several caveats to the analysis:
 - All-Star level players can transfer between conferences during a season. (*In 2018 for instance, Blake Griffin transferred from the Clippers in the Western Conference to the Pistons in the Eastern Conference*).
 - All-Star selection is not only determined by a player's individual performance, but also by his team's performance before the All-Star break. Team performance is included in the analysis by the *TW* statistic (i.e. the number of team wins per season), but no attempt has been made to tune the weight of this statistic compared to other data features. (*In 2018 for instance, Klay Thompson and  Draymond Green played for the Golden State Warriors, the defending NBA champions*).
 - Similarly, All-Star selection is (partly) based on fan voting, and therefore popular players can get selected even if they played poorly during the season.
-- Predictions for NBA seasons affected by a lock-out (i.e. the 1998–99 and 2011-2012 seasons were shortened to 50 and 66 regular season games per team respectively) may be sub-optimal.
+- The 1998–99 and 2011-2012 NBA seasons were shortened to 50 and 66 regular season games per team respectively due to a lock-out. Therefore there was no All-Star game in 1998-99, while the analysis might be suboptimal for 2011-2012.
