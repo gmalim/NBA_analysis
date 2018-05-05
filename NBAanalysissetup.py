@@ -18,6 +18,7 @@ import numpy as np
 import os
 import pandas as pd
 import re
+import sys
 
 global NBAanalysisdir    
 
@@ -25,7 +26,7 @@ NBAanalysisdir = os.path.expandvars(myNBAanalysisdir)
     
 if not os.path.isdir(NBAanalysisdir):
     print("--- ERROR: {} does not exist - EXIT".format(NBAanalysisdir))
-    exit()
+    sys.exit()
 
 class MyModel:
     """
@@ -159,7 +160,7 @@ def loaddata_singleyear(year, includeadvancedstats, target):
         
     if not os.path.isfile(NBA_playerstats_csvfilename):
         print("--- ERROR: {} does not exist - EXIT".format(NBA_playerstats_csvfilename))
-        exit()
+        sys.exit()
     
     df = pd.read_csv(NBA_playerstats_csvfilename)
 
@@ -169,7 +170,7 @@ def loaddata_singleyear(year, includeadvancedstats, target):
     
         if not os.path.isfile(NBA_playerstats_advanced_csvfilename):
             print("*** loaddata_singleyear ERROR: {} does not exist - EXIT")
-            exit()
+            sys.exit()
     
         df2 = pd.read_csv(NBA_playerstats_advanced_csvfilename)
         #df2.drop(df2.columns[[19, 24]], inplace=True, axis=1)    # remove empty columns
@@ -203,7 +204,7 @@ def loaddata_singleyear(year, includeadvancedstats, target):
         df = add_SMOY_column(year, df)
     else:
         print("*** loaddata_singleyear ERROR: Unknown target - EXIT")
-        exit()
+        sys.exit()
         
     # Add YEAR for cross-validation groups:
 
@@ -261,7 +262,7 @@ def add_team_columns(year, df):
 
     if not os.path.isfile(NBA_teammisc_csvfilename):
         print("--- ERROR: {} does not exist - EXIT")
-        exit()
+        sys.exit()
 
     df_tm = pd.read_csv(NBA_teammisc_csvfilename)
 
@@ -290,7 +291,7 @@ def add_AllStar_column(year, df):
 
     if not os.path.isfile(NBA_allstars_csvfilename):
         print("--- ERROR: {} does not exist - EXIT")
-        exit()
+        sys.exit()
 
     df_as = pd.read_csv(NBA_allstars_csvfilename)
 
@@ -320,7 +321,7 @@ def add_MVP_column(year, df):
 
     if not os.path.isfile(NBA_MVP_csvfilename):
         print("--- ERROR: {} does not exist - EXIT")
-        exit()
+        sys.exit()
 
     df_as = pd.read_csv(NBA_MVP_csvfilename)
 
@@ -346,7 +347,7 @@ def add_ROY_column(year, df):
 
     if not os.path.isfile(NBA_rookies_csvfilename):
         print("--- ERROR: {} does not exist - EXIT")
-        exit()
+        sys.exit()
 
     df_as = pd.read_csv(NBA_rookies_csvfilename)
 
@@ -358,7 +359,7 @@ def add_ROY_column(year, df):
 
     if not os.path.isfile(NBA_ROY_csvfilename):
         print("--- ERROR: {} does not exist - EXIT")
-        exit()
+        sys.exit()
 
     df_as = pd.read_csv(NBA_ROY_csvfilename)
 
@@ -384,7 +385,7 @@ def add_DPOY_column(year, df):
 
     if not os.path.isfile(NBA_DPOY_csvfilename):
         print("--- ERROR: {} does not exist - EXIT")
-        exit()
+        sys.exit()
 
     df_as = pd.read_csv(NBA_DPOY_csvfilename)
 
@@ -410,7 +411,7 @@ def add_SMOY_column(year, df):
 
     if not os.path.isfile(NBA_SMOY_csvfilename):
         print("--- ERROR: {} does not exist - EXIT")
-        exit()
+        sys.exit()
 
     df_as = pd.read_csv(NBA_SMOY_csvfilename)
 
@@ -664,7 +665,7 @@ def NBA_AllStar_scraper(year):
         NBA_AllStar_scraper_team(soup, "all_LeBron",  csv_writer)
     else:
         print("WRONG YEAR")
-        exit()
+        sys.exit()
         
     return 0
 
@@ -1269,7 +1270,7 @@ def team_info(team_acronym):
         print("")
         print("*** team_info ERROR ****")
         print("")
-        exit()
+        sys.exit()
         
     return full_team_name, conference
 
