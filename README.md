@@ -6,15 +6,15 @@ The goal of this analysis is to predict the [NBA All-Stars](https://www.basketba
 
 NBA data from 2000-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py). Data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py). The following data are used in the analysis, where each file corresponds to a single season:
 
-- *NBA_totals_xxx.csv*: Regular player performance statistics
-- *NBA_advanced_xxx.csv*: Advanced player performance statistics
-- *NBA_teammisc_xxx.csv*: Team performance statistics
-- *NBA_rookies_xxx.csv*: Rookie performance statistics
-- *NBA_allstars_xxx.csv*: All-Star game statistics
-- *NBA_MVP_xxx.csv*: MVP voting statistics
-- *NBA_ROY_xxx.csv*: ROY voting statistics
-- *NBA_DPOY_xxx.csv*: DPOY voting statistics
-- *NBA_SMOY_xxx.csv*: SMOY voting statistics
+- *NBA_totals_[...].csv*: Regular player performance statistics
+- *NBA_advanced_[...].csv*: Advanced player performance statistics
+- *NBA_teammisc_[...].csv*: Team performance statistics
+- *NBA_rookies_[...].csv*: Rookie performance statistics
+- *NBA_allstars_[...].csv*: All-Star game statistics
+- *NBA_MVP_[...].csv*: MVP voting statistics
+- *NBA_ROY_[...].csv*: ROY voting statistics
+- *NBA_DPOY_[...].csv*: DPOY voting statistics
+- *NBA_SMOY_[...].csv*: SMOY voting statistics
 
 ## Analysis
 
