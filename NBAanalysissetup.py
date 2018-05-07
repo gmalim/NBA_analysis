@@ -186,6 +186,11 @@ def loaddata_singleyear(year, includeadvancedstats, target):
 
     df = compress_multirowplayers(df)
     
+    # Add player efficiency statistics:
+
+    if (target == 'all'):
+        df = add_EFF_column(df)
+
     # Add team statistics:
 
     df = add_team_columns(year, df)
@@ -194,14 +199,17 @@ def loaddata_singleyear(year, includeadvancedstats, target):
 
     if (target == 'allstar'):
         df = add_AllStar_column(year, df)
-    elif (target == 'MVP'):
-        df = add_MVP_column(year, df)
-    elif (target == 'ROY'):
-        df = add_ROY_column(year, df)
-    elif (target == 'DPOY'):
-        df = add_DPOY_column(year, df)
-    elif (target == 'SMOY'):
-        df = add_SMOY_column(year, df)
+    elif ((target == 'MVP')  or
+          (target == 'ROY')  or
+          (target == 'DPOY') or
+          (target == 'SMOY')):
+        df = add_PlayerAward_column(year, df, target, False)
+    elif (target == 'all'):
+        df = add_AllStar_column(year, df)
+        df = add_PlayerAward_column(year, df, 'MVP',  True)
+        df = add_PlayerAward_column(year, df, 'ROY',  True)
+        df = add_PlayerAward_column(year, df, 'DPOY', True)
+        df = add_PlayerAward_column(year, df, 'SMOY', True)
     else:
         print("*** loaddata_singleyear ERROR: Unknown target - EXIT")
         sys.exit()
@@ -227,7 +235,9 @@ def add_EFF_column(df):
     df['EFF'] = (df['PTS']    + df['TRB'] + df['AST']    + df['STL'] + df['BLK'] + \
                  df['FGA']*-1 + df['FG']  + df['FTA']*-1 + df['FT']  + df['TOV']*-1) / df['G']
 
-    return 0
+    df['EFF'] = df['EFF'].round(3)
+    
+    return df
 
 
 def getTW(TeamWins_dict, team_acronym):
@@ -250,6 +260,19 @@ def getTC(team_acronym):
     _, TC = team_info(team_acronym)
 
     return TC
+
+
+def getTN(team_acronym):
+    """
+    Function that returns the full team name based on team acronym
+    """
+    
+    fullteamname, _ = team_info(team_acronym)
+
+    if (fullteamname == 'New Orleans/Oklahoma City Hornets'):
+        fullteamname = 'New Orleans Hornets'
+    
+    return fullteamname
 
 
 def add_team_columns(year, df):
@@ -300,18 +323,74 @@ def add_AllStar_column(year, df):
 
     df_as['AS'] = 1 # Set All-Star label
     
-    #df = pd.merge(df, df_as, how='left', left_on=['Player'], right_on=['Starters'])
     df = pd.merge(df, df_as, how='left', left_on=['Player'], right_on=['Player'])
-    #df = df.drop(['Starters'], axis=1) 
     
     values = {'AS': 0}
     df.fillna(value=values, inplace=True) # Set non-All-Star label
-
     df['AS'] = df['AS'].astype('int64')
-    
+
     return df
 
 
+def add_PlayerAward_column(year, df, target, winner_only):
+    """
+    Function that adds Player Award voting results to a dataframe
+    """
+
+    # Get rookie data and merge with original dataframe to select rookies only:
+
+    if (target == "ROY") and not winner_only:
+        NBA_rookies_csvfilename = NBAanalysisdir + 'data/NBA_rookies_{}-{}.csv'.format(year-1, year)
+        if not os.path.isfile(NBA_rookies_csvfilename):
+            print("--- ERROR: {} does not exist - EXIT")
+            sys.exit()
+        df_rookies = pd.read_csv(NBA_rookies_csvfilename)
+        df_rookies = df_rookies.drop(['Age', 'Yrs', 'G', 'MP', 'FG', 'FGA', '3P', '3PA', 'FT', 'FTA',
+                                      'ORB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', 'FG%',
+                                      '3P%', 'FT%', 'MP/G', 'PTS/G', 'TRB/G', 'AST/G'], axis=1)
+        df = pd.merge(df, df_rookies, how='right', left_on=['Player'], right_on=['Player'])
+
+    # Get Player Award data:
+        
+    NBA_PlayerAward_csvfilename = NBAanalysisdir + 'data/NBA_{}_{}-{}.csv'.format(target, year-1, year)
+
+    if not os.path.isfile(NBA_PlayerAward_csvfilename):
+        print("--- ERROR: {} does not exist - EXIT")
+        sys.exit()
+
+    df_award = pd.read_csv(NBA_PlayerAward_csvfilename)
+
+    if winner_only:
+        if (df_award.shape[0] > 0):
+            PlayerAward_rowindex = df_award['PtsWon'].idxmax()
+            df_award[target] = 0
+            df_award.loc[df_award.index[PlayerAward_rowindex], target] = 1
+        else:
+            df_award[target] = 0
+        df_award = df_award.drop(['Age', 'Tm', 'First', 'PtsWon', 'PtsMax', 'Share',
+                                  'G', 'MP', 'PTS', 'TRB', 'AST', 'STL', 'BLK',
+                                  'FG%', '3P%', 'FT%', 'WS', 'WS/48'], axis=1)
+    else:
+        df_award = df_award.drop(['Age', 'Tm', 'First', 'PtsWon', 'PtsMax',
+                                  'G', 'MP', 'PTS', 'TRB', 'AST', 'STL', 'BLK',
+                                  'FG%', '3P%', 'FT%', 'WS', 'WS/48'], axis=1)
+
+    # Merge award data with original dataframe:
+    
+    df = pd.merge(df, df_award, how='left', left_on=['Player'], right_on=['Player'])
+    
+    if winner_only:
+        values = {target: 0}
+        df.fillna(value=values, inplace=True) # Set award to 0 for players without award
+        df[target] = df[target].astype('int64')
+    else:
+        df = df.rename(index=str, columns={"Share": "AVS"})
+        values = {'AVS': 0}
+        df.fillna(value=values, inplace=True) # Set vote share to 0 for players without award votes        
+    return df
+
+
+'''
 def add_MVP_column(year, df):
     """
     Function that adds the MVP voting statistic of players as an extra column of floats to a dataframe
@@ -325,18 +404,15 @@ def add_MVP_column(year, df):
 
     df_as = pd.read_csv(NBA_MVP_csvfilename)
 
-    df_as = df_as.drop(['Age', 'Tm', 'First', 'PtsWon', 'PtsMax', 'G', 'MP', 'PTS', 'TRB',
-                        'AST', 'STL', 'BLK', 'FG%', '3P%', 'FT%', 'WS', 'WS/48'], axis=1)
-
+    df_as = df_as.drop(['Age', 'Tm', 'First', 'PtsWon', 'PtsMax',
+                        'G', 'MP', 'PTS', 'TRB', 'AST', 'STL', 'BLK', 'FG%', '3P%', 'FT%', 'WS', 'WS/48'], axis=1)
+        
     df = pd.merge(df, df_as, how='left', left_on=['Player'], right_on=['Player'])
     
-    df = df.rename(index=str, columns={"Share": "AVS"})
-
     values = {'AVS': 0}
     df.fillna(value=values, inplace=True) # Set MVP Vote Share to 0 for players without MVP votes
-    
-    return df
 
+    return df
 
 def add_ROY_column(year, df):
     """
@@ -426,7 +502,7 @@ def add_SMOY_column(year, df):
     df.fillna(value=values, inplace=True) # Set SMOY Vote Share to 0 for players without SMOY votes
     
     return df
-
+'''
 
 def cleanplayernames(df):
     """
