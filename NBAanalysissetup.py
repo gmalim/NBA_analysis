@@ -190,6 +190,7 @@ def loaddata_singleyear(year, includeadvancedstats, target):
 
     if (target == 'all'):
         df = add_EFF_column(df)
+        df = add_scaled_columns(df)
 
     # Add team statistics:
 
@@ -235,11 +236,40 @@ def add_EFF_column(df):
     df['EFF'] = (df['PTS']    + df['TRB'] + df['AST']    + df['STL'] + df['BLK'] + \
                  df['FGA']*-1 + df['FG']  + df['FTA']*-1 + df['FT']  + df['TOV']*-1) / df['G']
 
-    df['EFF'] = df['EFF'].round(3)
+    df['EFF'] = df['EFF'].round(1)
     
     return df
 
 
+def add_scaled_columns(df):
+    """
+    Function that adds the EFF statistic of players as an extra column to a dataframe
+    """
+
+    # Scale total-type features by MP/48:
+
+    df[['PTS/48', 'ORB/48', 'DRB/48', 'TRB/48', 'AST/48', 'STL/48', 'BLK/48', 'TOV/48', 'PF/48']] = \
+    df[['PTS', 'ORB', 'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF']].div(df['MP'].values, axis=0)
+    df[['PTS/48', 'ORB/48', 'DRB/48', 'TRB/48', 'AST/48', 'STL/48', 'BLK/48', 'TOV/48', 'PF/48']] = \
+    df[['PTS/48', 'ORB/48', 'DRB/48', 'TRB/48', 'AST/48', 'STL/48', 'BLK/48', 'TOV/48', 'PF/48']].multiply(48, axis=0)
+    df[['PTS/48', 'ORB/48', 'DRB/48', 'TRB/48', 'AST/48', 'STL/48', 'BLK/48', 'TOV/48', 'PF/48']] = \
+    df[['PTS/48', 'ORB/48', 'DRB/48', 'TRB/48', 'AST/48', 'STL/48', 'BLK/48', 'TOV/48', 'PF/48']].round(3)
+
+    df[['FG/48', 'FGA/48', '3P/48', '3PA/48', '2P/48', '2PA/48', 'FT/48', 'FTA/48', 'OWS/48', 'DWS/48']] = \
+    df[['FG', 'FGA', '3P', '3PA', '2P', '2PA', 'FT', 'FTA', 'OWS', 'DWS']].div(df['MP'].values, axis=0)
+    df[['FG/48', 'FGA/48', '3P/48', '3PA/48', '2P/48', '2PA/48', 'FT/48', 'FTA/48', 'OWS/48', 'DWS/48']] = \
+    df[['FG/48', 'FGA/48', '3P/48', '3PA/48', '2P/48', '2PA/48', 'FT/48', 'FTA/48', 'OWS/48', 'DWS/48']].multiply(48, axis=0)
+    df[['FG/48', 'FGA/48', '3P/48', '3PA/48', '2P/48', '2PA/48', 'FT/48', 'FTA/48', 'OWS/48', 'DWS/48']] = \
+    df[['FG/48', 'FGA/48', '3P/48', '3PA/48', '2P/48', '2PA/48', 'FT/48', 'FTA/48', 'OWS/48', 'DWS/48']].round(3)
+
+    # Scale MP by G:
+
+    df['MP/G'] = df['MP'].div(df['G'].values, axis=0)
+    df['MP/G'] = df['MP/G'].round(3)
+    
+    return df
+
+    
 def getTW(TeamWins_dict, team_acronym):
     """
     Function that returns team wins based on team acronym
