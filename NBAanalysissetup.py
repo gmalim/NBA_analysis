@@ -9,7 +9,7 @@ myNBAanalysisdir  = "${HOME}/Programming/github_reps/NBA_analysis/" # Your NBA a
 
 """
 Author: Gordon Lim
-Last Edit: 26 Apr 2018
+Last Edit: 19 June 2018
 """
 
 import itertools
