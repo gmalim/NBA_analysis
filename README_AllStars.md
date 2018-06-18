@@ -1,16 +1,18 @@
 # Predicting the NBA All-Stars with Machine Learning
 
-The goal of this analysis is to predict the [NBA All-Stars](https://www.basketball-reference.com/allstar/) for a specific year by applying machine learning algorithms on player performance data and All-Star selection data from other years. The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py), data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
+The goal of this analysis is to predict the [NBA All-Stars](https://www.basketball-reference.com/allstar/) for a specific year by applying machine learning algorithms on player performance data and All-Star selection data from other years. The analysis is based on the [NumPy](http://www.numpy.org) and [Pandas](https://pandas.pydata.org) data analysis packages and the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. The [XGBoost](http://xgboost.readthedocs.io/en/latest/) algorithm and the [Keras](https://keras.io/)-[TensorFlow](https://www.tensorflow.org/) deep learning libraries are tested as well. The [Matplotlib](https://matplotlib.org/), [Seaborn](https://seaborn.pydata.org/) and [Bokeh](https://bokeh.pydata.org/) packages are used for visualization. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py), data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).
 
 ## Analysis
 
 The analysis is presented as a [Python Jupyter Notebook](NBA_All-Stars.ipynb), and can be viewed online using [Jupyter nbviewer](https://nbviewer.jupyter.org/github/gmalim/NBA_analysis/blob/master/NBA_All-Stars.ipynb) (which has improved display rendering capabilities compared to Github). The outline of the analysis is summarized in the following:
 
-### 1. Import external modules and libraries
+### 1. Import prerequisites
 
 - [NumPy](http://www.numpy.org)
 - [Pandas](https://pandas.pydata.org)
 - [Scikit-learn](http://scikit-learn.org)
+- [Keras](https://keras.io/)
+- [TensorFlow](https://www.tensorflow.org/)
 - [XGBoost](http://xgboost.readthedocs.io/en/latest/)
 - [Matplotlib](https://matplotlib.org/)
 - [Seaborn](https://seaborn.pydata.org/)
@@ -19,13 +21,12 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_All-Stars.ipynb), a
 ### 2. User input
 
 - Choose the first and last year for which data has been scraped, and choose the year you want to predict. The years that are not selected are used for cross-validation and training of the ML algorithms.
-- Choose if you want to include advanced player statistics (e.g. *PER*, *VORP*, etc.) in the analysis or not.
 - Choose the minimum number of games a player has to have started per season to be included in the analysis.
 
 ### 3. Data processing
 
 - Data loading and preparation (feature selection, *NaN* handling, etc.):
-	- Features included in this analysis: *G, GS, MP/G, PTS/48, PER, TS%, TRB%, AST%, STL%, BLK%, USG%, OWS/48, DWS/48, OBPM, DBPM, VORP, TW*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
+	- Features included in this analysis: *TW/TOT, G/TOT, GS/G, MP/G, 2P/48, 2P%, 3P/48, 3P%, FT/48, FT%, USG%, ORB%, DRB%, AST%, TOV%, STL%, BLK%, PF/48*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
 	- Target statistic is the players' All-Star selection status (*AS*), a binary variable.
 - Feature scaling as required by various ML algorithms.
 - Visualization of distributions of all features for All-Stars and non-All-Stars.
@@ -48,7 +49,9 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_All-Stars.ipynb), a
 	- *Stochastic Gradient Descent Classifier*
 	- *Linear Discriminant Analysis Classifier*
 	- *Passive Aggressive Classifier*
+	- *Perceptron Classifier*
 	- *Neural Network Classifier*
+	- *Deep Neural Network Classifier (Keras-Tensorflow)*
 	- *Gaussian Process Classifier*
 	- *Gaussian Naive Bayes Classifier*
 	- *Decision Tree Classifier*
@@ -106,15 +109,15 @@ The NBA players in these groups for 2018 are listed below, based on 2010-2018 da
 
 - Western Conference:
 
-	- **Deserved All-Stars:** *James Harden (HOU), Russell Westbrook (OKC), Anthony Davis (NOP), Kevin Durant (GSW), Damian Lillard (POR), LaMarcus Aldridge (SAS), Jimmy Butler (MIN), DeMarcus Cousins (NOP), Stephen Curry (GSW), Karl-Anthony Towns (MIN)*
-	- **Questionable All-Stars:** *Paul George (OKC), Klay Thompson (GSW), Draymond Green (GSW)*
+	- **Deserved All-Stars:** *James Harden (HOU), Russell Westbrook (OKC), Kevin Durant (GSW), Anthony Davis (NOP), Damian Lillard (POR), DeMarcus Cousins (NOP), Jimmy Butler (MIN), Stephen Curry (GSW), LaMarcus Aldridge (SAS), Karl-Anthony Towns (MIN)*
+	- **Questionable All-Stars:** *Klay Thompson (GSW), Paul George (OKC), Draymond Green (GSW)*
 	- **Snubbed non-All-Stars:** *Chris Paul (HOU), Nikola Jokic (DEN)*
 
 - Eastern Conference:
 
-	- **Deserved All-Stars:** *Giannis Antetokounmpo (MIL), LeBron James (CLE), Kyrie Irving (BOS), Victor Oladipo (IND), DeMar DeRozan (TOR), Joel Embiid (PHI), Andre Drummond (DET), Kyle Lowry (TOR), Kemba Walker (CHO), Bradley Beal (WAS)*
-	- **Questionable All-Stars:** *John Wall (WAS), Kevin Love (CLE), Kristaps Porzingis (NYK), Al Horford (BOS), Goran Dragic (MIA)*
-	- **Snubbed non-All-Stars:** *Ben Simmons (PHI), Blake Griffin (DET)*
+	- **Deserved All-Stars:** *LeBron James (CLE), Giannis Antetokounmpo (MIL), DeMar DeRozan (TOR), Joel Embiid (PHI), Kyrie Irving (BOS), Victor Oladipo (IND), Kevin Love (CLE), John Wall (WAS), Kyle Lowry (TOR)*
+	- **Questionable All-Stars:** *Bradley Beal (WAS), Kemba Walker (CHO), Kristaps Porzingis (NYK), Andre Drummond (DET), Al Horford (BOS), Goran Dragic (MIA)*
+	- **Snubbed non-All-Stars:** *Blake Griffin (DET), Ben Simmons (PHI), Dwight Howard (CHO)*
 
 ## Discussion
 
@@ -125,5 +128,5 @@ There are several caveats to the analysis:
 - Similarly, players selected for the All-Star game who get injured before the All-Star game are replaced by other players who otherwise would not have been selected. (*In 2018 for instance, Paul George and Goran Dragic were injury replacements*). Therefore the injured players have been added to the scraped 2000-2018 csv-files by hand.
 - All-Star level players can transfer between conferences during a season. (*In 2018 for instance, Blake Griffin transferred from the Clippers in the Western Conference to the Pistons in the Eastern Conference*).
 - All-Star selection is not only determined by a player's individual performance, but also by his team's performance before the All-Star break. Team performance is included in the analysis by the *TW* statistic (i.e. the number of team wins per season), but no attempt has been made to tune the weight of this statistic compared to other data features. (*In 2018 for instance, Klay Thompson and  Draymond Green played for the Golden State Warriors, the defending NBA champions*).
-- Similarly, All-Star selection is (partly) based on fan voting, and therefore popular players can get selected even if they played poorly during the season.
+- Similarly, All-Star selection is (partly) based on fan voting, and therefore popular players can get selected even if they played poorly during the season (*e.g. Kobe Bryant in 2014, 2015 and 2016*).
 - The 1998–99 and 2011-2012 NBA seasons were shortened to 50 and 66 regular season games per team respectively due to a lock-out. Therefore there was no All-Star game in 1998-99, while the analysis might be suboptimal for 2011-2012.

@@ -6,19 +6,21 @@ The goal of this analysis is to predict the [NBA All-Stars](https://www.basketba
 
 NBA data from 2000-2018 from [basketball-reference.com](https://www.basketball-reference.com) have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py). Data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py). The following data are used in the analysis, where each file corresponds to a single season:
 
-- *NBA_totals_[...].csv*: Regular player performance statistics
-- *NBA_advanced_[...].csv*: Advanced player performance statistics
-- *NBA_teammisc_[...].csv*: Team performance statistics
-- *NBA_rookies_[...].csv*: Rookie performance statistics
-- *NBA_allstars_[...].csv*: All-Star game statistics
-- *NBA_MVP_[...].csv*: MVP voting statistics
-- *NBA_ROY_[...].csv*: ROY voting statistics
-- *NBA_DPOY_[...].csv*: DPOY voting statistics
-- *NBA_SMOY_[...].csv*: SMOY voting statistics
+- *NBA_totals_[season].csv*: Regular player performance statistics
+- *NBA_advanced_[season].csv*: Advanced player performance statistics
+- *NBA_teammisc_[season].csv*: Team performance statistics
+- *NBA_rookies_[season].csv*: Rookie performance statistics
+- *NBA_allstars_[season].csv*: All-Star game statistics
+- *NBA_MVP_[season].csv*: MVP voting statistics
+- *NBA_ROY_[season].csv*: ROY voting statistics
+- *NBA_DPOY_[season].csv*: DPOY voting statistics
+- *NBA_SMOY_[season].csv*: SMOY voting statistics
 
 ## Analysis
 
-The analyses are based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python, and are described in more detail in the following:
+The analysis is based on the [NumPy](http://www.numpy.org) and [Pandas](https://pandas.pydata.org) data analysis packages and the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. The [XGBoost](http://xgboost.readthedocs.io/en/latest/) algorithm and the [Keras](https://keras.io/)-[TensorFlow](https://www.tensorflow.org/) deep learning libraries are tested as well. The [Matplotlib](https://matplotlib.org/), [Seaborn](https://seaborn.pydata.org/) and [Bokeh](https://bokeh.pydata.org/) packages are used for visualization.
+
+The NBA All-Stars and NBA Player Awards analyses are described in more detail in the following:
 
 - [NBA All-Stars analysis README](README_AllStars.md)
 - [NBA Player Awards analysis README](README_PlayerAwards.md)
@@ -33,15 +35,15 @@ The predicted NBA All-Stars for 2018 based on 2010-2018 data, ordered by to the 
 
 - Western Conference:
 
-	- **Deserved All-Stars:** *James Harden (HOU), Russell Westbrook (OKC), Anthony Davis (NOP), Kevin Durant (GSW), Damian Lillard (POR), LaMarcus Aldridge (SAS), Jimmy Butler (MIN), DeMarcus Cousins (NOP), Stephen Curry (GSW), Karl-Anthony Towns (MIN)*
-	- **Questionable All-Stars:** *Paul George (OKC), Klay Thompson (GSW), Draymond Green (GSW)*
+	- **Deserved All-Stars:** *James Harden (HOU), Russell Westbrook (OKC), Kevin Durant (GSW), Anthony Davis (NOP), Damian Lillard (POR), DeMarcus Cousins (NOP), Jimmy Butler (MIN), Stephen Curry (GSW), LaMarcus Aldridge (SAS), Karl-Anthony Towns (MIN)*
+	- **Questionable All-Stars:** *Klay Thompson (GSW), Paul George (OKC), Draymond Green (GSW)*
 	- **Snubbed non-All-Stars:** *Chris Paul (HOU), Nikola Jokic (DEN)*
 
 - Eastern Conference:
 
-	- **Deserved All-Stars:** *Giannis Antetokounmpo (MIL), LeBron James (CLE), Kyrie Irving (BOS), Victor Oladipo (IND), DeMar DeRozan (TOR), Joel Embiid (PHI), Andre Drummond (DET), Kyle Lowry (TOR), Kemba Walker (CHO), Bradley Beal (WAS)*
-	- **Questionable All-Stars:** *John Wall (WAS), Kevin Love (CLE), Kristaps Porzingis (NYK), Al Horford (BOS), Goran Dragic (MIA)*
-	- **Snubbed non-All-Stars:** *Ben Simmons (PHI), Blake Griffin (DET)*
+	- **Deserved All-Stars:** *LeBron James (CLE), Giannis Antetokounmpo (MIL), DeMar DeRozan (TOR), Joel Embiid (PHI), Kyrie Irving (BOS), Victor Oladipo (IND), Kevin Love (CLE), John Wall (WAS), Kyle Lowry (TOR)*
+	- **Questionable All-Stars:** *Bradley Beal (WAS), Kemba Walker (CHO), Kristaps Porzingis (NYK), Andre Drummond (DET), Al Horford (BOS), Goran Dragic (MIA)*
+	- **Snubbed non-All-Stars:** *Blake Griffin (DET), Ben Simmons (PHI), Dwight Howard (CHO)*
 
 ### NBA Player Awards 2018:
 
