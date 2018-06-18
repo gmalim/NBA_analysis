@@ -126,7 +126,7 @@ class MyCM():
             if (self.precision+self.recall != 0) else 0
 
 
-def loaddata_allyears(train_years, test_year, includeadvancedstats, target):
+def loaddata_allyears(train_years, test_year, target):
     """
     Function that loads NBA data from csv-files for set of years
     """
@@ -138,7 +138,7 @@ def loaddata_allyears(train_years, test_year, includeadvancedstats, target):
     for train_year in train_years:
         
         print("--> Loading train year {}-{} ...".format(train_year-1, train_year))
-        df = loaddata_singleyear(train_year, includeadvancedstats, target)
+        df = loaddata_singleyear(train_year, target)
         dfs.append(df)
 
     df_train = pd.concat(dfs)
@@ -146,12 +146,12 @@ def loaddata_allyears(train_years, test_year, includeadvancedstats, target):
     # Load test data into df_test:
 
     print("--> Loading test  year {}-{} ...".format(test_year-1, test_year))
-    df_test = loaddata_singleyear(test_year, includeadvancedstats, target)
+    df_test = loaddata_singleyear(test_year, target)
     
     return df_train, df_test
 
 
-def loaddata_singleyear(year, includeadvancedstats, target):
+def loaddata_singleyear(year, target):
     """
     Function that loads NBA data from csv-files for one particular year
     """
@@ -163,20 +163,18 @@ def loaddata_singleyear(year, includeadvancedstats, target):
         sys.exit()
     
     df = pd.read_csv(NBA_playerstats_csvfilename)
+    
+    NBA_playerstats_advanced_csvfilename = NBAanalysisdir + 'data/NBA_advanced_{}-{}.csv'.format(year-1, year)
+    
+    if not os.path.isfile(NBA_playerstats_advanced_csvfilename):
+        print("*** loaddata_singleyear ERROR: {} does not exist - EXIT")
+        sys.exit()
+    
+    df2 = pd.read_csv(NBA_playerstats_advanced_csvfilename)
+    #df2.drop(df2.columns[[19, 24]], inplace=True, axis=1)    # remove empty columns
+    df2.drop(['Pos', 'Age', 'G', 'MP'], inplace=True, axis=1) # remove columns already included in regular stats csv
 
-    if includeadvancedstats:
-    
-        NBA_playerstats_advanced_csvfilename = NBAanalysisdir + 'data/NBA_advanced_{}-{}.csv'.format(year-1, year)
-    
-        if not os.path.isfile(NBA_playerstats_advanced_csvfilename):
-            print("*** loaddata_singleyear ERROR: {} does not exist - EXIT")
-            sys.exit()
-    
-        df2 = pd.read_csv(NBA_playerstats_advanced_csvfilename)
-        #df2.drop(df2.columns[[19, 24]], inplace=True, axis=1)    # remove empty columns
-        df2.drop(['Pos', 'Age', 'G', 'MP'], inplace=True, axis=1) # remove columns already included in regular stats csv
-
-        df = pd.merge(df, df2, how='left', left_on=['Player', 'Tm'], right_on=['Player', 'Tm'])
+    df = pd.merge(df, df2, how='left', left_on=['Player', 'Tm'], right_on=['Player', 'Tm'])
 
     # Clean player names:
 
@@ -186,15 +184,50 @@ def loaddata_singleyear(year, includeadvancedstats, target):
 
     df = compress_multirowplayers(df)
     
-    # Add player efficiency statistics:
+    # Add player efficiency and game score statistics:
 
-    if (target == 'all'):
-        df = add_EFF_column(df)
-        df = add_scaled_columns(df)
+    df = add_EFF_column(df)
+    df = add_GSC_column(df)
 
     # Add team statistics:
 
     df = add_team_columns(year, df)
+
+    # Add scaled statistics columns:
+        
+    df = add_scaled_columns(df, year)
+
+    # Add YEAR for cross-validation groups:
+
+    df['YEAR'] = year
+    df['YEAR'] = df['YEAR'].astype('int64')
+
+    # Change column order:
+
+    #cols = df.columns.tolist()
+    #print(cols)
+    
+    newcolumnorder = ['Player', 'YEAR', 'Pos', 'Age',
+                      'Tm', 'TC', 'TW', 'TW/TOT',
+                      'G', 'G/TOT', 'GS', 'GS/G', 'MP', 'MP/G', 
+                      'FG', 'FGA', 'FG/48', 'FGA/48', 'FG%', 'eFG%', 
+                      '2P', '2PA', '2P/48', '2PA/48', '2P%', 
+                      '3P', '3PA', '3P/48', '3PA/48', '3P%', '3PAr', 
+                      'FT', 'FTA', 'FT/48', 'FTA/48', 'FT%', 'FTr', 
+                      'PTS', 'PTS/48', 'TS%', 'USG%', 
+                      'TRB', 'TRB/48', 'TRB%',
+                      'ORB', 'ORB/48', 'ORB%', 
+                      'DRB', 'DRB/48', 'DRB%', 
+                      'AST', 'AST/48', 'AST%',
+                      'TOV', 'TOV/48', 'TOV%',
+                      'STL', 'STL/48', 'STL%', 
+                      'BLK', 'BLK/48', 'BLK%',
+                      'PF', 'PF/48', 
+                      'OWS', 'DWS', 'WS', 'OWS/48', 'DWS/48', 'WS/48', 
+                      'OBPM', 'DBPM', 'BPM', 'VORP',
+                      'EFF', 'GSC', 'PER']
+
+    df = df[newcolumnorder]
     
     # Add target selection statistic:
 
@@ -215,11 +248,6 @@ def loaddata_singleyear(year, includeadvancedstats, target):
         print("*** loaddata_singleyear ERROR: Unknown target - EXIT")
         sys.exit()
         
-    # Add YEAR for cross-validation groups:
-
-    df['YEAR'] = year
-    df['YEAR'] = df['YEAR'].astype('int64')
-
     #print(df.head())    
     #print(df.shape)
 
@@ -231,42 +259,69 @@ def add_EFF_column(df):
     Function that adds the EFF statistic of players as an extra column to a dataframe
     """
 
-    # EFF is defined as: (PTS + TRB + AST + STL + BLK − (FGA - FG) − (FTA - FT) - TOV) / G):
+    # EFF is defined as: (PTS + TRB + AST + STL + BLK − (FGA - FG) − (FTA - FT) - TOV) / G
 
     df['EFF'] = (df['PTS']    + df['TRB'] + df['AST']    + df['STL'] + df['BLK'] + \
-                 df['FGA']*-1 + df['FG']  + df['FTA']*-1 + df['FT']  + df['TOV']*-1) / df['G']
+                 df['FGA']*-1 + df['FG' ] + df['FTA']*-1 + df['FT' ] + df['TOV']*-1) / df['G']
 
     df['EFF'] = df['EFF'].round(1)
     
     return df
 
 
-def add_scaled_columns(df):
+def add_GSC_column(df):
     """
-    Function that adds the EFF statistic of players as an extra column to a dataframe
+    Function that adds the Game Score statistic of players as an extra column to a dataframe
+    """
+
+    # Game Score is defined as: (PTS + 0.4 * FG - 0.7 * FGA - 0.4*(FTA - FT) + 0.7 * ORB + 0.3 * DRB +
+    #                            STL + 0.7 * AST + 0.7 * BLK - 0.4 * PF - TOV) / G
+
+    df['GSC'] = (df['PTS'] + df['FG' ]*0.4 + df['FGA']*-0.7 + df['FTA']*-0.4 + df['FT' ]*0.4 + df['ORB']*0.7 + df['DRB']*0.3 + \
+                 df['STL'] + df['AST']*0.7 + df['BLK']* 0.7 + df['PF' ]*-0.4 + df['TOV']*-1) / df['G']
+
+    df['GSC'] = df['GSC'].round(1)
+    
+    return df
+
+
+def add_scaled_columns(df, year):
+    """
+    Function that adds the scaled total statistics of players as extra columns to a dataframe
     """
 
     # Scale total-type features by MP/48:
 
     df[['PTS/48', 'ORB/48', 'DRB/48', 'TRB/48', 'AST/48', 'STL/48', 'BLK/48', 'TOV/48', 'PF/48']] = \
-    df[['PTS', 'ORB', 'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF']].div(df['MP'].values, axis=0)
+    df[['PTS',    'ORB',    'DRB',    'TRB',    'AST',    'STL',    'BLK',    'TOV',    'PF'   ]].div(df['MP'].values, axis=0)
     df[['PTS/48', 'ORB/48', 'DRB/48', 'TRB/48', 'AST/48', 'STL/48', 'BLK/48', 'TOV/48', 'PF/48']] = \
     df[['PTS/48', 'ORB/48', 'DRB/48', 'TRB/48', 'AST/48', 'STL/48', 'BLK/48', 'TOV/48', 'PF/48']].multiply(48, axis=0)
     df[['PTS/48', 'ORB/48', 'DRB/48', 'TRB/48', 'AST/48', 'STL/48', 'BLK/48', 'TOV/48', 'PF/48']] = \
     df[['PTS/48', 'ORB/48', 'DRB/48', 'TRB/48', 'AST/48', 'STL/48', 'BLK/48', 'TOV/48', 'PF/48']].round(3)
 
     df[['FG/48', 'FGA/48', '3P/48', '3PA/48', '2P/48', '2PA/48', 'FT/48', 'FTA/48', 'OWS/48', 'DWS/48']] = \
-    df[['FG', 'FGA', '3P', '3PA', '2P', '2PA', 'FT', 'FTA', 'OWS', 'DWS']].div(df['MP'].values, axis=0)
+    df[['FG',    'FGA',    '3P',    '3PA',    '2P',    '2PA',    'FT',    'FTA',    'OWS',    'DWS'   ]].div(df['MP'].values, axis=0)
     df[['FG/48', 'FGA/48', '3P/48', '3PA/48', '2P/48', '2PA/48', 'FT/48', 'FTA/48', 'OWS/48', 'DWS/48']] = \
     df[['FG/48', 'FGA/48', '3P/48', '3PA/48', '2P/48', '2PA/48', 'FT/48', 'FTA/48', 'OWS/48', 'DWS/48']].multiply(48, axis=0)
     df[['FG/48', 'FGA/48', '3P/48', '3PA/48', '2P/48', '2PA/48', 'FT/48', 'FTA/48', 'OWS/48', 'DWS/48']] = \
     df[['FG/48', 'FGA/48', '3P/48', '3PA/48', '2P/48', '2PA/48', 'FT/48', 'FTA/48', 'OWS/48', 'DWS/48']].round(3)
 
-    # Scale MP by G:
+    # Scale MP and GS by G:
 
-    df['MP/G'] = df['MP'].div(df['G'].values, axis=0)
-    df['MP/G'] = df['MP/G'].round(3)
+    df[['MP/G', 'GS/G']] = df[['MP',   'GS'  ]].div(df['G'].values, axis=0)
+    df[['MP/G', 'GS/G']] = df[['MP/G', 'GS/G']].round(3)
     
+    # Scale G and TW by total number of games in a season:
+
+    n_totgames = 82
+    if (year == 1999):
+        n_totgames = 50
+    if (year == 2012):
+        n_totgames = 66
+    
+    df[['G/TOT', 'TW/TOT']] = df[['G', 'TW']].div(n_totgames, axis=0)
+    df[['G/TOT', 'TW/TOT']] = df[['G/TOT', 'TW/TOT']].round(3)
+
     return df
 
     
@@ -1253,6 +1308,54 @@ def NBA_SMOY_scraper(year):
         csv_writer.writerow(row)
 
         
+def NBA_allnba_scraper():
+    """
+    NBA All-NBA scraper function (result is not perfect, has to be edited manually)
+    """
+
+    import requests
+    import csv
+    from bs4 import BeautifulSoup
+
+    out_path = NBAanalysisdir + 'data/NBA_allnba.csv'
+    csv_file = open(out_path, 'w')
+    csv_writer = csv.writer(csv_file)
+
+    features = ['League', 'ATeam', 'Player1', 'Player2', 'Player3', 'Player4', 'Player5']
+
+    csv_writer.writerow(features)
+    
+    URL = 'https://www.basketball-reference.com/awards/all_league.html'
+    
+    r = requests.get(URL)
+    soup = BeautifulSoup(r.text, "html5lib")
+    
+    table = soup.find(id="awards_all_league")
+    cells = table.find_all('td')
+    
+    ncolumns = len(features)
+    
+    League  = [cells[i].getText() for i in range( 0, len(cells), ncolumns)]
+    ATeam   = [cells[i].getText() for i in range( 1, len(cells), ncolumns)]
+    Player1 = [cells[i].getText() for i in range( 2, len(cells), ncolumns)]
+    Player2 = [cells[i].getText() for i in range( 3, len(cells), ncolumns)]
+    Player3 = [cells[i].getText() for i in range( 4, len(cells), ncolumns)]
+    Player4 = [cells[i].getText() for i in range( 5, len(cells), ncolumns)]
+    Player5 = [cells[i].getText() for i in range( 6, len(cells), ncolumns)]
+    
+    #Player1 = [i.replace(' C', '') for i in Player1]
+    #Player2 = [i.replace(' F', '') for i in Player2]
+    #Player3 = [i.replace(' F', '') for i in Player3]
+    #Player4 = [i.replace(' G', '') for i in Player4]
+    #Player5 = [i.replace(' G', '') for i in Player5]
+    
+    for i in range(0, int(len(cells) / ncolumns)):
+        row = [League[i], ATeam[i], Player1[i], Player2[i], Player3[i], Player4[i], Player5[i]]
+        csv_writer.writerow(row)
+
+    return 0
+
+
 def team_info(team_acronym):
 
     if (team_acronym == 'ATL'):
