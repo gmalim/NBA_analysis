@@ -109,14 +109,14 @@ The NBA players in these groups for 2018 are listed below, based on 2010-2018 da
 
 - Western Conference:
 
-	- **Deserved All-Stars:** *James Harden (HOU), Russell Westbrook (OKC), Kevin Durant (GSW), Anthony Davis (NOP), Damian Lillard (POR), DeMarcus Cousins (NOP), Jimmy Butler (MIN), Stephen Curry (GSW), LaMarcus Aldridge (SAS), Karl-Anthony Towns (MIN)*
+	- **Deserved All-Stars:** *James Harden (HOU), Anthony Davis (NOP), Russell Westbrook (OKC), Kevin Durant (GSW), Damian Lillard (POR), DeMarcus Cousins (NOP), Jimmy Butler (MIN), Stephen Curry (GSW), LaMarcus Aldridge (SAS), Karl-Anthony Towns (MIN)*
 	- **Questionable All-Stars:** *Klay Thompson (GSW), Paul George (OKC), Draymond Green (GSW)*
 	- **Snubbed non-All-Stars:** *Chris Paul (HOU), Nikola Jokic (DEN)*
 
 - Eastern Conference:
 
-	- **Deserved All-Stars:** *LeBron James (CLE), Giannis Antetokounmpo (MIL), DeMar DeRozan (TOR), Joel Embiid (PHI), Kyrie Irving (BOS), Victor Oladipo (IND), Kevin Love (CLE), John Wall (WAS), Kyle Lowry (TOR)*
-	- **Questionable All-Stars:** *Bradley Beal (WAS), Kemba Walker (CHO), Kristaps Porzingis (NYK), Andre Drummond (DET), Al Horford (BOS), Goran Dragic (MIA)*
+	- **Deserved All-Stars:** *LeBron James (CLE), Giannis Antetokounmpo (MIL), DeMar DeRozan (TOR), Joel Embiid (PHI), Kyrie Irving (BOS), Victor Oladipo (IND), Kevin Love (CLE), John Wall (WAS), Bradley Beal (WAS)*
+	- **Questionable All-Stars:** *Kemba Walker (CHO), Andre Drummond (DET), Kyle Lowry (TOR), Kristaps Porzingis (NYK), Al Horford (BOS), Goran Dragic (MIA)*
 	- **Snubbed non-All-Stars:** *Blake Griffin (DET), Ben Simmons (PHI), Dwight Howard (CHO)*
 
 ## Discussion

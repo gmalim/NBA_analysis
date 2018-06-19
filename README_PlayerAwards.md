@@ -1,16 +1,18 @@
 # Predicting NBA Player Award winners with Machine Learning
 
-The goal of this analysis is to predict NBA Player Award winners for a specific year by applying machine learning algorithms on player performance data and award voting data from other years. Player Awards considered in this analysis are [Most Valuable Player](https://www.basketball-reference.com/awards/mvp.html) (MVP), [Rookie of the Year](https://www.basketball-reference.com/awards/roy.html) (ROY), [Defensive Player of the Year](https://www.basketball-reference.com/awards/dpoy.html) (DPOY) and [Sixth Man of the Year](https://www.basketball-reference.com/awards/smoy.html) (SMOY). The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py), data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
+The goal of this analysis is to predict NBA Player Award winners for a specific year by applying machine learning algorithms on player performance data and award voting data from other years. Player Awards considered in this analysis are [Most Valuable Player](https://www.basketball-reference.com/awards/mvp.html) (MVP), [Rookie of the Year](https://www.basketball-reference.com/awards/roy.html) (ROY), [Defensive Player of the Year](https://www.basketball-reference.com/awards/dpoy.html) (DPOY) and [Sixth Man of the Year](https://www.basketball-reference.com/awards/smoy.html) (SMOY). The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. The [XGBoost](http://xgboost.readthedocs.io/en/latest/) algorithm and the [Keras](https://keras.io/)-[TensorFlow](https://www.tensorflow.org/) deep learning libraries are tested as well. The [Matplotlib](https://matplotlib.org/), [Seaborn](https://seaborn.pydata.org/) and [Bokeh](https://bokeh.pydata.org/) packages are used for visualization. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py), data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
 
 ## Analysis
 
 The analysis is presented as a [Python Jupyter Notebook](NBA_PlayerAwards.ipynb), and can be viewed online using [Jupyter nbviewer](https://nbviewer.jupyter.org/github/gmalim/NBA_analysis/blob/master/NBA_PlayerAwards.ipynb) (which has improved display rendering capabilities compared to Github). The outline of the analysis is summarized in the following:
 
-### 1. Import external modules and libraries
+### 1. Import prerequisites
 
 - [NumPy](http://www.numpy.org)
 - [Pandas](https://pandas.pydata.org)
 - [Scikit-learn](http://scikit-learn.org)
+- [Keras](https://keras.io/)
+- [TensorFlow](https://www.tensorflow.org/)
 - [XGBoost](http://xgboost.readthedocs.io/en/latest/)
 - [Matplotlib](https://matplotlib.org/)
 - [Seaborn](https://seaborn.pydata.org/)
@@ -24,13 +26,12 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_PlayerAwards.ipynb)
 	- NBA Defensive Player of the Year (DPOY)
 	- NBA Sixth Man of the Year (SMOY)
 - Choose the first and last year for which data has been scraped, and choose the year you want to predict. The years that are not selected are used for cross-validation and training of the ML algorithms.
-- Choose whether you want to include advanced player statistics (e.g. *PER*, *VORP*, etc.) in the analysis or not.
 - Choose the minimum number of games a player has to have played (ROY) or started (MVP, DPOY) per season to be included in the analysis.
 
 ### 3. Data processing
 
 - Data loading and preparation (feature selection, *NaN* handling, etc.).
-	- Features included in this analysis: *G, GS, MP/G, PTS/48, PER, TS%, TRB%, AST%, STL%, BLK%, USG%, OWS/48, DWS/48, OBPM, DBPM, VORP, TW*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
+	- Features included in this analysis: *TW/TOT, G/TOT, GS/G, MP/G, 2P/48, 2P%, 3P/48, 3P%, FT/48, FT%, USG%, ORB%, DRB%, AST%, TOV%, STL%, BLK%, PF/48*. (Definitions can be found [here](https://www.basketball-reference.com/about/glossary.html)).
 	- Target statistic is the players' Award Voting Share (*AVS*), a continuous variable.
 - The AVS distributions of training and test data as well as the relationships between AVS and other features in training data are visualized.
 - Feature scaling as required by various ML algorithms.
@@ -46,6 +47,7 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_PlayerAwards.ipynb)
 	- *Stochastic Gradient Descent Regressor*
 	- *Passive Aggressive Regressor*
 	- *Neural Network Regressor*
+	- *Deep Neural Network Regressor*
 	- *Gaussian Process Regressor*
 	- *Decision Tree Regressor*
 	- *Random Forest Regressor*
@@ -77,25 +79,25 @@ At the time of writing the NBA Player Awards for 2018 have not been awarded yet.
 
 	1. *James Harden (HOU)*
 	2. *LeBron James (CLE)* 
-	3. *Russell Westbrook (OKC)* 
+	3. *Stephen Curry (GSW)* 
 
 - ### NBA Rookie of the Year 2018:
 
 	1. *Ben Simmons (PHI)*
 	2. *Donovan Mitchell (UTA)*
-	3. *Kyle Kuzma (LAL)*
+	3. *Lauri Markkanen (CHI)*
 
 - ### NBA Defensive Player of the Year 2018:
 
-	1. *Andre Drummond (DET)*
-	2. *Clint Capela (HOU)*
-	3. *Ben Simmons (PHI)*
+	1. *Draymond Green (GSW)*
+	2. *Anthony Davis (NOP)*
+	3. *Clint Capela (HOU)*
 
 - ### NBA Sixth Man of the Year 2018:
 
-	1. *Lou Williams (LAC)*
-	2. *Eric Gordon (HOU)*
-	3. *Jordan Clarkson (CLE)*
+	1. *Eric Gordon (HOU)*
+	2. *Lou Williams (LAC)*
+	3. *Marcus Smart (BOS)*
 
 ## Discussion
 

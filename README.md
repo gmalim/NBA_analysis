@@ -31,45 +31,44 @@ At the time of writing, the NBA All-Stars for 2018 have been selected, but the N
 
 ### NBA All-Stars 2018:
 
-The predicted NBA All-Stars for 2018 based on 2010-2018 data, ordered by to the median predicted calibrated probability score over all selected models and compared to the actual NBA All-Star selection in 2018:
+The predicted NBA All-Stars for 2018 based on 2010-2018 data, ordered by the median predicted calibrated probability score over all selected models and compared to the actual NBA All-Star selection in 2018:
 
 - Western Conference:
 
-	- **Deserved All-Stars:** *James Harden (HOU), Russell Westbrook (OKC), Kevin Durant (GSW), Anthony Davis (NOP), Damian Lillard (POR), DeMarcus Cousins (NOP), Jimmy Butler (MIN), Stephen Curry (GSW), LaMarcus Aldridge (SAS), Karl-Anthony Towns (MIN)*
+	- **Deserved All-Stars:** *James Harden (HOU), Anthony Davis (NOP), Russell Westbrook (OKC), Kevin Durant (GSW), Damian Lillard (POR), DeMarcus Cousins (NOP), Jimmy Butler (MIN), Stephen Curry (GSW), LaMarcus Aldridge (SAS), Karl-Anthony Towns (MIN)*
 	- **Questionable All-Stars:** *Klay Thompson (GSW), Paul George (OKC), Draymond Green (GSW)*
 	- **Snubbed non-All-Stars:** *Chris Paul (HOU), Nikola Jokic (DEN)*
 
 - Eastern Conference:
 
-	- **Deserved All-Stars:** *LeBron James (CLE), Giannis Antetokounmpo (MIL), DeMar DeRozan (TOR), Joel Embiid (PHI), Kyrie Irving (BOS), Victor Oladipo (IND), Kevin Love (CLE), John Wall (WAS), Kyle Lowry (TOR)*
-	- **Questionable All-Stars:** *Bradley Beal (WAS), Kemba Walker (CHO), Kristaps Porzingis (NYK), Andre Drummond (DET), Al Horford (BOS), Goran Dragic (MIA)*
+	- **Deserved All-Stars:** *LeBron James (CLE), Giannis Antetokounmpo (MIL), DeMar DeRozan (TOR), Joel Embiid (PHI), Kyrie Irving (BOS), Victor Oladipo (IND), Kevin Love (CLE), John Wall (WAS), Bradley Beal (WAS)*
+	- **Questionable All-Stars:** *Kemba Walker (CHO), Andre Drummond (DET), Kyle Lowry (TOR), Kristaps Porzingis (NYK), Al Horford (BOS), Goran Dragic (MIA)*
 	- **Snubbed non-All-Stars:** *Blake Griffin (DET), Ben Simmons (PHI), Dwight Howard (CHO)*
 
 ### NBA Player Awards 2018:
 
-The top-3 predicted NBA MVP, ROY, DPOY and SMOY candidates based on 2000-2018 data are listed below in order of the median predicted AVS rank over all selected models.
+The top-3 predicted NBA MVP, ROY, DPOY and SMOY candidates based on 2000-2018 data are listed below in order of the median predicted Award Voting Share rank over all selected models.
 
 - #### NBA Most Valuable Player 2018:
 
 	1. *James Harden (HOU)*
 	2. *LeBron James (CLE)* 
-	3. *Russell Westbrook (OKC)* 
+	3. *Stephen Curry (GSW)* 
 
 - #### NBA Rookie of the Year 2018:
 
 	1. *Ben Simmons (PHI)*
 	2. *Donovan Mitchell (UTA)*
-	3. *Kyle Kuzma (LAL)*
+	3. *Dennis Smith (DAL)*
 
 - #### NBA Defensive Player of the Year 2018:
 
-	1. *Andre Drummond (DET)*
-	2. *Clint Capela (HOU)*
-	3. *Ben Simmons (PHI)*
+	1. *Draymond Green (GSW)*
+	2. *Anthony Davis (NOP)*
+	3. *Clint Capela (HOU)*
 
 - #### NBA Sixth Man of the Year 2018:
 
-	1. *Lou Williams (LAC)*
-	2. *Eric Gordon (HOU)*
-	3. *Jordan Clarkson (CLE)*
-
+	1. *Eric Gordon (HOU)*
+	2. *Lou Williams (LAC)*
+	3. *Marcus Smart (BOS)*
