@@ -26,7 +26,7 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_PlayerAwards.ipynb)
 	- NBA Defensive Player of the Year (DPOY)
 	- NBA Sixth Man of the Year (SMOY)
 - Choose the first and last year for which data has been scraped, and choose the year you want to predict. The years that are not selected are used for cross-validation and training of the ML algorithms.
-- Choose the minimum number of games a player has to have played (ROY) or started (MVP, DPOY) per season to be included in the analysis.
+- Choose the minimum number of games a player has to have played (ROY, SMOY) or started (MVP, DPOY) per season to be included in the analysis.
 
 ### 3. Data processing
 
@@ -39,41 +39,42 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_PlayerAwards.ipynb)
 ### 4. Supervised Learning: Regression
 
 - Selection of various popular ML regression algorithms:
-	- *Nearest Neighbours Regressor*
-	- *Ridge Regressor*
-	- *Lasso Regressor*
-	- *ElasticNet Regressor*
-	- *Support Vector Machine Regressor*
-	- *Stochastic Gradient Descent Regressor*
-	- *Passive Aggressive Regressor*
-	- *Neural Network Regressor*
-	- *Deep Neural Network Regressor*
-	- *Gaussian Process Regressor*
-	- *Decision Tree Regressor*
-	- *Random Forest Regressor*
-	- *Extra Randomized Trees Regressor*
-	- *Adaptive Boosted (AdaBoost) Decision Tree Regressor*
-	- *Gradient Boosted Decision Tree Regressor*
+	- *[Nearest Neighbours Regressor](http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsRegressor.html)*
+	- *[Ridge Regressor](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html)*
+	- *[Lasso Regressor](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Lasso.html)*
+	- *[ElasticNet Regressor](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.ElasticNet.html)*
+	- *[Support Vector Machine Regressor](http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVR.html)*
+	- *[Stochastic Gradient Descent Regressor](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDRegressor.html)*
+	- *[Passive Aggressive Regressor](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.PassiveAggressiveRegressor.html)*
+	- *[Neural Network Regressor](http://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPRegressor.html)*
+	- *Deep Neural Network Regressor (Keras-TensorFlow)*
+	- *[Gaussian Process Regressor](http://scikit-learn.org/stable/modules/generated/sklearn.gaussian_process.GaussianProcessRegressor.html)*
+	- *[Decision Tree Regressor](http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeRegressor.html)*
+	- *[Random Forest Regressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html)*
+	- *[Extra Randomized Trees Regressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html)*
+	- *[Adaptive Boosted (AdaBoost) Decision Tree Regressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostRegressor.html)*
+	- *[Gradient Boosted Decision Tree Regressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html)*
 	- *Extreme Gradient Boosted (XGBoost) Decision Tree Regressor*
 - Hyper-parameter selection and instantiation of all models.
 
 ### 5. Cross-validation 
 
-- All regressors are cross-validated by using training data and the *LeaveOneGroupOut* cross-validation scheme, where a group is defined as a single NBA season.
+- All regressors are cross-validated by using training data and the *[LeaveOneGroupOut](http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.LeaveOneGroupOut.html)* cross-validation scheme, where a group is defined as a single NBA season.
 - Validation curves are calculated and visualized.
 - Predicted versus true AVS distributions are visualized for all models and regression metrics are calculated.
 - Feature importances for Decision Tree ensemble models are calculated and listed for all CV groups.
 
 ### 6. Model training and predictions
 
-- Models are fitted using training data, fitted models are used to predict test data.
+- Models are fitted using training data.
+- Fitted models are used to predict test data.
 - Predicted versus true AVS distributions are visualized for all models and regression metrics are calculated if the NBA Player Award has been awarded for test year.
 - NBA player predictions for all models are listed.
 - The NBA Player Award candidates are listed in order of the median predicted AVS rank over all selected models.
 
 ## NBA Player Awards predictions for 2018
 
-At the time of writing the NBA Player Awards for 2018 have not been awarded yet. The top-3 predicted NBA MVP, ROY and DPOY candidates based on 2000-2018 data are listed below in order of the median predicted AVS rank over all selected models.
+At the time of writing the NBA Player Awards for 2018 have not been awarded yet. The top-3 predicted NBA MVP, ROY, DPOY and SMOY candidates based on 2000-2018 data are listed below in order of the median predicted AVS rank over all selected models.
 
 - ### NBA Most Valuable Player 2018:
 

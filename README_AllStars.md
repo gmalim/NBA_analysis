@@ -33,39 +33,39 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_All-Stars.ipynb), a
 
 ### 4. Unsupervised Learning: PCA & Clustering
 
-- Principal Component Analysis is used for dimensionality reduction.
+- [Principal Component Analysis](http://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html) is used for dimensionality reduction.
 - Clustering algorithms to identify NBA All-Stars from non-All-Stars as separate groups in the data are tested and visualized:
-	- *K-Means Clustering*
-	- *Gaussian Mixture Model*
-	- *Spectral Clustering* 
+	- *[K-Means Clustering](http://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html)*
+	- *[Gaussian Mixture Model](http://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html)*
+	- *[Spectral Clustering](http://scikit-learn.org/stable/modules/generated/sklearn.cluster.SpectralClustering.html)* 
 - Clustering performance scores for all clustering algorithms are calculated.
 
 ### 5. Supervised Learning: Classification
 
 - Selection of various popular ML classification algorithms:
-	- *Nearest Neighbours Classifier*
-	- *Logistic Regression Classifier*
-	- *Linear Support Vector Machine Classifier*
-	- *Stochastic Gradient Descent Classifier*
-	- *Linear Discriminant Analysis Classifier*
-	- *Passive Aggressive Classifier*
-	- *Perceptron Classifier*
-	- *Neural Network Classifier*
-	- *Deep Neural Network Classifier (Keras-Tensorflow)*
-	- *Gaussian Process Classifier*
-	- *Gaussian Naive Bayes Classifier*
-	- *Decision Tree Classifier*
-	- *Bagged Decision Tree Classifier*
-	- *Random Forest Classifier*
-	- *Extra Randomized Trees Classifier*
-	- *Adaptive Boosted (AdaBoost) Decision Tree Classifier*
-	- *Gradient Boosted Decision Tree Classifier*
+	- *[Nearest Neighbours Classifier](http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html)*
+	- *[Logistic Regression Classifier](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html)*
+	- *[Linear Support Vector Machine Classifier](http://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVC.html)*
+	- *[Stochastic Gradient Descent Classifier](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html)*
+	- *[Linear Discriminant Analysis Classifier](http://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html)*
+	- *[Passive Aggressive Classifier](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.PassiveAggressiveClassifier.html)*
+	- *[Perceptron Classifier](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Perceptron.html)*
+	- *[Neural Network Classifier](http://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html)*
+	- *Deep Neural Network Classifier (Keras-TensorFlow)*
+	- *[Gaussian Process Classifier](http://scikit-learn.org/stable/modules/generated/sklearn.gaussian_process.GaussianProcessClassifier.html)*
+	- *[Gaussian Naive Bayes Classifier](http://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html)*
+	- *[Decision Tree Classifier](http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html)*
+	- *[Bagged Decision Tree Classifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingClassifier.html)*
+	- *[Random Forest Classifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)*
+	- *[Extra Randomized Trees Classifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html)*
+	- *[Adaptive Boosted (AdaBoost) Decision Tree Classifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html)*
+	- *[Gradient Boosted Decision Tree Classifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html)*
 	- *Extreme Gradient Boosted (XGBoost) Decision Tree Classifier*
 - Hyper-parameter selection and instantiation of all models.
 
 ### 6. Cross-validation 
 
-- All classifiers are cross-validated by using training data and the *LeaveOneGroupOut* cross-validation scheme, where a group is defined as a single NBA season.
+- All classifiers are cross-validated by using training data and the *[LeaveOneGroupOut](http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.LeaveOneGroupOut.html)* cross-validation scheme, where a group is defined as a single NBA season.
 - Validation curves are calculated and visualized.
 - Classification scores for all models are calculated and listed.
 - ROC and PR curves for all models are calculated and visualized.
@@ -84,7 +84,7 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_All-Stars.ipynb), a
 
 ### 8. Ensemble model
 
-- An ensemble model of all selected classifiers with majority voting is created using the *VotingClassifier* class.
+- An ensemble model of all selected classifiers with majority voting is created using the *[VotingClassifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.VotingClassifier.html)* class.
 - Ensemble model is cross-validated and classification scores are calculated and listed.
 - Ensemble model is fitted using training data, fitted ensemble is used to predict test data.
 - NBA player predictions and classification results per classifier in the ensemble model are listed.
@@ -94,12 +94,12 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_All-Stars.ipynb), a
 - Classification probability scores and corresponding scoring ranks of test data are calculated for all models.
 - Predicted score distributions and probability calibration curves of training data are visualized for all models.
 - Calibrated classification probability scores and corresponding scoring ranks of test data are calculated for all models.
-- Predicted calibrated score distributions and calibrated probability calibration curves of test data are vizualized for all models.
+- Predicted calibrated score distributions and calibrated probability calibration curves of test data are visualized for all models.
 - The NBA All-Stars per conference are listed in order of the median predicted calibrated score over all selected models.
 
 ## NBA All-Star prediction 2018
 
-At the time of writing the NBA All-Stars for 2018 were already selected. Therefore the analysis identifies three groups of players per conference:
+At the time of writing the NBA All-Stars for 2018 were already selected ([NBA All-Star Game 2018](https://www.basketball-reference.com/allstar/NBA_2018.html)). Therefore the analysis identifies three groups of players per conference:
 
 1. **Deserved All-Stars:**     Players that were selected and are predicted as All-Stars.
 2. **Questionable All-Stars:** Players that were selected but are not predicted as All-Stars.
@@ -121,12 +121,12 @@ The NBA players in these groups for 2018 are listed below, based on 2010-2018 da
 
 ## Discussion
 
-There are several caveats to the analysis:
+There are several caveats to the analysis, for instance:
 
-- NBA player data used in the analysis are summary statistics over a complete season, while the NBA All-Star game is played halfway through a season. Therefore the analysis might actually be more suited to predict the selection of the All-NBA teams awarded at the end of the season.
-- All-Star level players can be injured before the All-Star game but recover before the season ends and still pass the minimum number of games requirement to be included in the analysis.
-- Similarly, players selected for the All-Star game who get injured before the All-Star game are replaced by other players who otherwise would not have been selected. (*In 2018 for instance, Paul George and Goran Dragic were injury replacements*). Therefore the injured players have been added to the scraped 2000-2018 csv-files by hand.
-- All-Star level players can transfer between conferences during a season. (*In 2018 for instance, Blake Griffin transferred from the Clippers in the Western Conference to the Pistons in the Eastern Conference*).
+- NBA player data used in the analysis are summary statistics over a complete season, while the NBA All-Star game is played after roughly 2/3 of the season. Therefore the analysis might actually be more suited to predict the selection of the All-NBA teams awarded at the end of the season.
+- All-Star level players can be injured before the All-Star game but recover before the season ends and still pass the minimum number of games requirement to be included in the analysis. 
+- Similarly, players selected for the All-Star game who get injured before the All-Star game are replaced by other players who otherwise would not have been selected. (*In 2018 for instance, Paul George and Goran Dragic were injury replacements*). To limit the number of false positives in the analysis, the injured players who were unable to play in the All-Star games have been added to the scraped 2000-2018 csv-files by hand.
+- All-Star level players can transfer between conferences during a season. (*In 2018 for instance, Blake Griffin played most of the season for the Los Angeles Clippers in the Western Conference, but transferred to the Detroit Pistons in the Eastern Conference just before the All-Star Game*).
 - All-Star selection is not only determined by a player's individual performance, but also by his team's performance before the All-Star break. Team performance is included in the analysis by the *TW* statistic (i.e. the number of team wins per season), but no attempt has been made to tune the weight of this statistic compared to other data features. (*In 2018 for instance, Klay Thompson and  Draymond Green played for the Golden State Warriors, the defending NBA champions*).
 - Similarly, All-Star selection is (partly) based on fan voting, and therefore popular players can get selected even if they played poorly during the season (*e.g. Kobe Bryant in 2014, 2015 and 2016*).
 - The 1998–99 and 2011-2012 NBA seasons were shortened to 50 and 66 regular season games per team respectively due to a lock-out. Therefore there was no All-Star game in 1998-99, while the analysis might be suboptimal for 2011-2012.
