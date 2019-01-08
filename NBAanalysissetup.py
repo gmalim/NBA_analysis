@@ -374,7 +374,7 @@ def add_team_columns(year, df):
 
     df_tm = pd.read_csv(NBA_teammisc_csvfilename)
 
-    df_tm = df_tm.drop(['Age', 'L', 'PW', 'PL', 'MOV', 'SOS', 'SRS', 'ORtg', 'DRtg', 'Pace', 'FTr', '3PAr', 'TS%', 'eFG%', \
+    df_tm = df_tm.drop(['Age', 'L', 'PW', 'PL', 'MOV', 'SOS', 'SRS', 'ORtg', 'DRtg', 'NRtg', 'Pace', 'FTr', '3PAr', 'TS%', 'eFG%', \
                         'TOV%', 'ORB%', 'FT/FGA', 'OPP_eFG%', 'OPP_TOV%', 'OPP_DRB%', 'OPP_FT/FGA', 'Arena', 'Att', 'Att/G'], axis=1)
 
     TeamWins_dict = {}
@@ -952,7 +952,7 @@ def NBA_teammisc_scraper(year):
     csv_file = open(out_path, 'w')
     csv_writer = csv.writer(csv_file)
 
-    features = ['Team', 'Age', 'W', 'L', 'PW', 'PL', 'MOV', 'SOS', 'SRS', 'ORtg', 'DRtg', 'Pace', 'FTr', '3PAr', 'TS%', \
+    features = ['Team', 'Age', 'W', 'L', 'PW', 'PL', 'MOV', 'SOS', 'SRS', 'ORtg', 'DRtg', 'NRtg', 'Pace', 'FTr', '3PAr', 'TS%', \
                 'eFG%', 'TOV%', 'ORB%', 'FT/FGA', 'OPP_eFG%', 'OPP_TOV%', 'OPP_DRB%', 'OPP_FT/FGA', 'Arena', 'Att', 'Att/G']
         
     csv_writer.writerow(features)
@@ -981,30 +981,32 @@ def NBA_teammisc_scraper(year):
     SRS      = [cells[i].getText() for i in range( 8, len(cells), ncolumns)]
     ORtg     = [cells[i].getText() for i in range( 9, len(cells), ncolumns)]
     DRtg     = [cells[i].getText() for i in range(10, len(cells), ncolumns)]
-    Pace     = [cells[i].getText() for i in range(11, len(cells), ncolumns)]
-    FTr      = [cells[i].getText() for i in range(12, len(cells), ncolumns)]
-    TPAr     = [cells[i].getText() for i in range(13, len(cells), ncolumns)]
-    TSP      = [cells[i].getText() for i in range(14, len(cells), ncolumns)]
-    EFGP     = [cells[i].getText() for i in range(15, len(cells), ncolumns)]
-    TOVP     = [cells[i].getText() for i in range(16, len(cells), ncolumns)]
-    ORBP     = [cells[i].getText() for i in range(17, len(cells), ncolumns)]
-    FTPFGA   = [cells[i].getText() for i in range(18, len(cells), ncolumns)]
-    O_EFGP   = [cells[i].getText() for i in range(19, len(cells), ncolumns)]
-    O_TOVP   = [cells[i].getText() for i in range(20, len(cells), ncolumns)]
-    O_DRBP   = [cells[i].getText() for i in range(21, len(cells), ncolumns)]
-    O_FTPFGA = [cells[i].getText() for i in range(22, len(cells), ncolumns)]
-    Arena    = [cells[i].getText() for i in range(23, len(cells), ncolumns)]
-    Att      = [cells[i].getText() for i in range(24, len(cells), ncolumns)]
-    AttG     = [cells[i].getText() for i in range(25, len(cells), ncolumns)]
+    NRtg     = [cells[i].getText() for i in range(11, len(cells), ncolumns)]
+    Pace     = [cells[i].getText() for i in range(12, len(cells), ncolumns)]
+    FTr      = [cells[i].getText() for i in range(13, len(cells), ncolumns)]
+    TPAr     = [cells[i].getText() for i in range(14, len(cells), ncolumns)]
+    TSP      = [cells[i].getText() for i in range(15, len(cells), ncolumns)]
+    EFGP     = [cells[i].getText() for i in range(16, len(cells), ncolumns)]
+    TOVP     = [cells[i].getText() for i in range(17, len(cells), ncolumns)]
+    ORBP     = [cells[i].getText() for i in range(18, len(cells), ncolumns)]
+    FTPFGA   = [cells[i].getText() for i in range(19, len(cells), ncolumns)]
+    O_EFGP   = [cells[i].getText() for i in range(20, len(cells), ncolumns)]
+    O_TOVP   = [cells[i].getText() for i in range(21, len(cells), ncolumns)]
+    O_DRBP   = [cells[i].getText() for i in range(22, len(cells), ncolumns)]
+    O_FTPFGA = [cells[i].getText() for i in range(23, len(cells), ncolumns)]
+    Arena    = [cells[i].getText() for i in range(24, len(cells), ncolumns)]
+    Att      = [cells[i].getText() for i in range(25, len(cells), ncolumns)]
+    AttG     = [cells[i].getText() for i in range(26, len(cells), ncolumns)]
 
     Team = [i.replace('*', '') for i in Team] # Remove possible asterix from team name
     Att  = [i.replace(',', '') for i in Att]  # Remove comma from Attendence
     AttG = [i.replace(',', '') for i in AttG] # Remove comma from Attendence per Game
     Att  = [i.replace('"', '') for i in Att]  # Remove quotes from Attendence
     AttG = [i.replace('"', '') for i in AttG] # Remove quotes from Attendence per Game
+    NRtg = [i.replace('+', '') for i in NRtg] # Remove pluses from NRtg
 
     for i in range(0, int(len(cells) / ncolumns) - 1): # Skip last line
-        row = [Team[i], Age[i], W[i], L[i], PW[i], PL[i], MOV[i], SOS[i], SRS[i], ORtg[i], DRtg[i], Pace[i], FTr[i], TPAr[i], TSP[i], \
+        row = [Team[i], Age[i], W[i], L[i], PW[i], PL[i], MOV[i], SOS[i], SRS[i], ORtg[i], DRtg[i], NRtg[i], Pace[i], FTr[i], TPAr[i], TSP[i], \
                EFGP[i], TOVP[i], ORBP[i], FTPFGA[i], O_EFGP[i], O_TOVP[i], O_DRBP[i], O_FTPFGA[i], Arena[i], Att[i], AttG[i]]
         csv_writer.writerow(row)
 
