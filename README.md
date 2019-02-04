@@ -1,6 +1,6 @@
-# Predicting the NBA All-Stars and NBA Player Awards with Machine Learning
+# Predicting the NBA All-Stars and NBA Awards with Machine Learning
 
-The goal of this analysis is to predict the [NBA All-Stars](https://www.basketball-reference.com/allstar/) and NBA Player Awards for a specific year, by applying various machine learning algorithms on player performance data and All-Star selections / award voting data from other years. Player Awards considered in this analysis are [Most Valuable Player](https://www.basketball-reference.com/awards/mvp.html) (MVP), [Rookie of the Year](https://www.basketball-reference.com/awards/roy.html) (ROY), [Defensive Player of the Year](https://www.basketball-reference.com/awards/dpoy.html) (DPOY) and [Sixth Man of the Year](https://www.basketball-reference.com/awards/smoy.html) (SMOY).
+The goal of this analysis is to predict the [NBA All-Stars](https://www.basketball-reference.com/allstar/) and [NBA Awards](https://www.basketball-reference.com/awards/) for a specific year, by applying various machine learning algorithms on player performance data and All-Star selections / award voting data from other years. NBA Awards considered in this analysis are [Most Valuable Player](https://www.basketball-reference.com/awards/mvp.html) (MVP), [Rookie of the Year](https://www.basketball-reference.com/awards/roy.html) (ROY), [Defensive Player of the Year](https://www.basketball-reference.com/awards/dpoy.html) (DPOY) and [Sixth Man of the Year](https://www.basketball-reference.com/awards/smoy.html) (SMOY).
 
 ## Data
 
@@ -20,55 +20,55 @@ NBA data from 2000-2018 from [basketball-reference.com](https://www.basketball-r
 
 The analysis is based on the [NumPy](http://www.numpy.org) and [Pandas](https://pandas.pydata.org) data analysis packages and the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. The [XGBoost](http://xgboost.readthedocs.io/en/latest/) algorithm and the [Keras](https://keras.io/)-[TensorFlow](https://www.tensorflow.org/) deep learning libraries are tested as well. The [Matplotlib](https://matplotlib.org/), [Seaborn](https://seaborn.pydata.org/) and [Bokeh](https://bokeh.pydata.org/) packages are used for visualization.
 
-The NBA All-Stars and NBA Player Awards analyses are described in more detail in the following:
+The NBA All-Stars and NBA Awards analyses are described in more detail in the following:
 
 - [NBA All-Stars analysis README](README_AllStars.md)
-- [NBA Player Awards analysis README](README_PlayerAwards.md)
+- [NBA Awards analysis README](README_PlayerAwards.md)
 
-## Predictions for 2018
+## Predictions for 2019
 
-At the time of writing, the NBA All-Stars for 2018 have been selected, but the NBA Player Awards for 2018 have not been awarded yet. Predictions for the NBA All-Stars and Player Awards for 2018 are listed below.
+At the time of writing (February 4, 2019), the NBA All-Stars for 2019 have been selected but the NBA Awards for 2019 have not been awarded yet. Predictions for the NBA All-Stars and NBA Awards for 2019 are listed below.
 
-### NBA All-Stars 2018:
+### NBA All-Stars 2019:
 
-The predicted NBA All-Stars for 2018 based on 2010-2018 data, ordered by the median predicted calibrated probability score over all selected models and compared to the actual NBA All-Star selection in 2018:
+The predicted NBA All-Stars for 2019 based on 2010-2019 data, ordered by the median predicted calibrated probability score over all selected models and compared to the actual NBA All-Star selection in 2019:
 
 - Western Conference:
 
-	- **Deserved All-Stars:** *James Harden (HOU), Anthony Davis (NOP), Russell Westbrook (OKC), Kevin Durant (GSW), Damian Lillard (POR), DeMarcus Cousins (NOP), Jimmy Butler (MIN), Stephen Curry (GSW), LaMarcus Aldridge (SAS), Karl-Anthony Towns (MIN)*
-	- **Questionable All-Stars:** *Klay Thompson (GSW), Paul George (OKC), Draymond Green (GSW)*
-	- **Snubbed non-All-Stars:** *Chris Paul (HOU), Nikola Jokic (DEN)*
+	- **Deserved All-Stars:** *James Harden (HOU), Kevin Durant (GSW), Anthony Davis (NOP), Paul George (OKC), Stephen Curry (GSW), Damian Lillard (POR), LeBron James (LAL), Russell Westbrook (OKC), LaMarcus Aldridge (SAS), Nikola Jokic (DEN), Karl-Anthony Towns (MIN)*
+	- **Questionable All-Stars:** *Klay Thompson (GSW)*
+	- **Snubbed non-All-Stars:** *DeMar DeRozan (SAS)*
 
 - Eastern Conference:
 
-	- **Deserved All-Stars:** *LeBron James (CLE), Giannis Antetokounmpo (MIL), DeMar DeRozan (TOR), Joel Embiid (PHI), Kyrie Irving (BOS), Victor Oladipo (IND), Kevin Love (CLE), John Wall (WAS), Bradley Beal (WAS)*
-	- **Questionable All-Stars:** *Kemba Walker (CHO), Andre Drummond (DET), Kyle Lowry (TOR), Kristaps Porzingis (NYK), Al Horford (BOS), Goran Dragic (MIA)*
-	- **Snubbed non-All-Stars:** *Blake Griffin (DET), Ben Simmons (PHI), Dwight Howard (CHO)*
+	- **Deserved All-Stars:** *Joel Embiid (PHI), Giannis Antetokounmpo (MIL), Kawhi Leonard (TOR), Blake Griffin (DET), Kemba Walker (CHO), Kyrie Irving (BOS), Nikola Vucevic (ORL), Ben Simmons (PHI), D'Angelo Russell (BRK), Bradley Beal (WAS), Khris Middleton (MIL)*
+	- **Questionable All-Stars:** *Kyle Lowry (TOR), Victor Oladipo (IND)*
+	- **Snubbed non-All-Stars:** *Jimmy Butler (PHI), Eric Bledsoe (MIL)*
 
-### NBA Player Awards 2018:
+### NBA Awards 2019 (at the time of writing: February 4, 2019):
 
-The top-3 predicted NBA MVP, ROY, DPOY and SMOY candidates based on 2000-2018 data are listed below in order of the median predicted Award Voting Share rank over all selected models.
+The top-3 predicted NBA MVP, ROY, DPOY and SMOY candidates based on 2000-2019 data are listed below in order of the median predicted Award Voting Share rank over all selected models.
 
-- #### NBA Most Valuable Player 2018:
+- #### NBA Most Valuable Player 2019:
 
 	1. *James Harden (HOU)*
-	2. *LeBron James (CLE)* 
-	3. *Stephen Curry (GSW)* 
+	2. *Kevin Durant (GSW)* 
+	3. *Joel Embiid (PHI)* 
 
-- #### NBA Rookie of the Year 2018:
+- #### NBA Rookie of the Year 2019:
 
-	1. *Ben Simmons (PHI)*
-	2. *Donovan Mitchell (UTA)*
-	3. *Dennis Smith (DAL)*
+	1. *Luka Doncic (DAL)*
+	2. *Trae Young (ATL)*
+	3. *Deandre Ayton (PHO)*
 
-- #### NBA Defensive Player of the Year 2018:
+- #### NBA Defensive Player of the Year 2019:
 
-	1. *Draymond Green (GSW)*
-	2. *Anthony Davis (NOP)*
-	3. *Clint Capela (HOU)*
+	1. *Kawhi Leonard (TOR)*
+	2. *Joel Embiid (PHI)*
+	3. *Myles Turner (IND)*
 
-- #### NBA Sixth Man of the Year 2018:
+- #### NBA Sixth Man of the Year 2019:
 
-	1. *Eric Gordon (HOU)*
-	2. *Lou Williams (LAC)*
-	3. *Marcus Smart (BOS)*
+	1. *Lou Williams (LAC)*
+	2. *Spencer Dinwiddie (BRK)*
+	3. *Dennis Schroder (OKC)*

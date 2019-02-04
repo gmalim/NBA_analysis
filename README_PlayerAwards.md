@@ -1,6 +1,6 @@
-# Predicting NBA Player Award winners with Machine Learning
+# Predicting the NBA Awards with Machine Learning
 
-The goal of this analysis is to predict NBA Player Award winners for a specific year by applying machine learning algorithms on player performance data and award voting data from other years. Player Awards considered in this analysis are [Most Valuable Player](https://www.basketball-reference.com/awards/mvp.html) (MVP), [Rookie of the Year](https://www.basketball-reference.com/awards/roy.html) (ROY), [Defensive Player of the Year](https://www.basketball-reference.com/awards/dpoy.html) (DPOY) and [Sixth Man of the Year](https://www.basketball-reference.com/awards/smoy.html) (SMOY). The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. The [XGBoost](http://xgboost.readthedocs.io/en/latest/) algorithm and the [Keras](https://keras.io/)-[TensorFlow](https://www.tensorflow.org/) deep learning libraries are tested as well. The [Matplotlib](https://matplotlib.org/), [Seaborn](https://seaborn.pydata.org/) and [Bokeh](https://bokeh.pydata.org/) packages are used for visualization. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py), data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
+The goal of this analysis is to predict the [NBA Awards](https://www.basketball-reference.com/awards/) for a specific year by applying machine learning algorithms on player performance data and award voting data from other years. Player Awards considered in this analysis are [Most Valuable Player](https://www.basketball-reference.com/awards/mvp.html) (MVP), [Rookie of the Year](https://www.basketball-reference.com/awards/roy.html) (ROY), [Defensive Player of the Year](https://www.basketball-reference.com/awards/dpoy.html) (DPOY) and [Sixth Man of the Year](https://www.basketball-reference.com/awards/smoy.html) (SMOY). The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. The [XGBoost](http://xgboost.readthedocs.io/en/latest/) algorithm and the [Keras](https://keras.io/)-[TensorFlow](https://www.tensorflow.org/) deep learning libraries are tested as well. The [Matplotlib](https://matplotlib.org/), [Seaborn](https://seaborn.pydata.org/) and [Bokeh](https://bokeh.pydata.org/) packages are used for visualization. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py), data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
 
 ## Analysis
 
@@ -20,7 +20,7 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_PlayerAwards.ipynb)
 
 ### 2. User input
 
-- Choose the NBA Player Award you want to predict:
+- Choose the NBA Award you want to predict:
 	- NBA Most Valuable Player (MVP)
 	- NBA Rookie of the Year (ROY)
 	- NBA Defensive Player of the Year (DPOY)
@@ -68,13 +68,13 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_PlayerAwards.ipynb)
 
 - Models are fitted using training data.
 - Fitted models are used to predict test data.
-- Predicted versus true AVS distributions are visualized for all models and regression metrics are calculated if the NBA Player Award has been awarded for test year.
+- Predicted versus true AVS distributions are visualized for all models and regression metrics are calculated if the NBA Award has been awarded for test year.
 - NBA player predictions for all models are listed.
-- The NBA Player Award candidates are listed in order of the median predicted AVS rank over all selected models.
+- The NBA Award candidates are listed in order of the median predicted AVS rank over all selected models.
 
-## NBA Player Awards predictions for 2018
+## NBA Awards predictions for 2018
 
-At the time of writing the NBA Player Awards for 2018 have not been awarded yet. The top-3 predicted NBA MVP, ROY, DPOY and SMOY candidates based on 2000-2018 data are listed below in order of the median predicted AVS rank over all selected models.
+At the time of writing the NBA Awards for 2018 have not been awarded yet. The top-3 predicted NBA MVP, ROY, DPOY and SMOY candidates based on 2000-2018 data are listed below in order of the median predicted AVS rank over all selected models.
 
 - ### NBA Most Valuable Player 2018:
 
@@ -102,4 +102,4 @@ At the time of writing the NBA Player Awards for 2018 have not been awarded yet.
 
 ## Discussion
 
-Unfortunately none of the regression models tested in this analysis are able to accurately predict the Player Award voting shares. This is due to the erratic relationship between AVS and other features in the analysis (and to a lesser degree to the small sample size of players with award votes). Therefore the predicted absolute AVS values are ignored and the predicted median AVS rank over all models is used as a measure for Player Award candidateship.
+Unfortunately none of the regression models tested in this analysis are able to accurately predict the NBA Award voting shares. This is due to the erratic relationship between AVS and other features in the analysis (and to a lesser degree to the small sample size of players with award votes). Therefore the predicted absolute AVS values are ignored and the predicted median AVS rank over all models is used as a measure for NBA Award candidateship.
