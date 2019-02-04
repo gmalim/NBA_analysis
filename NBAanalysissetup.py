@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3 -tt
+# #!/usr/local/bin/python3 -tt
 """
 NBA analysis setup.
 
@@ -313,15 +313,22 @@ def add_scaled_columns(df, year):
     
     # Scale G and TW by total number of games in a season:
 
+    """
     n_totgames = 82
     if (year == 1999):
         n_totgames = 50
     if (year == 2012):
         n_totgames = 66
+    if (year == 2019):
+        n_totgames = 40
     
     df[['G/TOT', 'TW/TOT']] = df[['G', 'TW']].div(n_totgames, axis=0)
     df[['G/TOT', 'TW/TOT']] = df[['G/TOT', 'TW/TOT']].round(3)
-
+    """
+    
+    df[['G/TOT', 'TW/TOT']] = df[['G', 'TW']].div(df['TT'].values, axis=0)
+    df[['G/TOT', 'TW/TOT']] = df[['G/TOT', 'TW/TOT']].round(3)
+    
     return df
 
     
@@ -335,6 +342,18 @@ def getTW(TeamWins_dict, team_acronym):
     TW = TeamWins_dict[fullteamname]
 
     return TW
+
+    
+def getTT(TeamWins_dict, TeamLosses_dict, team_acronym):
+    """
+    Function that returns team wins+losses based on team acronym
+    """
+
+    fullteamname, _ = team_info(team_acronym)
+
+    TT = TeamWins_dict[fullteamname] + TeamLosses_dict[fullteamname]
+
+    return TT
 
     
 def getTC(team_acronym):
@@ -374,16 +393,22 @@ def add_team_columns(year, df):
 
     df_tm = pd.read_csv(NBA_teammisc_csvfilename)
 
-    df_tm = df_tm.drop(['Age', 'L', 'PW', 'PL', 'MOV', 'SOS', 'SRS', 'ORtg', 'DRtg', 'NRtg', 'Pace', 'FTr', '3PAr', 'TS%', 'eFG%', \
+    df_tm = df_tm.drop(['Age', 'PW', 'PL', 'MOV', 'SOS', 'SRS', 'ORtg', 'DRtg', 'NRtg', 'Pace', 'FTr', '3PAr', 'TS%', 'eFG%', \
                         'TOV%', 'ORB%', 'FT/FGA', 'OPP_eFG%', 'OPP_TOV%', 'OPP_DRB%', 'OPP_FT/FGA', 'Arena', 'Att', 'Att/G'], axis=1)
 
     TeamWins_dict = {}
     for index, row in df_tm.iterrows():
         TeamWins_dict[row['Team']] = row['W']    
 
-    df['TW'] = df.apply(lambda row: getTW(TeamWins_dict, row['Tm']), axis=1)    
-        
+    TeamLosses_dict = {}
+    for index, row in df_tm.iterrows():
+        TeamLosses_dict[row['Team']] = row['L']    
+
+    df['TW'] = df.apply(lambda row: getTW(TeamWins_dict, row['Tm']), axis=1)            
     df['TW'] = df['TW'].astype('int64')
+
+    df['TT'] = df.apply(lambda row: getTT(TeamWins_dict, TeamLosses_dict, row['Tm']), axis=1)            
+    df['TT'] = df['TT'].astype('int64')
 
     df['TC'] = df.apply(lambda row: getTC(row['Tm']), axis=1)
         
@@ -430,7 +455,7 @@ def add_PlayerAward_column(year, df, target, winner_only):
             print("--- ERROR: {} does not exist - EXIT")
             sys.exit()
         df_rookies = pd.read_csv(NBA_rookies_csvfilename)
-        df_rookies = df_rookies.drop(['Age', 'Yrs', 'G', 'MP', 'FG', 'FGA', '3P', '3PA', 'FT', 'FTA',
+        df_rookies = df_rookies.drop(['Debut', 'Age', 'Yrs', 'G', 'MP', 'FG', 'FGA', '3P', '3PA', 'FT', 'FTA',
                                       'ORB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', 'FG%',
                                       '3P%', 'FT%', 'MP/G', 'PTS/G', 'TRB/G', 'AST/G'], axis=1)
         df = pd.merge(df, df_rookies, how='right', left_on=['Player'], right_on=['Player'])
@@ -512,7 +537,7 @@ def add_ROY_column(year, df):
 
     df_as = pd.read_csv(NBA_rookies_csvfilename)
 
-    df_as = df_as.drop(['Age', 'Yrs', 'G', 'MP', 'FG', 'FGA', '3P', '3PA', 'FT', 'FTA', 'ORB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', 'FG%', '3P%', 'FT%', 'MP/G', 'PTS/G', 'TRB/G', 'AST/G'], axis=1)
+    df_as = df_as.drop(['Debut', 'Age', 'Yrs', 'G', 'MP', 'FG', 'FGA', '3P', '3PA', 'FT', 'FTA', 'ORB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', 'FG%', '3P%', 'FT%', 'MP/G', 'PTS/G', 'TRB/G', 'AST/G'], axis=1)
 
     df = pd.merge(df, df_as, how='right', left_on=['Player'], right_on=['Player'])
 
@@ -1026,7 +1051,7 @@ def NBA_rookies_scraper(year):
     csv_file = open(out_path, 'w')
     csv_writer = csv.writer(csv_file)
     
-    features = ['Player', 'Age', 'Yrs', 'G', 'MP', 'FG', 'FGA', '3P', '3PA', 'FT', 'FTA', 'ORB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', 'FG%', '3P%', 'FT%', 'MP/G', 'PTS/G', 'TRB/G', 'AST/G']
+    features = ['Player', 'Debut', 'Age', 'Yrs', 'G', 'MP', 'FG', 'FGA', '3P', '3PA', 'FT', 'FTA', 'ORB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', 'FG%', '3P%', 'FT%', 'MP/G', 'PTS/G', 'TRB/G', 'AST/G']
     
     csv_writer.writerow(features)
     
@@ -1043,36 +1068,37 @@ def NBA_rookies_scraper(year):
     ncolumns = len(features)
     
     Player = [cells[i].getText() for i in range( 0, len(cells), ncolumns)]
-    Age    = [cells[i].getText() for i in range( 1, len(cells), ncolumns)]
-    Yrs    = [cells[i].getText() for i in range( 2, len(cells), ncolumns)]
-    G      = [cells[i].getText() for i in range( 3, len(cells), ncolumns)]
-    MP     = [cells[i].getText() for i in range( 4, len(cells), ncolumns)]
-    FG     = [cells[i].getText() for i in range( 5, len(cells), ncolumns)]
-    FGA    = [cells[i].getText() for i in range( 6, len(cells), ncolumns)]
-    THP    = [cells[i].getText() for i in range( 7, len(cells), ncolumns)]
-    THPA   = [cells[i].getText() for i in range( 8, len(cells), ncolumns)]
-    FT     = [cells[i].getText() for i in range( 9, len(cells), ncolumns)]
-    FTA    = [cells[i].getText() for i in range(10, len(cells), ncolumns)]
-    ORB    = [cells[i].getText() for i in range(11, len(cells), ncolumns)]
-    TRB    = [cells[i].getText() for i in range(12, len(cells), ncolumns)]
-    AST    = [cells[i].getText() for i in range(13, len(cells), ncolumns)]
-    STL    = [cells[i].getText() for i in range(14, len(cells), ncolumns)]
-    BLK    = [cells[i].getText() for i in range(15, len(cells), ncolumns)]
-    TOV    = [cells[i].getText() for i in range(16, len(cells), ncolumns)]
-    PF     = [cells[i].getText() for i in range(17, len(cells), ncolumns)]
-    PTS    = [cells[i].getText() for i in range(18, len(cells), ncolumns)]
-    FGP    = [cells[i].getText() for i in range(19, len(cells), ncolumns)]
-    THPP   = [cells[i].getText() for i in range(20, len(cells), ncolumns)]
-    FTP    = [cells[i].getText() for i in range(21, len(cells), ncolumns)]
-    MPG    = [cells[i].getText() for i in range(22, len(cells), ncolumns)]
-    PTSG   = [cells[i].getText() for i in range(23, len(cells), ncolumns)]
-    TRBG   = [cells[i].getText() for i in range(24, len(cells), ncolumns)]
-    ASTG   = [cells[i].getText() for i in range(25, len(cells), ncolumns)]
+    Debut  = [cells[i].getText() for i in range( 1, len(cells), ncolumns)]
+    Age    = [cells[i].getText() for i in range( 2, len(cells), ncolumns)]
+    Yrs    = [cells[i].getText() for i in range( 3, len(cells), ncolumns)]
+    G      = [cells[i].getText() for i in range( 4, len(cells), ncolumns)]
+    MP     = [cells[i].getText() for i in range( 5, len(cells), ncolumns)]
+    FG     = [cells[i].getText() for i in range( 6, len(cells), ncolumns)]
+    FGA    = [cells[i].getText() for i in range( 7, len(cells), ncolumns)]
+    THP    = [cells[i].getText() for i in range( 8, len(cells), ncolumns)]
+    THPA   = [cells[i].getText() for i in range( 9, len(cells), ncolumns)]
+    FT     = [cells[i].getText() for i in range(10, len(cells), ncolumns)]
+    FTA    = [cells[i].getText() for i in range(11, len(cells), ncolumns)]
+    ORB    = [cells[i].getText() for i in range(12, len(cells), ncolumns)]
+    TRB    = [cells[i].getText() for i in range(13, len(cells), ncolumns)]
+    AST    = [cells[i].getText() for i in range(14, len(cells), ncolumns)]
+    STL    = [cells[i].getText() for i in range(15, len(cells), ncolumns)]
+    BLK    = [cells[i].getText() for i in range(16, len(cells), ncolumns)]
+    TOV    = [cells[i].getText() for i in range(17, len(cells), ncolumns)]
+    PF     = [cells[i].getText() for i in range(18, len(cells), ncolumns)]
+    PTS    = [cells[i].getText() for i in range(19, len(cells), ncolumns)]
+    FGP    = [cells[i].getText() for i in range(20, len(cells), ncolumns)]
+    THPP   = [cells[i].getText() for i in range(21, len(cells), ncolumns)]
+    FTP    = [cells[i].getText() for i in range(22, len(cells), ncolumns)]
+    MPG    = [cells[i].getText() for i in range(23, len(cells), ncolumns)]
+    PTSG   = [cells[i].getText() for i in range(24, len(cells), ncolumns)]
+    TRBG   = [cells[i].getText() for i in range(25, len(cells), ncolumns)]
+    ASTG   = [cells[i].getText() for i in range(26, len(cells), ncolumns)]
     
     Player = [i.replace('*', '') for i in Player] # Remove possible asterix from player name
     
     for i in range(0, int(len(cells) / ncolumns)):
-        row = [Player[i], Age[i], Yrs[i], G[i], MP[i], FG[i], FGA[i], THP[i], THPA[i], FT[i], FTA[i], ORB[i], TRB[i], AST[i], STL[i], BLK[i], TOV[i], PF[i], PTS[i], FGP[i], THPP[i], FTP[i], MPG[i], PTSG[i], TRBG[i], ASTG[i]]
+        row = [Player[i], Debut[i], Age[i], Yrs[i], G[i], MP[i], FG[i], FGA[i], THP[i], THPA[i], FT[i], FTA[i], ORB[i], TRB[i], AST[i], STL[i], BLK[i], TOV[i], PF[i], PTS[i], FGP[i], THPP[i], FTP[i], MPG[i], PTSG[i], TRBG[i], ASTG[i]]
         csv_writer.writerow(row)
 
 
