@@ -1,6 +1,6 @@
 # Predicting the NBA All-Stars with Machine Learning
 
-The goal of this analysis is to predict the [NBA All-Stars](https://www.basketball-reference.com/allstar/) for a specific year by applying machine learning algorithms on player performance data and All-Star selection data from other years. The analysis is based on the [NumPy](http://www.numpy.org) and [Pandas](https://pandas.pydata.org) data analysis packages and the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. The [XGBoost](http://xgboost.readthedocs.io/en/latest/) algorithm and the [Keras](https://keras.io/)-[TensorFlow](https://www.tensorflow.org/) deep learning libraries are tested as well. The [Matplotlib](https://matplotlib.org/), [Seaborn](https://seaborn.pydata.org/) and [Bokeh](https://bokeh.pydata.org/) packages are used for visualization. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py), data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).
+The goal of this analysis is to predict the [NBA All-Stars](https://www.basketball-reference.com/allstar/) for a specific year by applying machine learning algorithms on player performance data and All-Star selection data from other years. The analysis is based on the [NumPy](http://www.numpy.org) and [Pandas](https://pandas.pydata.org) data analysis packages and the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. The [XGBoost](http://xgboost.readthedocs.io/en/latest/) algorithm and the [Keras](https://keras.io/)-[TensorFlow](https://www.tensorflow.org/) deep learning libraries are tested as well. The [Matplotlib](https://matplotlib.org/), [Seaborn](https://seaborn.pydata.org/) and [Bokeh](https://bokeh.pydata.org/) packages are used for visualization. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2020 have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py), data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).
 
 ## Analysis
 
@@ -97,27 +97,27 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_All-Stars.ipynb), a
 - Predicted calibrated score distributions and calibrated probability calibration curves of test data are visualized for all models.
 - The NBA All-Stars per conference are listed in order of the median predicted calibrated score over all selected models.
 
-## NBA All-Star prediction 2019
+## NBA All-Star prediction 2020
 
-At the time of writing the NBA All-Stars for 2019 were already selected ([NBA All-Star Game 2019](https://www.basketball-reference.com/allstar/NBA_2019.html)). Therefore the analysis identifies three groups of players per conference:
+At the time of writing (October 20, 2020) the NBA All-Stars for 2020 were already selected ([NBA All-Star Game 2020](https://www.basketball-reference.com/allstar/NBA_2020.html)). Therefore the analysis identifies three groups of players per conference:
 
 1. **Deserved All-Stars:**     Players that were selected and are predicted as All-Stars.
 2. **Questionable All-Stars:** Players that were selected but are not predicted as All-Stars.
 3. **Snubbed non-All-Stars:**  Players that are predicted but were not selected as All-Stars.
 
-The NBA players in these groups for 2019 are listed below, based on 2010-2019 data and in order of the median predicted calibrated scoring rank over all selected models:
+The NBA players in these groups for 2020 are listed below, based on 2010-2020 data and in order of the median predicted calibrated scoring rank over all selected models:
 
 - Western Conference:
 
-	- **Deserved All-Stars:** *James Harden (HOU), Kevin Durant (GSW), Anthony Davis (NOP), Paul George (OKC), Stephen Curry (GSW), Damian Lillard (POR), LeBron James (LAL), Russell Westbrook (OKC), LaMarcus Aldridge (SAS), Nikola Jokic (DEN), Karl-Anthony Towns (MIN)*
-	- **Questionable All-Stars:** *Klay Thompson (GSW)*
-	- **Snubbed non-All-Stars:** *DeMar DeRozan (SAS)*
+	- **Deserved All-Stars:** *Kawhi Leonard (LAC), Anthony Davis (LAL), James Harden (HOU), LeBron James (LAL), Luka Dončić (DAL), Russell Westbrook (HOU), Damian Lillard (POR), Devin Booker (PHO), Donovan Mitchell (UTA), Brandon Ingram (NOP)*
+	- **Questionable All-Stars:** *Nikola Jokić (DEN), Chris Paul (OKC), Rudy Gobert (UTA)*
+	- **Snubbed non-All-Stars:** *Paul George (LAC), Karl-Anthony Towns (MIN)*
 
 - Eastern Conference:
 
-	- **Deserved All-Stars:** *Joel Embiid (PHI), Giannis Antetokounmpo (MIL), Kawhi Leonard (TOR), Blake Griffin (DET), Kemba Walker (CHO), Kyrie Irving (BOS), Nikola Vucevic (ORL), Ben Simmons (PHI), D'Angelo Russell (BRK), Bradley Beal (WAS), Khris Middleton (MIL)*
-	- **Questionable All-Stars:** *Kyle Lowry (TOR), Victor Oladipo (IND)*
-	- **Snubbed non-All-Stars:** *Jimmy Butler (PHI), Eric Bledsoe (MIL)*
+	- **Deserved All-Stars:** *Giannis Antetokounmpo (MIL), Joel Embiid (PHI), Jayson Tatum (BOS), Trae Young (ATL), Pascal Siakam (TOR), Jimmy Butler (MIA), Kyle Lowry (TOR), Kemba Walker (BOS), Bam Adebayo (MIA), Khris Middleton (MIL)*
+	- **Questionable All-Stars:** *Ben Simmons (PHI), Domantas Sabonis (IND)*
+	- **Snubbed non-All-Stars:** *Bradley Beal (WAS), Zach LaVine (CHI)*
 
 ## Discussion
 
@@ -127,6 +127,6 @@ There are several caveats to this analysis, for instance:
 - All-Star level players can get injured early in the season and therefore are not selected for the All-Star game, but recover before the season ends and still pass the minimum number of games requirement to be included in the analysis. These will most likely end up as false positives in this analysis.
 - Similarly, players selected for the All-Star game who get injured just before the All-Star game are replaced by other players who otherwise would not have been selected. (*In 2019 for instance, D'Angelo Russell is an injury replacement for Victor Oladipo*) In this analysis a player's All-Star status is determined by who played in the actual All-Star game, therefore these injured players will most likely be classified as false positives. To limit these false positives, injured players who were unable to play in the All-Star games have been added to the scraped 2000-2019 csv-files by hand.
 - All-Star level players can transfer between conferences during a season, and therefore affect the All-Star predictions per conference. (*In 2018 for instance, Blake Griffin played most of the season for the Los Angeles Clippers in the Western Conference, but transferred to the Detroit Pistons in the Eastern Conference just before the All-Star Game*). No attempt has been made to correct for this effect.
-- All-Star selection is not only determined by a player's individual performance, but also by his team's performance before the All-Star break. Team performance is included in the analysis by the *TW* statistic (i.e. the number of team wins per season), but no attempt has been made to tune the weight of this statistic compared to other data features. Therefore it is possible these players will show up to the false negatives in this analysis (*In 2019 for instance, Klay Thompson played for the Golden State Warriors, the defending NBA champions*).
+- All-Star selection is not only determined by a player's individual performance, but also by his team's performance before the All-Star break. Team performance is included in the analysis by the *TW* statistic (i.e. the number of team wins per season), but no attempt has been made to tune the weight of this statistic compared to other data features. Therefore it is possible these players will show up as false negatives in this analysis (*In 2019 for instance, Klay Thompson played for the Golden State Warriors, the defending NBA champions*).
 - Similarly, All-Star selection is (partly) based on fan voting, and therefore popular players can get selected even if they played poorly during the season (*e.g. Kobe Bryant in 2014, 2015 and 2016*). These players will most likely contribute to the false negatives in this analysis.
-- The 1998–99 and 2011-2012 NBA seasons were shortened to 50 and 66 regular season games per team respectively due to a lock-out. Therefore there was no All-Star game in 1998-99, while the analysis might be suboptimal for 2011-2012.
+- The 1998–99 and 2011-2012 NBA seasons were shortened to 50 and 66 regular season games per team respectively due to a lock-out, while the 2019-2020 NBA season was shortened and altered due to the Coronavirus pandemic. Therefore there was no All-Star game in 1998-99, while the analysis might be suboptimal for the 2011-2012 and 2019-2020 seasons.

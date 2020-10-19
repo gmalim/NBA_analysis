@@ -1,6 +1,6 @@
 # Predicting the NBA Awards with Machine Learning
 
-The goal of this analysis is to predict the [NBA Awards](https://www.basketball-reference.com/awards/) for a specific year by applying machine learning algorithms on player performance data and award voting data from other years. Player Awards considered in this analysis are [Most Valuable Player](https://www.basketball-reference.com/awards/mvp.html) (MVP), [Rookie of the Year](https://www.basketball-reference.com/awards/roy.html) (ROY), [Defensive Player of the Year](https://www.basketball-reference.com/awards/dpoy.html) (DPOY) and [Sixth Man of the Year](https://www.basketball-reference.com/awards/smoy.html) (SMOY). The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. The [XGBoost](http://xgboost.readthedocs.io/en/latest/) algorithm and the [Keras](https://keras.io/)-[TensorFlow](https://www.tensorflow.org/) deep learning libraries are tested as well. The [Matplotlib](https://matplotlib.org/), [Seaborn](https://seaborn.pydata.org/) and [Bokeh](https://bokeh.pydata.org/) packages are used for visualization. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2018 have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py), data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
+The goal of this analysis is to predict the [NBA Awards](https://www.basketball-reference.com/awards/) for a specific year by applying machine learning algorithms on player performance data and award voting data from other years. Player Awards considered in this analysis are [Most Valuable Player](https://www.basketball-reference.com/awards/mvp.html) (MVP), [Rookie of the Year](https://www.basketball-reference.com/awards/roy.html) (ROY), [Defensive Player of the Year](https://www.basketball-reference.com/awards/dpoy.html) (DPOY) and [Sixth Man of the Year](https://www.basketball-reference.com/awards/smoy.html) (SMOY). The analysis is based on the [Scikit-learn](http://scikit-learn.org) machine learning package for Python. The [XGBoost](http://xgboost.readthedocs.io/en/latest/) algorithm and the [Keras](https://keras.io/)-[TensorFlow](https://www.tensorflow.org/) deep learning libraries are tested as well. [Matplotlib](https://matplotlib.org/), [Seaborn](https://seaborn.pydata.org/) and [Bokeh](https://bokeh.pydata.org/) are used for visualization. NBA data are taken from [basketball-reference.com](https://www.basketball-reference.com). Data from 2000-2020 have been saved as csv-files in the [data](data) directory using the scraper functions in [*NBAanalysissetup.py*](NBAanalysissetup.py), data from other years can be obtained by using [*Basketball_Reference_scraper.py*](Basketball_Reference_scraper.py).  
 
 ## Analysis
 
@@ -72,33 +72,33 @@ The analysis is presented as a [Python Jupyter Notebook](NBA_PlayerAwards.ipynb)
 - NBA player predictions for all models are listed.
 - The NBA Award candidates are listed in order of the median predicted AVS rank over all selected models.
 
-## NBA Awards predictions for 2018
+## NBA Awards predictions for 2020
 
-At the time of writing the NBA Awards for 2018 have not been awarded yet. The top-3 predicted NBA MVP, ROY, DPOY and SMOY candidates based on 2000-2018 data are listed below in order of the median predicted AVS rank over all selected models.
+At the time of writing (October 20, 2020) the NBA Awards for 2018 have been awarded. The top-3 predicted NBA MVP, ROY, DPOY and SMOY candidates based on 2000-2020 data are listed below in order of the median predicted AVS rank over all selected models. The award winners are shown in bold face.
 
-- ### NBA Most Valuable Player 2018:
+- ### NBA Most Valuable Player 2020:
 
-	1. *James Harden (HOU)*
-	2. *LeBron James (CLE)* 
-	3. *Stephen Curry (GSW)* 
+	1. ***Giannis Antetokounmpo (MIL)***
+	2. *James Harden (HOU)* 
+	3. *LeBron James (LAL)* 
 
-- ### NBA Rookie of the Year 2018:
+- ### NBA Rookie of the Year 2020:
 
-	1. *Ben Simmons (PHI)*
-	2. *Donovan Mitchell (UTA)*
-	3. *Lauri Markkanen (CHI)*
+	1. ***Ja Morant (MEM)***
+	2. *RJ Barrett (NYK)*
+	3. *Kendrick Nunn (MIA)*
 
-- ### NBA Defensive Player of the Year 2018:
+- ### NBA Defensive Player of the Year 2020:
 
-	1. *Draymond Green (GSW)*
-	2. *Anthony Davis (NOP)*
-	3. *Clint Capela (HOU)*
+	1. *Rudy Gobert (UTA)*
+	2. ***Giannis Antetokounmpo (MIL)***
+	3. *Anthony Davis (LAL)*
 
-- ### NBA Sixth Man of the Year 2018:
+- ### NBA Sixth Man of the Year 2020:
 
-	1. *Eric Gordon (HOU)*
-	2. *Lou Williams (LAC)*
-	3. *Marcus Smart (BOS)*
+	1. *Lou Williams (LAC)*
+	2. *Dennis Schroder (OKC)*
+	3. ***Montrezl Harrell (LAC)***
 
 ## Discussion
 
